@@ -1,0 +1,15 @@
+{% extends "core/base_dark.html" %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="card">
+    <h4 class="card-header">
+        {% block card_header %}card header{% endblock %}
+    </h4>
+    {% block card_body %}{% endblock %}
+    <div class="card-footer text-muted">
+        {% block card_footer %}<a class="text-muted" href="{% url 'core:index' %}">{% trans 'Home' %}</a>{% endblock %}
+    </div>
+</div>
+{% endblock %}

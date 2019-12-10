@@ -1,0 +1,120 @@
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+img {
+    margin-bottom: 1.5rem;
+}
+
+.jumbotron {
+    margin-bottom: 0;
+}
+
+main {
+    padding-top: 2.0rem;
+    padding-bottom: 2.5rem;
+}
+
+/*image and div cropping*/
+.image-crop-1-1 {
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+}
+
+.image-crop-3-2 {
+    width: 100%;
+    padding-top: 66.67%;
+    position: relative;
+}
+
+.image-crop-2-3 {
+    width: 100%;
+    padding-top: 150%;
+    position: relative;
+}
+
+.image-crop-4-3 {
+    width: 100%;
+    padding-top: 75%;
+    position: relative;
+}
+
+.image-crop-3-4 {
+    width: 100%;
+    padding-top: 133.33%;
+    position: relative;
+}
+
+.image-crop-16-9 {
+    width: 100%;
+    padding-top: 56.25%;
+    position: relative;
+}
+
+.image-crop-16-10 {
+    width: 100%;
+    padding-top: 62.5%;
+    position: relative;
+}
+
+.image-crop img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    object-fit: cover;
+}
+
+.image-crop div {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/*card columns spacing*/
+/*Extra small devices (portrait phones, less than 576px)*/
+/*No media query for `xs` since this is the default in Bootstrap*/
+.card-columns {
+    column-count: 1;
+}
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+    .card-columns {
+        column-count: 2;
+    }
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+    .card-columns {
+        column-count: 3;
+    }
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+    .card-columns {
+        column-count: 4;
+    }
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+    .card-columns {
+        column-count: 4;
+    }
+}

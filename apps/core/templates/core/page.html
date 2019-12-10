@@ -1,0 +1,40 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block head_title %}{% trans 'Home' %}{% endblock %}
+
+{% block body %}
+{% include 'core/_header.html' %}
+{% include 'core/_nav.html' %}
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-3">{% block jumbotron_title %}{% endblock %}</h1>
+        <p class="lead">{% block jumbotron_lead %}{% endblock %}</p>
+        {% block jumbotron_footer %}{% endblock %}
+    </div>
+</div>
+<main role="main" class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% if messages %}
+                {% for message in messages %}
+                {% include 'core/utils/message.html' %}
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% block content %}{% endblock %}
+                {% if is_paginated %}
+                {% include 'core/_pagination_bar.html' %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</main>
+{% include 'core/_footer.html' %}
+{% endblock %}

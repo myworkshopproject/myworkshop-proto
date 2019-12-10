@@ -34,7 +34,10 @@ from .production import *
 ## Tech/framework used
 
 ### Backend
- * [Django 3.0](https://www.djangoproject.com/) : High-level Python Web framework.
+* [Django 3.0](https://www.djangoproject.com/) : High-level Python Web framework.
+* [The “sites” framework](https://docs.djangoproject.com/en/2.2/ref/contrib/sites/) : Associating content with multiple sites
+* [django-allauth 0.40.0](https://github.com/pennersr/django-allauth) : Integrated set of Django applications addressing authentication, registration, account management as well as 3rd party (social) account authentication.
+* [django-crispy-forms 1.8.1](https://github.com/django-crispy-forms/django-crispy-forms) : The best way to have DRY Django forms.
 
 ### Frontend
  * [Bootstrap 4.4.1](https://getbootstrap.com/) : A responsive web toolkit.

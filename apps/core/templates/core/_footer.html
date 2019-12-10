@@ -1,0 +1,18 @@
+{% load i18n %}
+<footer class="page-footer font-small bg-secondary text-white pt-4 footer mt-auto" role="contentinfo">
+    <div class="container-fluid text-center text-md-left">
+        <div class="row text-center">
+            <div class="col-md-4 mt-md-0 mt-3">
+            </div>
+            <div class="col-md-4 mt-md-0 mt-3">
+                <h5 class="text-uppercase"><i class="fas fa-tools"></i> {{ request.site.name }}</h5>
+                <p>{{ request.site.url }}</p>
+            </div>
+            <div class="col-md-4 mt-md-0 mt-3">
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright text-center py-3 bg-dark text-white">
+        &copy; <a href="https://github.com/myworkshopproject" class="text-white">MyWorkshopProject</a> {% now "Y" %}
+    </div>
+</footer>

@@ -1,0 +1,28 @@
+{% extends "core/base.html" %}
+
+{% load i18n %}
+
+{% block body_class %}bg-dark{% endblock %}
+
+{% block body %}
+<main role="main" class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto align-middle">
+                {% if messages %}
+                {% for message in messages %}
+                {% include 'core/utils/message.html' %}
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto align-middle">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

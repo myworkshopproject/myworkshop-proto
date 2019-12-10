@@ -1,0 +1,11 @@
+{% extends "core/page.html" %}
+{% load i18n %}
+
+{% block head_title %}{% trans 'Home' %}{% endblock %}
+
+{% block jumbotron_title %}<i class="fas fa-tools"></i> {{ request.site.name }}{% endblock %}
+{% block jumbotron_lead %}{{ request.site.domain }}{% endblock %}
+
+{% block content %}
+<h1>{% trans 'Home' %}</h1>
+{% endblock %}
