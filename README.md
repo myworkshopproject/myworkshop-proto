@@ -1,6 +1,9 @@
 # myworkshop
 A documentation generator for open hardware projects.
 
+## Disclaimer
+This project is at a very early stage of development: It can evolve dramatically at the next commits!
+
 ## Features
  * Generate beautiful documentation for open hardware projects!
 
