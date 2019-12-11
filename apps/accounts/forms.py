@@ -1,4 +1,4 @@
-from allauth.account.forms import SignupForm
+from allauth.account.forms import LoginForm, SignupForm
 from django import forms
 from django.utils.translation import gettext, gettext_lazy as _
 
@@ -12,3 +12,10 @@ class CustomSignupForm(SignupForm):
         user.last_name = self.cleaned_data["last_name"]
         user.save()
         return user
+
+
+class CustomLoginForm(LoginForm):
+    def login(self, *args, **kwargs):
+        # Add your own processing here.
+        # You must return the original result.
+        return super(CustomLoginForm, self).login(*args, **kwargs)

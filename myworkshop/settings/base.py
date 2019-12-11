@@ -22,8 +22,12 @@ INSTALLED_APPS = [
     "allauth.account",  # <- django-allauth
     "allauth.socialaccount",  # <- django-allauth
     "myworkshopprovider",  # <- django-allauth
+    "api.apps.ApiConfig",
     "core.apps.CoreConfig",
+    "labbook.apps.LabbookConfig",
+    "projects.apps.ProjectsConfig",
     "crispy_forms",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -87,7 +91,10 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
 ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400  # 1 day in seconds
 ACCOUNT_LOGOUT_REDIRECT_URL = "core:index"
-ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
+ACCOUNT_FORMS = {
+    "login": "accounts.forms.CustomLoginForm",
+    "signup": "accounts.forms.CustomSignupForm",
+}
 
 # i18n
 LANGUAGE_CODE = "en"
@@ -102,3 +109,6 @@ MEDIA_URL = "/site_media/media/"
 
 # crispy_forms
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+# Django REST Framework
+REST_FRAMEWORK = {}
