@@ -16,8 +16,12 @@ ALLOWED_HOSTS = ["127.0.0.1"]
 # Database
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "",
+        "USER": "",
+        "PASSWORD": "",
+        "HOST": "",
+        "PORT": "",
     }
 }
 
@@ -26,10 +30,20 @@ STATIC_ROOT = os.path.join(BASE_DIR, "site_media", "static")
 MEDIA_ROOT = os.path.join(BASE_DIR, "site_media", "media")
 
 # i18n
-LANGUAGES = (("en", _("English")), ("fr", _("French")))
+LANGUAGES = (("fr", _("French")), ("en", _("English")))
+MODELTRANSLATION_FALLBACK_LANGUAGES = ("fr",)
 
 # Email
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-# Django OAuth Toolkit
-OAUTH_SERVER_BASEURL = "http://127.0.0.1:8001"
+# My Workshop
+MYWORKSHOP_TITLE_LENGHT = 200
+MYWORKSHOP_SLUG_LENGHT = (
+    MYWORKSHOP_TITLE_LENGHT + 6
+)  # up to 10.000 different slugs based
+MYWORKSHOP_SHORT_DESCRIPTION_LENGHT = 1000
+MYWORKSHOP_TAG_LENGHT = 200
+MYWORKSHOP_IMAGE_ALT_LENGHT = 500
+MYWORKSHOP_IMAGE_CREDIT_LENGHT = 200
+MYWORKSHOP_WORKSHOP_TAGLINE_LENGHT = 200
+MYWORKSHOP_WORKSHOP_FOOTER_LENGHT = 1000

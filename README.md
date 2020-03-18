@@ -11,8 +11,11 @@ This project is at a very early stage of development: It can evolve dramatically
 
 ### Requirements
  * python 3.6.9 or higher (package _python3_);
+ * PostgreSQL 10.3 or higher;
 
 ### Install
+Edit `myworkshop/settings/development.py` and complete your database settings in it.
+
 Install all the required tools in a virtualenv:
 ```
 $ make install
@@ -22,6 +25,7 @@ $ make install
 
 #### Development environment
 To run the application locally in a development environment:
+
 ```
 $ make serve
 ```
@@ -39,14 +43,14 @@ from .production import *
 ### Backend
 * [Django 3.0](https://www.djangoproject.com/) : High-level Python Web framework.
 * [The “sites” framework](https://docs.djangoproject.com/en/2.2/ref/contrib/sites/) : Associating content with multiple sites
-* [django-allauth 0.40.0](https://github.com/pennersr/django-allauth) : Integrated set of Django applications addressing authentication, registration, account management as well as 3rd party (social) account authentication.
-* [django-crispy-forms 1.8.1](https://github.com/django-crispy-forms/django-crispy-forms) : The best way to have DRY Django forms.
-* [Django REST framework 3.10.3](https://github.com/encode/django-rest-framework) : A powerful and flexible toolkit for building Web APIs.
+* [django-allauth 0.41.0](https://github.com/pennersr/django-allauth) : Integrated set of Django applications addressing authentication, registration, account management as well as 3rd party (social) account authentication.
+* [django-crispy-forms 1.9.0](https://github.com/django-crispy-forms/django-crispy-forms) : The best way to have DRY Django forms.
+* [Django REST framework 3.11.0](https://github.com/encode/django-rest-framework) : A powerful and flexible toolkit for building Web APIs.
 
 ### Frontend
  * [Bootstrap 4.4.1](https://getbootstrap.com/) : A responsive web toolkit.
  * [Boostwatch 4.4.1](https://bootswatch.com/) : Free themes for Bootstrap.
- * [Font Awesome 5.11.2](https://fontawesome.com/) : Icon set and toolkit.
+ * [Font Awesome 5.12.1](https://fontawesome.com/) : Icon set and toolkit.
  * [jQuery 3.4.1](https://jquery.com/) : A feature-rich JavaScript library for dynamic web pages.
 
 ## Versioning

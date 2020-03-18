@@ -12,6 +12,7 @@ sys.path.append(APPS_DIR)
 INSTALLED_APPS = [
     "django.contrib.sites",  # before "accounts" to override SiteAdmin
     "accounts.apps.AccountsConfig",  # before "django.contrib.auth" to override templates
+    "modeltranslation",  # before "django.contrib.admin" to use the admin integration
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -21,13 +22,16 @@ INSTALLED_APPS = [
     "allauth",  # <- django-allauth
     "allauth.account",  # <- django-allauth
     "allauth.socialaccount",  # <- django-allauth
-    "myworkshopprovider",  # <- django-allauth
-    "api.apps.ApiConfig",
+    # "allauth.socialaccount.providers.facebook",
+    # "allauth.socialaccount.providers.github",
+    # "allauth.socialaccount.providers.google",
+    # "allauth.socialaccount.providers.twitter",
+    # "allauth.socialaccount.providers.linkedin",
     "core.apps.CoreConfig",
-    "labbook.apps.LabbookConfig",
-    "projects.apps.ProjectsConfig",
+    "flatpages.apps.FlatpagesConfig",
     "crispy_forms",
-    "rest_framework",
+    "simple_history",
+    "mptt",
 ]
 
 MIDDLEWARE = [
@@ -40,11 +44,18 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.contrib.sites.middleware.CurrentSiteMiddleware",
+    "simple_history.middleware.HistoryRequestMiddleware",
 ]
 
 ROOT_URLCONF = "myworkshop.urls"
 
 TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.jinja2.Jinja2",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {"environment": "myworkshop.jinja2.environment"},
+    },
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [os.path.join(BASE_DIR, "templates")],
@@ -58,7 +69,7 @@ TEMPLATES = [
                 "django.template.context_processors.media",
             ]
         },
-    }
+    },
 ]
 
 WSGI_APPLICATION = "myworkshop.wsgi.application"
@@ -70,9 +81,9 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",  # `allauth` specific authentication methods, such as login by e-mail
 )
 AUTH_USER_MODEL = "accounts.CustomUser"
-LOGIN_REDIRECT_URL = "core:index"  # Default: '/accounts/profile/'
+LOGIN_REDIRECT_URL = "core:home"  # Default: '/accounts/profile/'
 LOGIN_URL = "account_login"  # Default: '/accounts/login/'
-LOGOUT_REDIRECT_URL = "core:index"  # If None, the logout view will be rendered.
+LOGOUT_REDIRECT_URL = "core:home"  # If None, the logout view will be rendered.
 PASSWORD_RESET_TIMEOUT_DAYS = 3  # days
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -87,14 +98,15 @@ AUTH_PASSWORD_VALIDATORS = [
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "none"
-ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
-ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400  # 1 day in seconds
-ACCOUNT_LOGOUT_REDIRECT_URL = "core:index"
+ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_FORMS = {
     "login": "accounts.forms.CustomLoginForm",
     "signup": "accounts.forms.CustomSignupForm",
 }
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400  # 1 day in seconds
+ACCOUNT_LOGOUT_REDIRECT_URL = "core:home"
+ACCOUNT_USERNAME_MIN_LENGTH = 8
 
 # i18n
 LANGUAGE_CODE = "en"
@@ -109,6 +121,3 @@ MEDIA_URL = "/site_media/media/"
 
 # crispy_forms
 CRISPY_TEMPLATE_PACK = "bootstrap4"
-
-# Django REST Framework
-REST_FRAMEWORK = {}
