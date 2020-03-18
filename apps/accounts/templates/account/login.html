@@ -1,5 +1,4 @@
-{% extends "account/base.html" %}
-
+{% extends "accounts/base.html" %}
 {% load crispy_forms_tags %}
 {% load i18n %}
 {% load account socialaccount %}
@@ -23,9 +22,7 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
 
     {% include "socialaccount/snippets/login_extra.html" %}
 
-</div>
-<div class="card-body">
-    <h5 class="card-title text-center">{% trans 'or' %}</h5>
+    <h5 class="card-title text-center my-4">{% trans 'or' %}</h5>
 
     {% else %}
     <p class="card-text">{% blocktrans %}If you have not created an account yet, then please

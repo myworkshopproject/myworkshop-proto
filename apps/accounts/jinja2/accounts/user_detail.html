@@ -1,0 +1,49 @@
+{% extends "core/page.html" %}
+
+{% block section %}
+<section class="my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2 col-md-12">
+            </div>
+            <div class="col-lg-3 col-md-6 mt-lg-0 mt-3">
+                {% if user.photo %}
+                <div class="image-crop image-crop-1-1">
+                    <img class="image-crop rounded-lg" src="{{ user.photo.url }}" alt="{{ user.get_full_name() }}">
+                </div>
+                {% else %}
+                <div class="image-crop image-crop-1-1">
+                    <div>
+                        <span class="text-dark" style="font-size: 7.5rem;"><i class="fas fa-user"></i></span>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="text-center mt-4">
+                    {% include 'accounts/social.html' %}
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-6 mt-lg-0 mt-3">
+                <h1>{{ user.get_full_name() }}</h1>
+                <p class="lead">{{ user.get_username() }}</p>
+                <p>{{ _('date joined') }} : {{ user.date_joined|format_date(locale=lang.code) }}</p>
+                <h2>{{ _('about me') }}</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                {% for tag in ['un', 'deux', 'trois'] %}
+                <a href="#" class="badge badge-secondary">{{ tag }}</a>
+                {% endfor %}
+            </div>
+            <div class="col-lg-2 col-md-12 mt-lg-0 mt-3">
+            </div>
+        </div>
+        <div class="row text-center mt-5">
+            <div class="col mt-lg-0 mt-3">
+                <h2>{{ _('projects')}}</h2>
+                <hr>
+                <h2>{{ _('publications')}}</h2>
+                <hr>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock section %}
