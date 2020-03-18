@@ -5,10 +5,12 @@ from django.urls import include, path
 
 
 urlpatterns = [
-    path("", include("core.urls")),
-    url(r"^accounts/", include("allauth.urls")),
+    path("accounts/", include("allauth.urls")),
     path("admin/", admin.site.urls),
-    path("api/v1/", include("api.urls")),
+    path("i18n/", include("django.conf.urls.i18n")),
+    path("pages/", include("flatpages.urls")),
+    path("users/", include("accounts.urls")),
+    path("", include("core.urls")),
 ]
 
 
