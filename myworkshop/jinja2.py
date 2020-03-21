@@ -12,6 +12,15 @@ from mimetypes import guess_type
 from core.models import Image, ProjectType, Publication, PublicationType
 from flatpages.models import FlatPage
 
+
+def get_root_pages():
+    try:
+        root_pages = FlatPage.objects.filter(level=0)
+        return root_pages
+    except:
+        return None
+
+
 markdownExtra = {
     "tables": True,
     "break-on-newline": True,
@@ -124,7 +133,7 @@ def environment(**options):
             "get_messages": get_messages,
             "guess_type": guess_type,
             "languages": languages,
-            "pages": FlatPage.objects.filter(level=0),
+            "pages": get_root_pages(),
             "project_types": ProjectType.objects.all(),
             "publication_types": PublicationType.objects.all(),
             "settings": settings,
