@@ -163,10 +163,11 @@ class Project(LogModelMixin, SlugModel, BaseModel):
     # SAVE METHOD
     def save(self, *args, **kwargs):
         super(Project, self).save(*args, **kwargs)
-        project_contributor = ProjectContributor(
-            project=self, contributor=self.owner, role=ProjectContributor.OWNER
-        )
-        project_contributor.save()
+        if self._state.adding:
+            project_contributor = ProjectContributor(
+                project=self, contributor=self.owner, role=ProjectContributor.OWNER
+            )
+            project_contributor.save()
 
     # ABSOLUTE URL METHOD
     def get_absolute_url(self):
