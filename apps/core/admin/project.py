@@ -8,10 +8,15 @@ from core.admin import (
     SaveOwnerModelMixin,
     SlugAdminMixin,
 )
-from core.models import PublicationType, Publication
+from core.models import ProjectType, Project, ProjectContributor
 
 
-class PublicationTypeAdmin(
+class ProjectContributorInline(admin.TabularInline):
+    model = ProjectContributor
+    extra = 0
+
+
+class ProjectTypeAdmin(
     BaseAdminMixin,
     SaveOwnerModelMixin,
     LogAdminMixin,
@@ -19,27 +24,17 @@ class PublicationTypeAdmin(
     TranslationAdmin,
     SimpleHistoryAdmin,
 ):
-    list_display = ("title", "is_public", "has_steps")
+    list_display = ("title", "is_public")
     readonly_fields = []
     fieldsets = [
-        (
-            _("Mandatory"),
-            {
-                "fields": (
-                    "bootstrap4_color",
-                    "fontawesome5_class",
-                    "meta_schema",
-                    "has_steps",
-                )
-            },
-        )
+        (_("Mandatory"), {"fields": ("bootstrap4_color", "fontawesome5_class")})
     ]
 
 
-admin.site.register(PublicationType, PublicationTypeAdmin)
+admin.site.register(ProjectType, ProjectTypeAdmin)
 
 
-class PublicationAdmin(
+class ProjectAdmin(
     BaseAdminMixin,
     SaveOwnerModelMixin,
     LogAdminMixin,
@@ -50,7 +45,9 @@ class PublicationAdmin(
     list_display = ("title", "slug", "changed_at", "is_public", "type", "owner")
     list_filter = ("is_public", "type", "owner")
     readonly_fields = []
-    fieldsets = [(_("Mandatory"), {"fields": ("type", "body")})]
+    fieldsets = [(_("Mandatory"), {"fields": ("type",)})]
+
+    inlines = [ProjectContributorInline]
 
 
-admin.site.register(Publication, PublicationAdmin)
+admin.site.register(Project, ProjectAdmin)

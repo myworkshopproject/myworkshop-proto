@@ -42,8 +42,10 @@ from .production import *
 
 ### Backend
 * [Django 3.0](https://www.djangoproject.com/) : High-level Python Web framework.
+* [Jinja2 2.11.1](https://jinja.palletsprojects.com/en/2.11.x/) : a modern and designer-friendly templating language for Python.
 * [The “sites” framework](https://docs.djangoproject.com/en/2.2/ref/contrib/sites/) : Associating content with multiple sites
 * [django-allauth 0.41.0](https://github.com/pennersr/django-allauth) : Integrated set of Django applications addressing authentication, registration, account management as well as 3rd party (social) account authentication.
+* [Modeltranslation 0.14.4](https://github.com/deschler/django-modeltranslation) : is used to translate dynamic content of existing Django models to an arbitrary number of languages without having to change the original model classes.
 * [django-crispy-forms 1.9.0](https://github.com/django-crispy-forms/django-crispy-forms) : The best way to have DRY Django forms.
 * [Django REST framework 3.11.0](https://github.com/encode/django-rest-framework) : A powerful and flexible toolkit for building Web APIs.
 

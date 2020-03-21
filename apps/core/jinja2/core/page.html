@@ -1,0 +1,19 @@
+{% extends "core/base.html" %}
+
+{% block robots %}
+    <meta name="robots" content="all, index, follow">
+{% endblock robots %}
+
+{% block body %}
+    {% block nav %}
+        {% include 'core/nav/base.html' %}
+    {% endblock nav %}
+    {% block message %}
+        {% include 'core/messages/base.html' %}
+    {% endblock message %}
+    {% block section %}
+    {% endblock section %}
+    {% block footer %}
+        {% include 'core/footer/base.html' %}
+    {% endblock footer %}
+{% endblock body %}

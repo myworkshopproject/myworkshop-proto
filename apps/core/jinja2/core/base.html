@@ -1,0 +1,99 @@
+{% set lang = translation.get_language_info(translation.get_language()) %}
+<!DOCTYPE html>
+<html lang="{{ lang.code }}" dir="ltr">
+
+<head>
+    <!-- Basic Metadata -->
+    <meta charset="utf-8">
+    {% if object %}
+    {% if object.author %}
+    <meta name="author" content="{{ object.author.get_full_name() }}">
+    {% else %}
+    <meta name="author" content="{{ request.site.name }}">
+    {% endif %}
+    {% if object.short_description %}
+    <meta name="description" content="{{ object.short_description }}">
+    {% endif %}
+    {% if object.tags %}
+    <meta name="keywords" content="{% for tag in object.tags %}{{ tag }}{{ ',' if not loop.last }}{% endfor %}">
+    {% endif %}
+    {% else %}
+    <meta name="author" content="{{ request.site.name }}">
+    {% if request.site.workshop.short_description %}
+    <meta name="description" content="{{ request.site.workshop.short_description }}">
+    {% endif %}
+    {% if request.site.workshop.tags %}
+    <meta name="keywords" content="{% for tag in request.site.workshop.tags %}{{ tag }}{{ ',' if not loop.last }}{% endfor %}">
+    {% endif %}
+    {% endif %}
+    <meta name="generator" content="My Workshop Project">
+    <meta name="publisher" content="{{ request.site.name }}">
+    {% block robots %}
+    <meta name="robots" content="noindex, nofollow">
+    {% endblock robots %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block opengraph %}
+
+    {% include "core/opengraph/base.html" %}
+    {% endblock opengraph %}
+
+    <!-- Title -->
+    {% if object %}
+    {% if object.title %}
+    <title>{{ object.title }} | {{ request.site.name }}</title>
+    {% elif request.site.workshop.tagline %}
+    <title>{{ request.site.name }} | {{ request.site.workshop.tagline }}</title>
+    {% else %}
+    <title>{{ request.site.name }}</title>
+    {% endif %}
+    {% elif request.site.workshop.tagline %}
+    <title>{{ request.site.name }} | {{ request.site.workshop.tagline }}</title>
+    {% else %}
+    <title>{{ request.site.name }}</title>
+    {% endif %}
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ url('core:favicon') }}" type="image/x-icon">
+    {% block css %}
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- Bootswatch CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/united/bootstrap.min.css">
+
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ static('core/css/style.css') }}">
+    {% endblock css %}
+    {% block head_js %}
+    {#
+
+    <!-- Custom JavaScript -->
+    <script src="{% static 'core/js/app.js' %}"></script>
+    #}
+    {% endblock head_js %}
+    {% block extra_head %}
+    {% endblock extra_head %}
+</head>
+
+<body class="main {% block body_class %}bg-transparent{% endblock body_class %}" id="top">
+    {% block body %}
+    {% endblock body %}
+    {% block body_js %}
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <!-- Moment.js -->
+    {% endblock body_js %}
+    {% block extra_body %}
+    {% endblock extra_body%}
+</body>
+
+</html>

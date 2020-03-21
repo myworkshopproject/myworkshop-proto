@@ -1,0 +1,207 @@
+{% extends "core/page.html" %}
+
+
+{% block section %}
+<section class="my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-1 col-12">
+                <div class="sticky pt-lg-5">
+                </div>
+            </div>
+            <div class="col-lg-10 col-12">
+                <div class="row mb-5">
+                    <div class="col">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">{{ _('Project details') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">{{ _('Forge') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">{{ _('Issues') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">{{ _('Forum') }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-12">
+                        {% if object.featured_image %}
+                        {% with image = object.featured_image %}
+                        {% include "core/elements/image_with_modal.html" %}
+                        {% endwith %}
+                        {% else %}
+                        <div class="image-crop image-crop-3-2">
+                            <div>
+                                <span class="text-{{ object.type.bootstrap4_color }}" style="font-size: 10rem;"><i class="{{ object.type.fontawesome5_class }}"></i></span>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-8 col-12">
+                        <h1>{{ object.title }}</h1>
+                        <span class="text-muted">{{ _('created at') }} {{ object.created_at|format_date(locale=lang.code, format='full') }}</span>
+                        <p class="lead">
+                            {{ object.short_description|to_markdown|safe }}
+                        </p>
+                    </div>
+                </div>
+                <div class="row my-5">
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <h2>{{ _('contributors') }}</h2>
+                        {% for projectcontributor in object.projectcontributor_set.all() %}
+                        {% with user=projectcontributor.contributor %}
+                        <div class="row my-3">
+                            <div class="col-3 my-auto">
+                                {% if user.photo %}
+                                <div class="image-crop image-crop-1-1">
+                                    <img class="image-crop rounded-circle" src="{{ user.photo.url }}" alt="{{ user.get_full_name() }}">
+                                </div>
+                                {% else %}
+                                <div class="image-crop image-crop-1-1">
+                                    <div>
+                                        <span class="text-danger" style="font-size: 2rem;"><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-9 my-auto">
+                                <a href="#" data-toggle="modal" data-target=".user-{{ user.username }}">
+                                    <span class="h5">{{ user.get_full_name() }}</span>
+                                </a>
+                                {% include "core/modals/user.html" %}
+                                <br>
+                                <span class="text-muted">{{ projectcontributor.get_role_display() }}</span>
+                                {% if object.is_owner(request.user) %}
+                                <a href="{{ projectcontributor.get_update_url() }}"><i class="fas fa-edit"></i></a>
+                                <a href="{{ projectcontributor.get_delete_url() }}"><i class="fas fa-times"></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endwith %}
+                        {% endfor %}
+                        {% if object.is_owner(request.user) %}
+                        <div class="row my-3">
+                            <div class="col-3 my-auto">
+                                <div class="image-crop image-crop-1-1">
+                                    <div>
+                                        <span class="text-danger" style="font-size: 2rem;"><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-9 my-auto">
+                                <a href="{{ url('core:project-contributor-create', kwargs={'slug': object.slug}) }}"><i class="fas fa-plus"></i> {{ _('Add') }}</a>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-12 my-md-0 my-3">
+                        <h2>{{ _('project details') }}</h2>
+                        <h3>{{ _('tags') }}</h3>
+                        <p>
+                            <a href="{{ object.type.get_absolute_url() }}" class="badge badge-pill badge-{{ object.type.bootstrap4_color }}"><i class="{{ object.type.fontawesome5_class }}"></i> {{ object.type }}</a>
+                            {% for tag in object.tags %}
+                            <a href="#" class="badge badge-pill badge-secondary">{{ tag }}</a>
+                            {% endfor %}
+                        </p>
+                        <h3>{{ _('License') }}</h3>
+                        <p>
+                            {% if object.license %}
+                            {{ _('This project is licensed')}} <a href="#" title="{{ object.get_license_display() }}">{{ object.license }}</a>.
+                            {% else %}
+                            <i class="fas fa-exclamation-triangle"></i> No license has been specified for the content of this project!
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <h2>{{ _('statistics') }}</h2>
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="far fa-eye"></i> {{ _('views') }}</span>
+                                <span class="badge badge-primary badge-pill">265</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-cogs"></i> {{ _('mades') }}</span>
+                                <span class="badge badge-primary badge-pill">7</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-thumbs-up"></i> {{ _('likes') }}</span>
+                                <span class="badge badge-primary badge-pill">65</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-comments"></i> {{ _('comments') }}</span>
+                                <span class="badge badge-primary badge-pill">32</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-code-branch"></i> {{ _('forks') }}</span>
+                                <span class="badge badge-primary badge-pill">3</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1 col-12 text-right">
+                {% if object.is_owner(request.user) %}
+                <div class="sticky pt-lg-5">
+                    <a href="{{ object.get_update_url() }}"><i class="fas fa-edit"></i> {{ _('edit') }}</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-1 col-12 d-none d-lg-block">
+                <div class="sticky pt-lg-5">
+                    <a href="#top" title="{{ _('top') }}"><i class="fas fa-chevron-up"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-10 col-12">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="text-center my-5">{{ _('publications') }}</h2>
+                        <div class="card-columns">
+                            {% for object in object.publications.all() %}
+                            {% include "core/cards/object.html" %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="text-center my-5">{{ _('your achievements') }}</h2>
+                        <div class="card-columns">
+                            {% for image in object.get_mades() %}
+                            {% include "core/cards/image.html" %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="text-center my-5">{{ _('related projects') }}</h2>
+                        <div class="card-columns">
+                            {% for object in object.get_related_projects() %}
+                            {% include "core/cards/object.html" %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1 col-12 text-right">
+                <div class="sticky pt-lg-5">
+                    {% if object.is_owner_or_editor(request.user) %}
+                    <a href="#"><i class="fas fa-plus"></i> {{ _('New') }}</a><br>
+                    <a href="#"><i class="fas fa-edit"></i> {{ _('edit') }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock section %}

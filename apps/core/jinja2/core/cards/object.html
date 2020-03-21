@@ -1,0 +1,45 @@
+<div class="card">
+    <a href="#" data-toggle="modal" data-target=".object-{{ object.id }}">
+        {% if object.featured_image %}
+        <div class="image-crop image-crop-3-2">
+            <img src="{{ object.featured_image.picture.url }}" class="card-img-top" alt="{{ object.featured_image.alt }}">
+        </div>
+        {% else %}
+        <div class="image-crop image-crop-3-2">
+            <div>
+                <span class="text-{{ object.type.bootstrap4_color }}" style="font-size: 7.5rem;"><i class="{{ object.type.fontawesome5_class }}"></i></span>
+            </div>
+        </div>
+        {% endif %}
+    </a>
+    {% include "core/modals/object.html" %}
+    <div class="card-body">
+        <h5 class="card-title">{{ object.title }}</h5>
+        <p class="card-text">{{ object.short_description|to_markdown|safe|truncate(150) }}</p>
+        <p class="card-text">
+            <small class="text-muted">
+                {{ object.created_at|format_date(locale=lang.code, format='full') }}
+                <br>
+                {% if object.contributors %}
+                {% for contributor in object.contributors.all() %}
+                <a href="{{ contributor.get_absolute_url() }}"><i class="fas fa-user"></i> {{ contributor }}</a><br>
+                {% endfor %}
+                {% else %}
+                <a href="{{ object.owner.get_absolute_url() }}"><i class="fas fa-user"></i> {{ object.owner }}</a><br>
+                {% endif %}
+                {% if object.license %}
+                <a href="#" title="{{ object.get_license_display() }}">{{ object.license }}</a>
+                {% endif %}
+            </small>
+        </p>
+    </div>
+    <div class="card-footer text-muted">
+        <a href="{{ object.type.get_absolute_url() }}" class="badge badge-pill badge-{{ object.type.bootstrap4_color }}"><i class="{{ object.type.fontawesome5_class }}"></i> {{ object.type }}</a>
+        {% for tag in object.tags %}
+        <a href="#" class="badge badge-pill badge-secondary">{{ tag }}</a>
+        {% endfor %}
+        {% if not object.is_public %}
+        <span class="badge badge-pill badge-danger">{{ _('private') }}</span>
+        {% endif %}
+    </div>
+</div>

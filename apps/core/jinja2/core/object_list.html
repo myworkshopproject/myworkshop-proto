@@ -1,0 +1,39 @@
+{% extends "core/page.html" %}
+
+{% block section %}
+<section class="my-5">
+    <div class="container">
+        <div class="row">
+            {% if type.featured_image %}
+            <div class="col-4">
+                {% with image = type.featured_image %}
+                {% include "core/elements/image_with_modal.html" %}
+                {% endwith %}
+            </div>
+            {% endif %}
+            <div class="col">
+                <div class="row">
+                    <div class="col my-auto">
+                        <h1><i class="{{ type.fontawesome5_class }}"></i> {{ type.title }}</h1>
+                    </div>
+                    <div class="col-auto text-right my-auto">
+                        {% if type.get_create_url %}
+                        <a class="btn btn-primary" href="{{ type.get_create_url() }}"><i class="fas fa-plus"></i> {{ _('New') }}</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <p class="lead">{{ type.short_description|to_markdown|safe }}</p>
+            </div>
+        </div>
+        <div class="row my-5">
+            <div class="col">
+                <div class="card-columns">
+                    {% for object in object_list %}
+                    {% include "core/cards/object.html" %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock section %}

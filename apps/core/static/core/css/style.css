@@ -1,3 +1,20 @@
+.main {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.sticky {
+    position: sticky;
+    top: 0;
+}
+
+.footer {
+    font-size: 90%;
+}
+
+
+/*
 .bd-placeholder-img {
     font-size: 1.125rem;
     text-anchor: middle;
@@ -21,6 +38,7 @@ main {
     padding-top: 2.0rem;
     padding-bottom: 2.5rem;
 }
+*/
 
 /*image and div cropping*/
 .image-crop-1-1 {
@@ -94,21 +112,21 @@ main {
 /*Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px) {
     .card-columns {
-        column-count: 2;
+        column-count: 1;
     }
 }
 
 /*Medium devices (tablets, 768px and up)*/
 @media (min-width: 768px) {
     .card-columns {
-        column-count: 3;
+        column-count: 2;
     }
 }
 
 /*Large devices (desktops, 992px and up)*/
 @media (min-width: 992px) {
     .card-columns {
-        column-count: 4;
+        column-count: 3;
     }
 }
 

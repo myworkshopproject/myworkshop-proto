@@ -1,4 +1,5 @@
 from babel import dates, numbers
+from crispy_forms.templatetags.crispy_forms_filters import as_crispy_form
 from datetime import datetime, timezone
 from django.conf import settings
 from django.contrib.messages import get_messages
@@ -6,14 +7,20 @@ from django.templatetags.static import static
 from django.urls import reverse
 from django.utils import translation
 from jinja2 import Environment
-from markdown import markdown
+from markdown2 import markdown
 from mimetypes import guess_type
 from core.models import Image, ProjectType, Publication, PublicationType
 from flatpages.models import FlatPage
 
+markdownExtra = {
+    "tables": True,
+    "break-on-newline": True,
+    "html-classes": {"table": "table table-striped"},
+}
+
 
 def to_markdown(value):
-    return markdown(value)
+    return markdown(value, extras=markdownExtra)
 
 
 def get_image(id):
@@ -126,6 +133,7 @@ def environment(**options):
             "url": reverse,
             "get_image": get_image,
             "get_publication": get_publication,
+            "as_crispy_form": as_crispy_form,
         }
     )
     env.install_gettext_translations(translation)

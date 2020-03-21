@@ -1,0 +1,71 @@
+{% extends "core/page.html" %}
+
+{% set root = object.get_root() %}
+{% set children = root.get_children() %}
+
+{% block section %}
+{% if object.template == object.REGULAR %}
+<section class="my-5">
+    <div class="container">
+        {% if children %}
+        <div class="row">
+            <div class="col-lg-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-light">
+                        {% for parent in object.get_ancestors() %}
+                        <li class="breadcrumb-item"><a href="{{ parent.get_absolute_url() }}">{{ parent.title }}</a></li>
+                        {% endfor %}
+                        <li class="breadcrumb-item active" aria-current="page">{{ object.title }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        {% endif %}
+        <div class="row">
+            {% if children %}
+            <div class="col-lg-3">
+                <div class="sticky">
+                    {# <span class="h3"><a href="{{ root.get_absolute_url() }}">{{ root.title }}</a></span> #}
+                    <span class="h4"><a href="{{ root.get_absolute_url() }}">Sommaire</a></span>
+                    <ul class="list-unstyled">
+                        {% for child in children recursive %}
+                        {% set children = child.get_children() %}
+                        <li>
+                            <a class="{{ 'font-weight-bold' if child == object }}" href="{{ url('flatpages:page-detail', kwargs={'slug':child.slug}) }}">{{ child.title }}</a>
+                            {% if children %}
+                            <ul>{{ loop(children) }}</ul>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+            <div class="col-lg-9 {{ 'offset-md-2' if not children }}">
+                <h1>{{ object.title }}</h1>
+                {% if object.featured_image %}
+                {% with image = object.featured_image %}
+                {% include "core/elements/image_with_modal.html" %}
+                {% endwith %}
+                {% endif %}
+                {% if object.short_description %}
+                <p class="lead">{{ object.short_description|to_markdown|safe }}</p>
+                {% endif %}
+                {% if object.body %}
+                <hr>
+                {{ object.body|safe }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% elif object.template == object.FULL_WIDTH %}
+{% if object.body %}
+{{ object.body|safe }}
+{% endif %}
+{% else %}{# object.template == object.FULL_PAGE #}
+{% if object.body %}
+{{ object.body|safe }}
+{% endif %}
+{% endif %}
+{% endblock section %}

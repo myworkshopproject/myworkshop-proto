@@ -1,0 +1,19 @@
+<div class="modal fade image-{{ image.id }}" tabindex="-1" role="dialog" aria-labelledby="image-{{ image.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ image.title }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% include "core/elements/image.html" %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a class="btn btn-primary" href="{{ image.get_absolute_url() }}">Detail</a>
+            </div>
+        </div>
+    </div>
+</div>

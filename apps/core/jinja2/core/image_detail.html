@@ -1,0 +1,55 @@
+{% extends "core/page.html" %}
+
+{% block section %}
+<section class="my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-12 mt-0">
+                {% include "core/elements/image_with_modal.html" %}
+            </div>
+            <div class="col-lg-4 col-md-12 mt-lg-0 mt-3">
+                <h2>{{ image.title }}</h2>
+                <p>id : {{ image.id }}</p>
+                <p>created_by : {{ image.created_by }}</p>
+                <p>created_at : {{ image.created_at|format_datetime(locale=lang.code) }}</p>
+                <p>changed_by : {{ image.changed_by }}</p>
+                <p>changed_at : {{ image.changed_at|format_datetime(locale=lang.code) }}</p>
+                <p>shooted_at : {{ image.shooted_at|format_datetime(locale=lang.code) }}</p>
+                <p>owner : {{ image.owner }}</p>
+                <p>is_public : {{ image.is_public }}</p>
+                <p>short_description : {{ image.short_description|to_markdown|safe }}</p>
+                <p>license : {{ image.license }}</p>
+                <p>alt : {{ image.alt }}</p>
+                <p>credit : © {{ image.credit }}</p>
+                <p>tags : {{ image.tags }}</p>
+            </div>
+        </div>
+        {% set exif = image.get_labeled_exif() %}
+        {% if exif %}
+        <div class="row">
+            <div class="col mt-3">
+                <h2>{{ _('EXIF') }}</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Key</th>
+                            <th scope="col">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for a, b in exif.items() %}
+                        <tr>
+                            <th scope="row">{{ loop.index }}</th>
+                            <td>{{ a }}</td>
+                            <td>{{ b }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock section %}

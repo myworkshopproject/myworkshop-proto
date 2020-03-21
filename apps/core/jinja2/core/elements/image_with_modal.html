@@ -1,0 +1,9 @@
+<figure class="figure w-100">
+    <a href="#" data-toggle="modal" data-target=".image-{{ image.id }}">
+        <img width="100%" src="{{ image.picture.url }}" class="figure-img img-fluid rounded" alt="{{ image.alt }}" title="{{ image.alt }}">
+    </a>
+    <figcaption class="figure-caption text-center">
+        {% include "core/elements/image_caption.html" %}
+    </figcaption>
+</figure>
+{% include "core/modals/image.html" %}

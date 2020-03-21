@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-xl navbar-light bg-light">
+    {% if request.site.workshop.logo %}
+    <div class="navbar-brand">
+        <img height="64" src="{{ request.site.workshop.logo.url }}" alt="logo">
+    </div>
+    {% endif %}
+    <a class="navbar-brand mr-4" href="{{ url('core:home') }}">
+        <span class="h4">{{ request.site.name }}</span><br>
+        <span class="text-muted h6">{{ request.site.workshop.tagline }}</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav mr-auto">
+            {% include 'core/nav/flatpage_list.html' %}
+            {% for project_type in project_types %}
+            {% if project_type.is_public %}
+            <li class="nav-item {{ 'active' if request.path == project_type.get_absolute_url() }}">
+                <a class="nav-link" href="{{ project_type.get_absolute_url() }}">{{ project_type }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            {% for publication_type in publication_types %}
+            {% if publication_type.is_public %}
+            <li class="nav-item {{ 'active' if request.path == publication_type.get_absolute_url() }}">
+                <a class="nav-link" href="{{ publication_type.get_absolute_url() }}">{{ publication_type }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            <li class="nav-item {{ 'active' if request.path == url('core:image-list') }}">
+                <a class="nav-link" href="{{ url('core:image-list') }}">{{ _('Image gallery') }}</a>
+            </li>
+            <li class="nav-item {{ 'active' if request.path == url('accounts:user-list') }}">
+                <a class="nav-link" href="{{ url('accounts:user-list') }}">{{ _('Users') }}</a>
+            </li>
+        </ul>
+        {% include 'core/nav/lang_select.html' %}
+        {% include 'core/nav/search.html' %}
+        {% include 'core/nav/login.html' %}
+    </div>
+</nav>

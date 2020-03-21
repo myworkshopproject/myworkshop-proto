@@ -1,0 +1,75 @@
+{% extends "core/page.html" %}
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+{% endblock extra_head %}
+
+{% block section %}
+<section class="my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div id='body_editor'></div>
+            </div>
+            <div class="col-12">
+                <form method="post">
+                    {{ csrf_input }}
+                    {{ form.as_p() }}
+                    <div style="display:none;">
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="{{ _('Update') }}">
+                    <a class="ml-2" href="{{ object.get_absolute_url() }}">{{ _('Cancel') }}</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock section %}
+
+{% block extra_body %}
+<script>
+    // Initialize the editor with a JSON schema
+    var editor = new JSONEditor(document.getElementById('body_editor'), {
+        ajax: false,
+        ajaxBase: '',
+        ajaxCredentials: false,
+        compact: false,
+        expand_height: false,
+        disable_array_add: false,
+        disable_array_delete: false,
+        disable_array_reorder: false,
+        enable_array_copy: false,
+        disable_array_delete_all_rows: true,
+        disable_array_delete_last_row: true,
+        collapsed: false,
+        disable_collapse: true,
+        disable_edit_json: true,
+        disable_properties: true,
+        array_controls_top: false,
+        form_name_root: 'root',
+        iconlib: 'fontawesome5',
+        remove_button_labels: false,
+        no_additional_properties: true,
+        remove_empty_properties: true,
+        refs: {},
+        required_by_default: false,
+        keep_oneof_values: true,
+        show_errors: 'interaction', // Valid values are 'interaction', 'change', 'always', and 'never'.
+        template: 'default',
+        theme: 'bootstrap4',
+        display_required_only: false,
+        show_opt_in: false,
+        prompt_before_delete: true,
+        object_layout: 'normal',
+        enum_source_value_auto_select: true,
+        startval: {{ object.meta | safe }},
+        schema: {{ object.type.meta_schema | safe }}
+    });
+
+    editor.on('change', () => {
+        document.getElementById('id_meta').value = JSON.stringify(editor.getValue());
+    });
+</script>
+{% endblock extra_body%}

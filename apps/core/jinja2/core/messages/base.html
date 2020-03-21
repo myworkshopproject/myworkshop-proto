@@ -1,0 +1,25 @@
+{% set messages = get_messages(request) %}
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 mx-auto align-middle">
+                {% for message in messages %}
+                {% include 'core/utils/message.html' %}
+                {% endfor %}
+                {% if request.user.is_authenticated %}
+                {% if not request.user.has_verified_emailaddress() %}
+                <div class="alert alert-info alert-dismissible fade show mt-3" role="alert">
+                    <i class="fas fa-info-circle"></i>
+                    {{ _("We have sent an e-mail to you for verification. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes.") }}
+                    <span class="float-md-right"><a href="{{ url('account_email') }}"><i class="fas fa-arrow-circle-right"></i> {{ _('Re-send Verification') }}</a></span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endif %}
+                {% else %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
