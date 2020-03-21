@@ -1,3 +1,4 @@
+{% if pages %}
 {% for page in pages %}
 {% set children = page.get_descendants() %}
 {% if children %}
@@ -16,3 +17,4 @@
 </li>
 {% endif %}
 {% endfor %}
+{% endif %}

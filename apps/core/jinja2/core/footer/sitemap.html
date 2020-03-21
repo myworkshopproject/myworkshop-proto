@@ -1,4 +1,5 @@
 <ul class="list-unstyled">
+    {% if pages %}
     {% for node in pages recursive %}
     {% set children = node.get_children() %}
     <li>
@@ -8,6 +9,7 @@
         {% endif %}
     </li>
     {% endfor %}
+    {% endif %}
     <li>
         <a href="{{ url('core:project-list') }}">{{ _('Projects') }}</a>
         <ul>
