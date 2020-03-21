@@ -21,7 +21,6 @@ urlpatterns = [
         views.ImageThumbnailView.as_view(),
         name="image-thumbnail",
     ),
-    path("labbook/", views.LabbookView.as_view(), name="labbook"),
     path(
         "publications/create/<slug:slug>/",
         views.PublicationCreateView.as_view(),
