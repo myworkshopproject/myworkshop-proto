@@ -55,7 +55,7 @@ class ProjectType(LogModelMixin, SlugModel, BaseModel):
 
     fontawesome5_class = models.CharField(
         max_length=100,
-        default="fas fa-question",
+        default="fas fa-cogs",
         verbose_name=_("Font Awesome 5 class"),
         help_text=_(
             "Used for icons. See <a href='https://fontawesome.com/'>fontawesome.com</a>."
@@ -162,8 +162,11 @@ class Project(LogModelMixin, SlugModel, BaseModel):
 
     # SAVE METHOD
     def save(self, *args, **kwargs):
-        super(Project, self).save(*args, **kwargs)
+        new_project = False
         if self._state.adding:
+            new_project = True
+        super(Project, self).save(*args, **kwargs)
+        if new_project:
             project_contributor = ProjectContributor(
                 project=self, contributor=self.owner, role=ProjectContributor.OWNER
             )

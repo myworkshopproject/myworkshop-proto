@@ -53,7 +53,7 @@ class PublicationType(LogModelMixin, SlugModel, BaseModel):
 
     fontawesome5_class = models.CharField(
         max_length=100,
-        default="fas fa-question",
+        default="fas fa-feather-alt",
         verbose_name=_("Font Awesome 5 class"),
         help_text=_(
             "Used for icons. See <a href='https://fontawesome.com/'>fontawesome.com</a>."
