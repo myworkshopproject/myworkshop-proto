@@ -196,7 +196,7 @@
                 <div class="sticky pt-lg-5">
                     {% if object.is_owner_or_editor(request.user) %}
                     <a href="#"><i class="fas fa-plus"></i> {{ _('New') }}</a><br>
-                    <a href="#"><i class="fas fa-edit"></i> {{ _('edit') }}</a>
+                    <a href="{{ object.get_publications_update_url() }}"><i class="fas fa-edit"></i> {{ _('edit') }}</a>
                     {% endif %}
                 </div>
             </div>

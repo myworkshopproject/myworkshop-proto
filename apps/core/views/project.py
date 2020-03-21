@@ -92,6 +92,30 @@ class ProjectUpdateView(UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
 
+class ProjectPublicationsUpdateView(UpdateView):
+    model = Project
+    fields = [
+        # "type",
+        # "title",
+        # "slug",
+        # "short_description",
+        # "featured_image",
+        # "license",
+        # "tags",
+        # "is_public",
+        # "contributors",
+        "publications"
+    ]
+    template_name = "core/forms/object_update.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        project = self.get_object()
+        # allow only OWNERS and EDITORS to access this view
+        if not project.is_owner_or_editor(request.user):
+            return redirect(project.get_absolute_url())
+        return super().dispatch(request, *args, **kwargs)
+
+
 class ProjectContributorCreateView(LoginRequiredMixin, CreateView):
     model = ProjectContributor
     fields = ["contributor", "role"]

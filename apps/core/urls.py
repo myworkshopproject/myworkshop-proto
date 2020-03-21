@@ -21,6 +21,7 @@ urlpatterns = [
         views.ImageThumbnailView.as_view(),
         name="image-thumbnail",
     ),
+    path("labbook/", views.LabbookView.as_view(), name="labbook"),
     path(
         "publications/create/<slug:slug>/",
         views.PublicationCreateView.as_view(),
@@ -81,6 +82,11 @@ urlpatterns = [
         "projects/<slug:slug>/contributors/delete/<uuid:pk>/",
         views.ProjectContributorDeleteView.as_view(),
         name="project-contributor-delete",
+    ),
+    path(
+        "projects/<slug:slug>/publications/update/",
+        views.ProjectPublicationsUpdateView.as_view(),
+        name="project-publications-update",
     ),
     path("projects/", views.ProjectListView.as_view(), name="project-list"),
     path(

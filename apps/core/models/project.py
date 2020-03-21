@@ -177,18 +177,14 @@ class Project(LogModelMixin, SlugModel, BaseModel):
     def get_update_url(self):
         return reverse("core:project-update", kwargs={"slug": self.slug})
 
-    def get_publications(self):
-        from core.models import Publication
-
-        return Publication.objects.all()
+    def get_publications_update_url(self):
+        return reverse("core:project-publications-update", kwargs={"slug": self.slug})
 
     def get_mades(self):
-        from core.models import Image
-
-        return Image.objects.all()
+        return list()
 
     def get_related_projects(self):
-        return Project.objects.all()
+        return list()
 
     def is_owner(self, user):
         if user.is_authenticated:
