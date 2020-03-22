@@ -1,7 +1,9 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 from django.utils.translation import gettext, gettext_lazy as _
+from model_utils.fields import MonitorField
 from core.models import BaseModel, LogModelMixin, SlugModel
 
 
@@ -104,9 +106,60 @@ class PublicationType(LogModelMixin, SlugModel, BaseModel):
         return reverse("core:publication-create", kwargs={"slug": self.slug})
 
 
+class PublicPublicationManager(models.Manager):
+    def get_queryset(self):
+        return (
+            super()
+            .get_queryset()
+            .filter(
+                Q(visibility=Publication.PUBLIC)
+                & (Q(status=Publication.PUBLISH) | Q(status=Publication.ARCHIVE))
+            )
+        )
+
+
+class MembersPublicationManager(models.Manager):
+    def get_queryset(self):
+        return (
+            super()
+            .get_queryset()
+            .filter(
+                (
+                    Q(visibility=Publication.PUBLIC)
+                    | Q(visibility=Publication.MEMBERS_ONLY)
+                )
+                & (Q(status=Publication.PUBLISH) | Q(status=Publication.ARCHIVE))
+            )
+        )
+
+
 class Publication(LogModelMixin, SlugModel, BaseModel):
 
     # CHOICES
+
+    DRAFT = "DR"
+    PUBLISH = "PU"
+    ARCHIVE = "AR"
+    TRASH = "TR"
+
+    STATUS_CHOICES = [
+        (DRAFT, _("draft")),
+        (PUBLISH, _("publish")),
+        (ARCHIVE, _("archive")),
+        (TRASH, _("trash")),
+    ]
+
+    PENDING = "PE"
+    PUBLIC = "PU"
+    MEMBERS_ONLY = "ME"
+    BLOCKED = "BL"
+
+    VISIBILITY_CHOICES = [
+        (PENDING, _("pending")),
+        (PUBLIC, _("public")),
+        (MEMBERS_ONLY, _("members only")),
+        (BLOCKED, _("blocked")),
+    ]
 
     # DATABASE FIELDS
 
@@ -131,13 +184,27 @@ class Publication(LogModelMixin, SlugModel, BaseModel):
 
     body = JSONField(default=dict)
 
-    # is_published: BooleanField
-    # published_at: MonitorField(monitor="is_published",when=[True])
+    status = models.CharField(
+        max_length=2, choices=STATUS_CHOICES, default=DRAFT, verbose_name=_("status")
+    )
+
+    visibility = models.CharField(
+        max_length=2,
+        choices=VISIBILITY_CHOICES,
+        default=PENDING,
+        verbose_name=_("visibility"),
+    )
+
+    published_at = MonitorField(monitor="status", when=[PUBLISH])
+
     # version: ?
 
     ## optional fields
 
     # MANAGERS
+    objects = models.Manager()  # The default manager.
+    public_objects = PublicPublicationManager()
+    members_objects = MembersPublicationManager()
 
     # META CLASS
     class Meta:
@@ -166,6 +233,37 @@ class Publication(LogModelMixin, SlugModel, BaseModel):
         return reverse("core:publication-update-body", kwargs={"slug": self.slug})
 
     # OTHER METHODS
+    def is_awaiting_moderation(self):
+        if self.status == self.PUBLISH and self.visibility == self.PENDING:
+            return True
+        else:
+            return False
+
+    is_awaiting_moderation.boolean = True
+
+    def get_statuses(self):
+        statuses = []
+        if self.status == self.DRAFT:
+            statuses.append({"name": "draft", "color": "warning"})
+
+        if self.status == self.PUBLISH or self.status == self.ARCHIVE:
+            if self.visibility == self.PENDING:
+                statuses.append({"name": "pending", "color": "info"})
+            if self.visibility == self.MEMBERS_ONLY:
+                statuses.append({"name": "restricted", "color": "dark"})
+            if self.visibility == self.PUBLIC:
+                statuses.append({"name": "public", "color": "success"})
+
+        if self.status == self.ARCHIVE:
+            statuses.append({"name": "archived", "color": "secondary"})
+
+        if self.status == self.TRASH:
+            statuses.append({"name": "deleted", "color": "dark"})
+
+        if self.visibility == self.BLOCKED:
+            statuses.append({"name": "blocked", "color": "danger"})
+
+        return statuses
 
 
 """

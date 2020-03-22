@@ -16,7 +16,6 @@
                 <p>changed_at : {{ image.changed_at|format_datetime(locale=lang.code) }}</p>
                 <p>shooted_at : {{ image.shooted_at|format_datetime(locale=lang.code) }}</p>
                 <p>owner : {{ image.owner }}</p>
-                <p>is_public : {{ image.is_public }}</p>
                 <p>short_description : {{ image.short_description|to_markdown|safe }}</p>
                 <p>license : {{ image.license }}</p>
                 <p>alt : {{ image.alt }}</p>

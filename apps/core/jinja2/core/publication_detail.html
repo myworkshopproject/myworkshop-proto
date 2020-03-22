@@ -44,7 +44,7 @@
                     {% endif %}
                     <div class="col my-auto">
                         <span class="h5"><a href="{{ object.owner.get_absolute_url() }}">{{ object.owner }}</a></span><br>
-                        <span class="text-muted">{{ object.created_at|format_date(locale=lang.code, format='full') }}</span>
+                        <span class="text-muted">{{ object.published_at|format_date(locale=lang.code, format='full') }}</span>
                     </div>
                     <div class="col-md-auto my-auto h5">
                         <a class="text-dark mr-2" href="#"><i class="fab fa-twitter"></i></a>
@@ -207,6 +207,11 @@
                     {% for tag in object.tags %}
                     <a href="#" class="badge badge-pill badge-secondary">{{ tag }}</a>
                     {% endfor %}
+                    {% if object.get_statuses and request.user.is_authenticated %}
+                    {% for status in object.get_statuses() %}
+                    <span class="badge badge-pill badge-{{ status.color }}">{{ status.name }}</span>
+                    {% endfor %}
+                    {% endif %}
                 </p>
                 <p>
                     {% if object.license %}

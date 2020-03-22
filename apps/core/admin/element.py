@@ -9,8 +9,8 @@ from core.models import Image
 class ImageAdmin(
     SaveOwnerModelMixin, LogAdminMixin, TranslationAdmin, SimpleHistoryAdmin
 ):
-    list_display = ("title", "alt", "owner", "is_public", "shooted_at", "license")
-    list_filter = ("is_public", "owner")
+    list_display = ("title", "alt", "owner", "shooted_at", "license", "visibility")
+    list_filter = ("owner", "visibility")
 
     readonly_fields = ["id", "owner", "exif", "get_labeled_exif", "shooted_at"]
 
@@ -21,7 +21,6 @@ class ImageAdmin(
             {
                 "fields": (
                     "title",
-                    "is_public",
                     "short_description",
                     # "featured_image",
                     "license",
@@ -29,7 +28,7 @@ class ImageAdmin(
                 )
             },
         ),
-        (_("Mandatory"), {"fields": ("picture", "alt")}),
+        (_("Mandatory"), {"fields": ("picture", "alt", "visibility")}),
         (_("Optional"), {"fields": ("credit",)}),
         (_("Calculated"), {"fields": ("exif", "get_labeled_exif", "shooted_at")}),
     ]

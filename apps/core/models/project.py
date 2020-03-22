@@ -1,6 +1,7 @@
 import uuid
 from django.conf import settings
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 from django.utils.translation import gettext, gettext_lazy as _
 from core.models import BaseModel, LogModelMixin, SlugModel
@@ -95,9 +96,57 @@ class ProjectType(LogModelMixin, SlugModel, BaseModel):
         return reverse("core:project-create", kwargs={"slug": self.slug})
 
 
+class PublicProjectManager(models.Manager):
+    def get_queryset(self):
+        return (
+            super()
+            .get_queryset()
+            .filter(
+                Q(visibility=Project.PUBLIC)
+                & (Q(status=Project.PUBLISH) | Q(status=Project.ARCHIVE))
+            )
+        )
+
+
+class MembersProjectManager(models.Manager):
+    def get_queryset(self):
+        return (
+            super()
+            .get_queryset()
+            .filter(
+                (Q(visibility=Project.PUBLIC) | Q(visibility=Project.MEMBERS_ONLY))
+                & (Q(status=Project.PUBLISH) | Q(status=Project.ARCHIVE))
+            )
+        )
+
+
 class Project(LogModelMixin, SlugModel, BaseModel):
 
     # CHOICES
+
+    DRAFT = "DR"
+    PUBLISH = "PU"
+    ARCHIVE = "AR"
+    TRASH = "TR"
+
+    STATUS_CHOICES = [
+        (DRAFT, _("draft")),
+        (PUBLISH, _("publish")),
+        (ARCHIVE, _("archive")),
+        (TRASH, _("trash")),
+    ]
+
+    PENDING = "PE"
+    PUBLIC = "PU"
+    MEMBERS_ONLY = "ME"
+    BLOCKED = "BL"
+
+    VISIBILITY_CHOICES = [
+        (PENDING, _("pending")),
+        (PUBLIC, _("public")),
+        (MEMBERS_ONLY, _("members only")),
+        (BLOCKED, _("blocked")),
+    ]
 
     # DATABASE FIELDS
 
@@ -118,7 +167,17 @@ class Project(LogModelMixin, SlugModel, BaseModel):
         help_text=_("?"),
     )
 
-    # is_published: BooleanField
+    status = models.CharField(
+        max_length=2, choices=STATUS_CHOICES, default=DRAFT, verbose_name=_("status")
+    )
+
+    visibility = models.CharField(
+        max_length=2,
+        choices=VISIBILITY_CHOICES,
+        default=PENDING,
+        verbose_name=_("visibility"),
+    )
+
     # is_pinned: BooleanField
 
     ## optional fields
@@ -150,6 +209,9 @@ class Project(LogModelMixin, SlugModel, BaseModel):
     # are_comments_allowed ?
 
     # MANAGERS
+    objects = models.Manager()  # The default manager.
+    public_objects = PublicProjectManager()
+    members_objects = MembersProjectManager()
 
     # META CLASS
     class Meta:
@@ -215,6 +277,38 @@ class Project(LogModelMixin, SlugModel, BaseModel):
             except:
                 return False
         return False
+
+    def is_awaiting_moderation(self):
+        if self.status == self.PUBLISH and self.visibility == self.PENDING:
+            return True
+        else:
+            return False
+
+    is_awaiting_moderation.boolean = True
+
+    def get_statuses(self):
+        statuses = []
+        if self.status == self.DRAFT:
+            statuses.append({"name": "draft", "color": "warning"})
+
+        if self.status == self.PUBLISH or self.status == self.ARCHIVE:
+            if self.visibility == self.PENDING:
+                statuses.append({"name": "pending", "color": "info"})
+            if self.visibility == self.MEMBERS_ONLY:
+                statuses.append({"name": "restricted", "color": "dark"})
+            if self.visibility == self.PUBLIC:
+                statuses.append({"name": "public", "color": "success"})
+
+        if self.status == self.ARCHIVE:
+            statuses.append({"name": "archived", "color": "secondary"})
+
+        if self.status == self.TRASH:
+            statuses.append({"name": "deleted", "color": "dark"})
+
+        if self.visibility == self.BLOCKED:
+            statuses.append({"name": "blocked", "color": "danger"})
+
+        return statuses
 
 
 class ProjectContributor(LogModelMixin, models.Model):

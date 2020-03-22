@@ -29,7 +29,6 @@ class Workshop(LogModelMixin, BaseModel):
     slug = None  # no need to use this field in this model
     featured_image = None  # no need to use this field in this model
     license = None  # no need to use this field in this model
-    is_public = None  # no need to use this field in this model
 
     ## automatic fields
 

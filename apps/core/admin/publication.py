@@ -19,7 +19,7 @@ class PublicationTypeAdmin(
     TranslationAdmin,
     SimpleHistoryAdmin,
 ):
-    list_display = ("title", "is_public", "has_steps")
+    list_display = ("title", "has_steps")
     readonly_fields = []
     fieldsets = [
         (
@@ -47,10 +47,24 @@ class PublicationAdmin(
     TranslationAdmin,
     SimpleHistoryAdmin,
 ):
-    list_display = ("title", "slug", "changed_at", "is_public", "type", "owner")
-    list_filter = ("is_public", "type", "owner")
+    list_display = (
+        "title",
+        "slug",
+        "changed_at",
+        "type",
+        "status",
+        "visibility",
+        "is_awaiting_moderation",
+        "owner",
+    )
+    list_filter = ("type", "status", "visibility", "owner")
     readonly_fields = []
-    fieldsets = [(_("Mandatory"), {"fields": ("type", "body")})]
+    fieldsets = [
+        (
+            _("Mandatory"),
+            {"fields": ("type", "status", "visibility", "body", "published_at")},
+        )
+    ]
 
 
 admin.site.register(Publication, PublicationAdmin)

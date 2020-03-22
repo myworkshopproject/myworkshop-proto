@@ -22,6 +22,18 @@ class FlatPage(LogModelMixin, MPTTModel, SlugModel, BaseModel):
         (FULL_PAGE, _("Full page")),
     ]
 
+    DRAFT = "DR"
+    PUBLIC = "PU"
+    MEMBERS_ONLY = "ME"
+    TRASH = "TR"
+
+    VISIBILITY_CHOICES = [
+        (DRAFT, _("draft")),
+        (PUBLIC, _("public")),
+        (MEMBERS_ONLY, _("members only")),
+        (TRASH, _("trash")),
+    ]
+
     # DATABASE FIELDS
 
     ## BaseModel fields replaced
@@ -39,6 +51,13 @@ class FlatPage(LogModelMixin, MPTTModel, SlugModel, BaseModel):
         choices=FLATPAGE_TEMPLATE_CHOICES,
         default=REGULAR,
         verbose_name=_("template"),
+    )
+
+    visibility = models.CharField(
+        max_length=2,
+        choices=VISIBILITY_CHOICES,
+        default=DRAFT,
+        verbose_name=_("visibility"),
     )
 
     ## optional fields

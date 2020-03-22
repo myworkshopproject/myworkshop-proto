@@ -8,14 +8,11 @@
             {% include "core/elements/image_caption.html" %}
         </p>
     </div>
-    {% if image.tags or not image.is_public %}
+    {% if image.tags %}
     <div class="card-footer text-muted">
         {% for tag in image.tags %}
         <a href="#" class="badge badge-pill badge-secondary">{{ tag }}</a>
         {% endfor %}
-        {% if not image.is_public %}
-        <span class="badge badge-pill badge-danger">{{ _('private') }}</span>
-        {% endif %}
     </div>
     {% endif %}
 </div>

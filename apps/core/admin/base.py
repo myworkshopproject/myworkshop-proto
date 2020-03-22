@@ -17,7 +17,6 @@ class BaseAdminMixin(object):
             {
                 "fields": (
                     "title",
-                    "is_public",
                     "short_description",
                     "featured_image",
                     "license",

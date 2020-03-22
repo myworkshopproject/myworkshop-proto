@@ -20,7 +20,10 @@ class ProjectListByTypeView(ListView):
 
     def get_queryset(self):
         self.type = get_object_or_404(ProjectType, slug=self.kwargs["type"])
-        return Project.objects.filter(type=self.type)
+        if self.request.user.is_authenticated:
+            return Project.members_objects.filter(type=self.type)
+        else:
+            return Project.public_objects.filter(type=self.type)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -31,6 +34,12 @@ class ProjectListByTypeView(ListView):
 class ProjectListView(ListView):
     model = Project
     template_name = "core/object_list.html"
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Project.members_objects.all()
+        else:
+            return Project.public_objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -45,12 +54,13 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
     model = Project
     fields = [
         # "type",
+        # "status",
+        # "visibility",
         "title",
         "short_description",
         # "featured_image",
         "license",
         "tags",
-        "is_public",
         # "slug",
         # "contributors",
         # "publications",
@@ -72,13 +82,14 @@ class ProjectUpdateView(UpdateView):
     model = Project
     fields = [
         # "type",
+        "status",
+        # "visibility",
         "title",
         "slug",
         "short_description",
         "featured_image",
         "license",
         "tags",
-        "is_public",
         # "contributors",
         # "publications",
     ]
@@ -94,18 +105,7 @@ class ProjectUpdateView(UpdateView):
 
 class ProjectPublicationsUpdateView(UpdateView):
     model = Project
-    fields = [
-        # "type",
-        # "title",
-        # "slug",
-        # "short_description",
-        # "featured_image",
-        # "license",
-        # "tags",
-        # "is_public",
-        # "contributors",
-        "publications"
-    ]
+    fields = ["publications"]
     template_name = "core/forms/object_update.html"
 
     def dispatch(self, request, *args, **kwargs):

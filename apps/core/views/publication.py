@@ -17,7 +17,10 @@ class PublicationListByTypeView(ListView):
 
     def get_queryset(self):
         self.type = get_object_or_404(PublicationType, slug=self.kwargs["type"])
-        return Publication.objects.filter(type=self.type)
+        if self.request.user.is_authenticated:
+            return Publication.members_objects.filter(type=self.type)
+        else:
+            return Publication.public_objects.filter(type=self.type)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -28,6 +31,12 @@ class PublicationListByTypeView(ListView):
 class PublicationListView(ListView):
     model = Publication
     template_name = "core/object_list.html"
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Publication.members_objects.all()
+        else:
+            return Publication.public_objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -42,12 +51,13 @@ class PublicationCreateView(LoginRequiredMixin, CreateView):
     model = Publication
     fields = [
         # "type",
+        # "status",
+        # "visibility",
         "title",
         "short_description",
         # "featured_image",
         "license",
         "tags",
-        "is_public",
         # "slug",
         # "body",
     ]
@@ -68,13 +78,14 @@ class PublicationUpdateView(UpdateView):
     model = Publication
     fields = [
         # "type",
+        "status",
+        # "visibility",
         "title",
         "slug",
         "short_description",
         "featured_image",
         "license",
         "tags",
-        "is_public",
         # "body",
     ]
     template_name = "core/forms/object_update.html"

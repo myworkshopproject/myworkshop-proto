@@ -96,6 +96,12 @@ class CustomUser(AbstractUser):
     def get_absolute_url(self):
         return reverse("accounts:user-detail", kwargs={"pk": self.username})
 
+    def get_projects_url(self):
+        return reverse("accounts:user-project-list", kwargs={"pk": self.username})
+
+    def get_publications_url(self):
+        return reverse("accounts:user-publication-list", kwargs={"pk": self.username})
+
     # OTHER METHODS
     def get_full_name(self):
         if self.first_name:

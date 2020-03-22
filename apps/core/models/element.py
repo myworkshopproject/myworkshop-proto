@@ -56,6 +56,16 @@ class Image(LogModelMixin, BaseModel):
 
     # CHOICES
 
+    PENDING = "PE"
+    PUBLIC = "PU"
+    BLOCKED = "BL"
+
+    VISIBILITY_CHOICES = [
+        (PENDING, _("pending")),
+        (PUBLIC, _("public")),
+        (BLOCKED, _("blocked")),
+    ]
+
     # DATABASE FIELDS
 
     ## BaseModel fields replaced
@@ -86,6 +96,13 @@ class Image(LogModelMixin, BaseModel):
             "The main purpose of the alternate text is to improve accessibility by enabling screen readers to read it out for visually impaired users."
         ),
     )  # [i18n]
+
+    visibility = models.CharField(
+        max_length=2,
+        choices=VISIBILITY_CHOICES,
+        default=PUBLIC,
+        verbose_name=_("visibility"),
+    )
 
     ## optional fields
 
@@ -139,7 +156,6 @@ class Note(LogModelMixin, BaseModel):
     # changed_at -> OK
     # owner -> OK
     # title = None  # no need to use this field in this model
-    # is_public -> OK
     # short_description -> ???
     # featured_image = None  # no need to use this field in this model
     # license = None  # no need to use this field in this model

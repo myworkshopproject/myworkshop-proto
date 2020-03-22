@@ -24,7 +24,7 @@ class ProjectTypeAdmin(
     TranslationAdmin,
     SimpleHistoryAdmin,
 ):
-    list_display = ("title", "is_public")
+    list_display = ("title",)
     readonly_fields = []
     fieldsets = [
         (_("Mandatory"), {"fields": ("bootstrap4_color", "fontawesome5_class")})
@@ -42,10 +42,19 @@ class ProjectAdmin(
     TranslationAdmin,
     SimpleHistoryAdmin,
 ):
-    list_display = ("title", "slug", "changed_at", "is_public", "type", "owner")
-    list_filter = ("is_public", "type", "owner")
+    list_display = (
+        "title",
+        "slug",
+        "changed_at",
+        "type",
+        "status",
+        "visibility",
+        "is_awaiting_moderation",
+        "owner",
+    )
+    list_filter = ("type", "status", "visibility", "owner")
     readonly_fields = []
-    fieldsets = [(_("Mandatory"), {"fields": ("type",)})]
+    fieldsets = [(_("Mandatory"), {"fields": ("type", "status", "visibility")})]
 
     inlines = [ProjectContributorInline]
 

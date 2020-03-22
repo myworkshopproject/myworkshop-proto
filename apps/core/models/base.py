@@ -119,14 +119,6 @@ class BaseModel(models.Model):
         max_length=settings.MYWORKSHOP_TITLE_LENGHT, verbose_name=_("title")
     )  # [i18n]
 
-    is_public = models.BooleanField(
-        default=True,
-        verbose_name=_("is this element public?"),
-        help_text=_(
-            "If this object is public, it will be visible and usable to anyone on this website."
-        ),
-    )
-
     # is_pinned
 
     # enable_comments
@@ -144,7 +136,6 @@ class BaseModel(models.Model):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,  # if the featured_image is deleted, do not delete the BaseModel!
-        limit_choices_to={"is_public": True},  # to-do : implement {"is_owner": True}
         related_name="%(app_label)s_%(class)ss_as_featured_image",
         related_query_name="%(app_label)s_%(class)s_as_featured_image",
         verbose_name=_("featured image"),

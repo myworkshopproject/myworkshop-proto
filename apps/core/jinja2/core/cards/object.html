@@ -18,7 +18,11 @@
         <p class="card-text">{{ object.short_description|to_markdown|safe|truncate(150) }}</p>
         <p class="card-text">
             <small class="text-muted">
+                {% if object.published_at %}
+                {{ object.published_at|format_date(locale=lang.code, format='full') }}
+                {% else %}
                 {{ object.created_at|format_date(locale=lang.code, format='full') }}
+                {% endif %}
                 <br>
                 {% if object.contributors %}
                 {% for contributor in object.contributors.all() %}
@@ -38,8 +42,10 @@
         {% for tag in object.tags %}
         <a href="#" class="badge badge-pill badge-secondary">{{ tag }}</a>
         {% endfor %}
-        {% if not object.is_public %}
-        <span class="badge badge-pill badge-danger">{{ _('private') }}</span>
+        {% if object.get_statuses and request.user.is_authenticated %}
+        {% for status in object.get_statuses() %}
+        <span class="badge badge-pill badge-{{ status.color }}">{{ status.name }}</span>
+        {% endfor %}
         {% endif %}
     </div>
 </div>

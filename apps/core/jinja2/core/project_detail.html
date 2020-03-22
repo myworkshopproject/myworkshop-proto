@@ -108,6 +108,11 @@
                             {% for tag in object.tags %}
                             <a href="#" class="badge badge-pill badge-secondary">{{ tag }}</a>
                             {% endfor %}
+                            {% if object.get_statuses and request.user.is_authenticated %}
+                            {% for status in object.get_statuses() %}
+                            <span class="badge badge-pill badge-{{ status.color }}">{{ status.name }}</span>
+                            {% endfor %}
+                            {% endif %}
                         </p>
                         <h3>{{ _('License') }}</h3>
                         <p>
