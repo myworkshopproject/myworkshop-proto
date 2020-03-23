@@ -10,7 +10,8 @@
                 <p class="lead text-primary">{{ request.site.workshop.short_description|to_markdown|safe }}</p>
             </div>
         </div>
-        <hr>
+        <hr class="mb-5">
+        <h2 class="h1 text-center">{{ _('Projects') }}</h2>
         <div class="row justify-content-center align-items-center text-center">
             {% for project_type in project_types %}
             <div class="col-lg-3 col-md-4 col-sm-6 col-8">
@@ -35,7 +36,8 @@
                 </div>
             </div>
         </div>
-        <hr class="mt-5">
+        <hr class="my-5">
+        <h2 class="h1 text-center">{{ _('Publications') }}</h2>
         <div class="row justify-content-center align-items-center text-center">
             {% for publication_type in publication_types %}
             <div class="col-lg-3 col-md-4 col-sm-6 col-8">
