@@ -9,7 +9,7 @@
     {% if image.license %}
         © {{ image.shooted_at.year }}
         {% if image.credit %}
-            {{ image.credit }}
+            {{ image.credit|safe }}
         {% else %}
             <a href="{{ image.owner.get_absolute_url() }}">{{ image.owner.get_full_name() }}</a>
         {% endif %}

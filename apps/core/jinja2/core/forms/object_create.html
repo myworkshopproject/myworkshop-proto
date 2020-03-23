@@ -6,7 +6,7 @@
         <div class="row justify-content-center">
             <div class="col col-lg-8">
                 <h1>{{ _('Create') }}</h1>
-                <form method="post">
+                <form method="post"{% if enctype %} enctype="{{ enctype }}"{% endif %}>
                     {{ csrf_input }}
                     {{ as_crispy_form(form) }}
                     <input class="btn btn-primary" type="submit" value="{{ _('Create') }}">

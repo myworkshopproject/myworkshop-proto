@@ -20,6 +20,9 @@
                         {% if type.get_create_url %}
                         <a class="btn btn-primary" href="{{ type.get_create_url() }}"><i class="fas fa-plus"></i> {{ _('New') }}</a>
                         {% endif %}
+                        {% if image_list %}
+                        <a class="btn btn-primary" href="{{ url('core:image-create') }}"><i class="fas fa-plus"></i> {{ _('New') }}</a>
+                        {% endif %}
                     </div>
                 </div>
                 <p class="lead">{{ type.short_description }}</p>

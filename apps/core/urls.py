@@ -15,12 +15,17 @@ urlpatterns = [
     path("favicon.ico", favicon_view, name="favicon"),
     path("i18n/", include("django.conf.urls.i18n")),
     path("images/", views.ImageListView.as_view(), name="image-list"),
+    path("images/create/", views.ImageCreateView.as_view(), name="image-create"),
     path("images/<uuid:pk>/", views.ImageDetailView.as_view(), name="image-detail"),
+    path(
+        "images/<uuid:pk>/update/", views.ImageUpdateView.as_view(), name="image-update"
+    ),
     path(
         "images/<uuid:pk>/thumbnail/",
         views.ImageThumbnailView.as_view(),
         name="image-thumbnail",
     ),
+    # path("labbook/", views.LabbookView.as_view(), name="labbook"),
     path(
         "publications/create/<slug:slug>/",
         views.PublicationCreateView.as_view(),

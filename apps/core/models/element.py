@@ -48,6 +48,18 @@ def get_date_time_original(exif, default):
     return date_time_original
 
 
+def get_copyright(exif, default):
+    if default:
+        copyright = default
+    else:
+        copyright = ""
+
+    if 33432 in exif:  # EXIF Copyright
+        copyright = str(exif[33432])
+
+    return copyright
+
+
 def images_file_name(instance, filename):
     return "/".join(["images", str(uuid.uuid4()), filename])
 
@@ -70,7 +82,6 @@ class Image(LogModelMixin, BaseModel):
 
     ## BaseModel fields replaced
 
-    # title = None  # no need to use this field in this model
     featured_image = None  # avoid self-referencing of this model
 
     ## automatic fields
@@ -82,7 +93,10 @@ class Image(LogModelMixin, BaseModel):
     exif = models.TextField(blank=True, verbose_name=_("EXIF"), editable=False)
 
     shooted_at = models.DateTimeField(
-        blank=True, null=True, verbose_name=_("shooting_date"), editable=False
+        blank=True,
+        null=True,
+        verbose_name=_("shooting_date"),
+        # editable=False
     )
 
     ## mandatory fields
@@ -127,16 +141,28 @@ class Image(LogModelMixin, BaseModel):
 
     # SAVE METHOD
     def save(self, *args, **kwargs):
-        exif = get_exif(self.picture)
-        self.exif = str(exif)
-        self.shooted_at = get_date_time_original(exif, self.created_at)
+        if self._state.adding:
+            exif = get_exif(self.picture)
+            self.exif = str(exif)
+            self.shooted_at = get_date_time_original(exif, self.created_at)
+            self.credit = get_copyright(exif, self.credit)
         super(Image, self).save(*args, **kwargs)
 
     # ABSOLUTE URL METHOD
     def get_absolute_url(self):
         return reverse("core:image-detail", kwargs={"pk": self.pk})
 
+    def get_update_url(self):
+        return reverse("core:image-update", kwargs={"pk": self.pk})
+
+    def get_delete_url(self):
+        # return reverse("core:image-delete", kwargs={"slug": self.slug})
+        return reverse("core:image-detail", kwargs={"pk": self.pk})
+
     # OTHER METHODS
+    def get_create_url(self):
+        return reverse("core:image-create")
+
     def get_labeled_exif(self):
         # return get_labeled_exif(self.exif)
         return get_labeled_exif(get_exif(self.picture))

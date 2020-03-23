@@ -1,11 +1,13 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.utils.translation import gettext, gettext_lazy as _
 from django.views import View
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.list import ListView
-from core.models import Image
-from PIL import Image as Img
 from io import BytesIO
+from PIL import Image as Img
+from core.models import Image
 
 
 class ImageThumbnailView(View):
@@ -44,3 +46,44 @@ class ImageListView(ListView):
             "short_description": _("All images"),
         }
         return context
+
+
+class ImageCreateView(LoginRequiredMixin, CreateView):
+    model = Image
+    fields = [
+        "picture",
+        "title",
+        "alt",
+        "credit",
+        "license",
+        "tags",
+        "short_description",
+        # "exif",
+        # "shooted_at",
+        # "visibility",
+    ]
+    template_name = "core/forms/object_create.html"
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["enctype"] = "multipart/form-data"
+        return context
+
+
+class ImageUpdateView(UpdateView):
+    model = Image
+    fields = [
+        # "picture",
+        "title",
+        "alt",
+        "credit",
+        "license",
+        "tags",
+        "shooted_at",
+        "short_description",
+    ]
+    template_name = "core/forms/object_update.html"
