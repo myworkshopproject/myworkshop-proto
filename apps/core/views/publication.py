@@ -42,6 +42,7 @@ class PublicationListView(ListView):
         context = super().get_context_data(**kwargs)
         context["type"] = {
             "title": _("All publications"),
+            "fontawesome5_class": "fas fa-feather-alt",
             "short_description": _("All publications"),
         }
         return context

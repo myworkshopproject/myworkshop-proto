@@ -28,9 +28,15 @@
         <div class="row my-5">
             <div class="col">
                 <div class="card-columns">
-                    {% for object in object_list %}
-                    {% include "core/cards/object.html" %}
-                    {% endfor %}
+                    {% if image_list %}
+                        {% for image in image_list %}
+                            {% include "core/cards/image.html" %}
+                        {% endfor %}
+                    {% else %}
+                        {% for object in object_list %}
+                            {% include "core/cards/object.html" %}
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
         </div>

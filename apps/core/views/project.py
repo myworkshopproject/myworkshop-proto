@@ -45,6 +45,7 @@ class ProjectListView(ListView):
         context = super().get_context_data(**kwargs)
         context["type"] = {
             "title": _("All projects"),
+            "fontawesome5_class": "fas fa-cogs",
             "short_description": _("All projects"),
         }
         return context

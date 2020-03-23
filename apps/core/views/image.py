@@ -33,4 +33,14 @@ class ImageDetailView(DetailView):
 
 class ImageListView(ListView):
     model = Image
-    template_name = "core/image_list.html"
+    context_object_name = "image_list"
+    template_name = "core/object_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["type"] = {
+            "title": _("Images"),
+            "fontawesome5_class": "far fa-images",
+            "short_description": _("All images"),
+        }
+        return context
