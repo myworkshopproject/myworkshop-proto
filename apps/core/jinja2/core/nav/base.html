@@ -14,16 +14,8 @@
     <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav mr-auto">
             {% include 'core/nav/flatpage_list.html' %}
-            {% for project_type in project_types %}
-            <li class="nav-item {{ 'active' if request.path == project_type.get_absolute_url() }}">
-                <a class="nav-link" href="{{ project_type.get_absolute_url() }}">{{ project_type }}</a>
-            </li>
-            {% endfor %}
-            {% for publication_type in publication_types %}
-            <li class="nav-item {{ 'active' if request.path == publication_type.get_absolute_url() }}">
-                <a class="nav-link" href="{{ publication_type.get_absolute_url() }}">{{ publication_type }}</a>
-            </li>
-            {% endfor %}
+            {% include 'core/nav/project_list.html' %}
+            {% include 'core/nav/publication_list.html' %}
             <li class="nav-item {{ 'active' if request.path == url('core:image-list') }}">
                 <a class="nav-link" href="{{ url('core:image-list') }}">{{ _('Image gallery') }}</a>
             </li>

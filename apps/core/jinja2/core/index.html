@@ -3,7 +3,7 @@
 {% block section %}
 <section class="mt-auto">
     <div class="container">
-        <div class="row justify-content-center text-center">
+        <div class="row justify-content-center align-items-center text-center">
             <div class="col-lg-8 col-md-10 p-5">
                 <h1 class="display-4">{{ request.site.name }}</h1>
                 <p class="lead font-italic">{{ request.site.workshop.tagline }}</p>
@@ -11,27 +11,57 @@
             </div>
         </div>
         <hr>
-        <div class="row justify-content-center text-center">
+        <div class="row justify-content-center align-items-center text-center">
+            {% for project_type in project_types %}
             <div class="col-lg-3 col-md-4 col-sm-6 col-8">
                 <div class="image-crop image-crop-1-1">
-                    <a class="h2 text-info" href="{{ url('core:project-list') }}">
+                    <a class="h2 text-{{ project_type.bootstrap4_color }}" href="{{ project_type.get_absolute_url() }}">
+                        <div>
+                            <span style="font-size: 7.5rem;"><i class="{{ project_type.fontawesome5_class }}"></i></span>
+                        </div>
+                        <span class="h2">{{ project_type }}</span>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="col-lg-3 col-md-4 col-sm-6 col-8">
+                <div class="image-crop image-crop-1-1">
+                    <a class="h2 text-secondary" href="{{ url('core:project-list') }}">
                         <div>
                             <span style="font-size: 7.5rem;"><i class="fas fa-cogs"></i></span>
                         </div>
-                        <span class="h2">{{ _('Projects') }}</span>
+                        <span class="h2">{{ _('All projects') }}</span>
                     </a>
                 </div>
             </div>
+        </div>
+        <hr class="mt-5">
+        <div class="row justify-content-center align-items-center text-center">
+            {% for publication_type in publication_types %}
             <div class="col-lg-3 col-md-4 col-sm-6 col-8">
                 <div class="image-crop image-crop-1-1">
-                    <a class="h2 text-success" href="{{ url('core:publication-list') }}">
+                    <a class="h2 text-{{ publication_type.bootstrap4_color }}" href="{{ publication_type.get_absolute_url() }}">
+                        <div>
+                            <span style="font-size: 7.5rem;"><i class="{{ publication_type.fontawesome5_class }}"></i></span>
+                        </div>
+                        <span class="h2">{{ publication_type }}</span>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="col-lg-3 col-md-4 col-sm-6 col-8">
+                <div class="image-crop image-crop-1-1">
+                    <a class="h2 text-secondary" href="{{ url('core:publication-list') }}">
                         <div>
                             <span style="font-size: 7.5rem;"><i class="fas fa-feather-alt"></i></span>
                         </div>
-                        <span class="h2">{{ _('Publications') }}</span>
+                        <span class="h2">{{ _('All publications') }}</span>
                     </a>
                 </div>
             </div>
+        </div>
+        <hr class="mt-5">
+        <div class="row justify-content-center align-items-center text-center">
             <div class="col-lg-3 col-md-4 col-sm-6 col-8">
                 <div class="image-crop image-crop-1-1">
                     <a class="h2 text-warning" href="{{ url('core:image-list') }}">
@@ -53,7 +83,7 @@
                 </div>
             </div>
         </div>
-        <hr class="my-5">
+        <hr class="mt-5">
         <div class="w-25 mx-auto">
         </div>
     </div>

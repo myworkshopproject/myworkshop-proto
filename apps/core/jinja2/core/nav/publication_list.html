@@ -1,0 +1,14 @@
+<li class="nav-item btn-group dropdown {{ 'active' if request.path == url('core:publication-list') }}">
+    <a class="nav-link" href="{{ url('core:publication-list') }}" role="button">{{ _('Publications') }}</a>
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="sr-only">Toggle Dropdown</span></a>
+    <div class="dropdown-menu">
+        {% for publication_type in publication_types %}
+        <a class="dropdown-item {{ 'active' if request.path == publication_type.get_absolute_url() }}" href="{{ publication_type.get_absolute_url() }}">
+            <span class="text-{{ publication_type.bootstrap4_color }}">
+                <i class="{{ publication_type.fontawesome5_class }}"></i>
+            </span>
+            {{ publication_type }}
+        </a>
+        {% endfor %}
+    </div>
+</li>
