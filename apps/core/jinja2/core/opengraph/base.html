@@ -40,7 +40,7 @@
     {% elif image %}
     <!-- Open Graph Data | Image -->
     <meta property="og:title" content="{{ image.title }}">
-    <meta property="og:type" content="{% set mimetype = guess_type(image.picture.url)[0] %}{% if mimetype != None %}{{ mimetype }}{% else %}image{% endif %}">
+    <meta property="og:type" content="article">
     <meta property="og:url" content="{{ request.build_absolute_uri() }}">
         {% if image.short_description %}
     <meta property="og:description" content="{{ image.short_description }}">
