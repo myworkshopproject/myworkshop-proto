@@ -24,7 +24,7 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
 
     <h5 class="card-title text-center my-4">{% trans 'or' %}</h5>
 
-    {% else %}
+    {% elif request.site.workshop.is_open_for_signup %}
     <p class="card-text">{% blocktrans %}If you have not created an account yet, then please
 <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
     {% endif %}

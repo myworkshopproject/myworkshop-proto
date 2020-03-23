@@ -43,6 +43,8 @@ class Workshop(LogModelMixin, BaseModel):
         verbose_name=_("site"),
     )
 
+    is_open_for_signup = models.BooleanField(default=True)
+
     ## optional fields
 
     tagline = models.CharField(

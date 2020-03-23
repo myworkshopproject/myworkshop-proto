@@ -95,6 +95,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # django-allauth
+ACCOUNT_ADAPTER = "accounts.adapter.CustomUserAccountAdapter"
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
 ACCOUNT_EMAIL_REQUIRED = True
