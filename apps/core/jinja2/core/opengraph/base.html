@@ -39,11 +39,11 @@
         {% endif %}
     {% elif image %}
     <!-- Open Graph Data | Image -->
-    <meta property="og:title" content="Titre de l'image">
+    <meta property="og:title" content="{{ image.title }}">
     <meta property="og:type" content="image">
     <meta property="og:url" content="{{ request.build_absolute_uri() }}">
-        {% if image.caption %}
-    <meta property="og:description" content="{{ image.caption }}">
+        {% if image.short_description %}
+    <meta property="og:description" content="{{ image.short_description }}">
         {% endif %}
     <meta property="og:image" content="{{ request.build_absolute_uri(image.picture.url) }}">
         {% if image.alt %}
