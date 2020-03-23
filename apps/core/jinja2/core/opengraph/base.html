@@ -36,6 +36,8 @@
         {% endif %}
         {% if user.biography %}
     <meta property="og:description" content="{{ user.biography }}">
+        {% else %}
+    <meta property="og:description" content="{{ user.get_full_name() }}">
         {% endif %}
     {% elif image %}
     <!-- Open Graph Data | Image -->
@@ -44,6 +46,8 @@
     <meta property="og:url" content="{{ request.build_absolute_uri() }}">
         {% if image.short_description %}
     <meta property="og:description" content="{{ image.short_description }}">
+        {% else %}
+    <meta property="og:description" content="{{ image.title }}">
         {% endif %}
     <meta property="og:image" content="{{ request.build_absolute_uri(image.picture.url) }}">
         {% if image.alt %}
@@ -62,6 +66,8 @@
     <meta property="og:url" content="{{ request.build_absolute_uri() }}">
         {% if object.short_description %}
     <meta property="og:description" content="{{ object.short_description }}">
+        {% else %}
+    <meta property="og:description" content="{{ object.title }}">
         {% endif %}
         {% if object.featured_image %}
     <meta property="og:image" content="{{ request.build_absolute_uri(object.featured_image.picture.url) }}">
@@ -106,6 +112,8 @@
     <meta property="og:url" content="{{ request.build_absolute_uri(url('core:home')) }}">
         {% if request.site.workshop.short_description %}
     <meta property="og:description" content="{{ request.site.workshop.short_description }}">
+        {% else %}
+    <meta property="og:description" content="{{ request.site.name }}">
         {% endif %}
         {% if request.site.workshop.logo %}
     <meta property="og:image" content="{{ request.build_absolute_uri(request.site.workshop.logo.url) }}">
