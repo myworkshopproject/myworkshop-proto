@@ -10,6 +10,11 @@ urlpatterns = [
     path("", views.CustomUserListView.as_view(), name="user-list"),
     path("<str:pk>/", views.CustomUserDetailView.as_view(), name="user-detail"),
     path(
+        "<str:pk>/images/",
+        views.CustomUserImageListView.as_view(),
+        name="user-image-list",
+    ),
+    path(
         "<str:pk>/projects/",
         views.CustomUserProjectListView.as_view(),
         name="user-project-list",

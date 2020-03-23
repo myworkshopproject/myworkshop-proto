@@ -1,6 +1,7 @@
 import uuid
 from django.conf import settings
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 from django.utils.translation import gettext, gettext_lazy as _
 from core.models import BaseModel, LogModelMixin
@@ -62,6 +63,18 @@ def get_copyright(exif, default):
 
 def images_file_name(instance, filename):
     return "/".join(["images", str(uuid.uuid4()), filename])
+
+
+class PublicImageManager(models.Manager):
+    # todo: retourner les images utilisée dans une documentation ou un projet publiés
+    def get_queryset(self):
+        return super().get_queryset().none()
+
+
+class MembersImageManager(models.Manager):
+    # todo: retourner les images utilisée dans une documentation ou un projet réservés aux membres
+    def get_queryset(self):
+        return super().get_queryset().none()
 
 
 class Image(LogModelMixin, BaseModel):
@@ -128,6 +141,9 @@ class Image(LogModelMixin, BaseModel):
     )
 
     # MANAGERS
+    objects = models.Manager()  # The default manager.
+    public_objects = PublicImageManager()
+    members_objects = MembersImageManager()
 
     # META CLASS
     class Meta(BaseModel.Meta):

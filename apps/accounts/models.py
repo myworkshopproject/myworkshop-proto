@@ -99,6 +99,9 @@ class CustomUser(AbstractUser):
     def get_projects_url(self):
         return reverse("accounts:user-project-list", kwargs={"pk": self.username})
 
+    def get_images_url(self):
+        return reverse("accounts:user-image-list", kwargs={"pk": self.username})
+
     def get_publications_url(self):
         return reverse("accounts:user-publication-list", kwargs={"pk": self.username})
 

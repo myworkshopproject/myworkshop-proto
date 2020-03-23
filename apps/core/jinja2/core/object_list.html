@@ -35,6 +35,10 @@
                         {% for image in image_list %}
                             {% include "core/cards/image.html" %}
                         {% endfor %}
+                    {% elif user_list %}
+                        {% for user in user_list %}
+                            {% include "core/cards/user.html" %}
+                        {% endfor %}
                     {% else %}
                         {% for object in object_list %}
                             {% include "core/cards/object.html" %}

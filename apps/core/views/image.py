@@ -38,6 +38,12 @@ class ImageListView(ListView):
     context_object_name = "image_list"
     template_name = "core/object_list.html"
 
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Image.members_objects.all()
+        else:
+            return Image.public_objects.all()
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["type"] = {

@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from allauth.account.decorators import verified_email_required
 from accounts.models import CustomUser
 from django.utils.translation import gettext, gettext_lazy as _
-from core.models import Project, Publication
+from core.models import Image, Project, Publication
 
 
 class CustomUserDetailView(DetailView):
@@ -16,11 +16,54 @@ class CustomUserDetailView(DetailView):
 
 class CustomUserListView(ListView):
     model = CustomUser
-    template_name = "accounts/user_list.html"
+    context_object_name = "user_list"
+    template_name = "core/object_list.html"
 
     def get_queryset(self):
-        qs = super().get_queryset()
-        return qs.exclude(username="deleted").exclude(username="deleted")
+        if self.request.user.is_authenticated:
+            queryset = super().get_queryset()
+            return queryset.exclude(username="deleted").exclude(username="admin")
+        else:
+            return CustomUser.objects.none()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["type"] = {
+            "title": _("Users"),
+            "fontawesome5_class": "fas fa-users",
+            "short_description": _("All users"),
+        }
+        return context
+
+
+class CustomUserImageListView(ListView):
+    model = Image
+    template_name = "core/object_list.html"
+
+    def get_queryset(self):
+        user = get_object_or_404(CustomUser, pk=self.kwargs["pk"])
+        if self.request.user.is_authenticated:
+            if self.request.user == user:
+                return Image.objects.filter(owner=user)
+            else:
+                return Image.members_objects.filter(owner=user)
+        else:
+            return Image.public_objects.filter(owner=user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = get_object_or_404(CustomUser, pk=self.kwargs["pk"])
+        if self.request.user == user:
+            context["type"] = {
+                "title": _("My images"),
+                "short_description": _("My images"),
+            }
+        else:
+            context["type"] = {
+                "title": _("All images"),
+                "short_description": _("All images"),
+            }
+        return context
 
 
 class CustomUserProjectListView(ListView):
