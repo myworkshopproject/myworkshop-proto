@@ -5,8 +5,9 @@
 <section class="my-5">
     <div class="container">
         <div class="row">
-            <div class="col-lg-1 col-12">
+            <div class="col-lg-1 col-12 d-none d-lg-block">
                 <div class="sticky pt-lg-5">
+                    <a href="#top" title="{{ _('top') }}"><i class="fas fa-chevron-up"></i></a>
                 </div>
             </div>
             <div class="col-lg-10 col-12">
@@ -43,10 +44,19 @@
                         {% endif %}
                     </div>
                     <div class="col-lg-8 col-12">
-                        <h1>{{ object.title }}</h1>
-                        <span class="text-muted">{{ _('created at') }} {{ object.created_at|format_date(locale=lang.code, format='full') }}</span>
+                        <div class="row">
+                            <div class="col">
+                                <h1>{{ object.title }}</h1>
+                                <span class="text-muted">{{ _('created at') }} {{ object.created_at|format_date(locale=lang.code, format='full') }}</span>
+                            </div>
+                            {% if object.is_owner(request.user) %}
+                            <div class="col-auto text-right">
+                                <a class="btn btn-primary" href="{{ object.get_update_url() }}"><i class="fas fa-edit"></i> {{ _('admin') }}</a>
+                            </div>
+                            {% endif %}
+                        </div>
                         <p class="lead">
-                            {{ object.short_description|to_markdown|safe }}
+                            {{ object.short_description }}
                         </p>
                     </div>
                 </div>
@@ -102,8 +112,9 @@
                     </div>
                     <div class="col-lg-4 col-md-6 col-12 my-md-0 my-3">
                         <h2>{{ _('project details') }}</h2>
-                        <h3>{{ _('tags') }}</h3>
                         <p>
+                            <span class="font-weight-bold">{{ _('tags') }}</span>
+                            <br>
                             <a href="{{ object.type.get_absolute_url() }}" class="badge badge-pill badge-{{ object.type.bootstrap4_color }}"><i class="{{ object.type.fontawesome5_class }}"></i> {{ object.type }}</a>
                             {% for tag in object.tags %}
                             <a href="#" class="badge badge-pill badge-secondary">{{ tag }}</a>
@@ -114,8 +125,9 @@
                             {% endfor %}
                             {% endif %}
                         </p>
-                        <h3>{{ _('License') }}</h3>
                         <p>
+                            <span class="font-weight-bold">{{ _('license') }}</span>
+                            <br>
                             {% if object.license %}
                             {{ _('This project is licensed')}} <a href="#" title="{{ object.get_license_display() }}">{{ object.license }}</a>.
                             {% else %}
@@ -149,26 +161,26 @@
                         </ul>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-1 col-12 text-right">
-                {% if object.is_owner(request.user) %}
-                <div class="sticky pt-lg-5">
-                    <a href="{{ object.get_update_url() }}"><i class="fas fa-edit"></i> {{ _('edit') }}</a>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-1 col-12 d-none d-lg-block">
-                <div class="sticky pt-lg-5">
-                    <a href="#top" title="{{ _('top') }}"><i class="fas fa-chevron-up"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-10 col-12">
                 <div class="row">
-                    <div class="col-12">
-                        <h2 class="text-center my-5">{{ _('publications') }}</h2>
+                    <div class="col-12 mt-5 text-center">
+                        <h2>{{ _('publications') }}</h2>
+                    </div>
+                    {% if object.is_owner_or_editor(request.user) %}
+                    <div class="col-12 mt-2 text-center">
+                        {% for type in publication_types %}
+                        <a class="btn btn-{{ type.bootstrap4_color }} mx-1" href="{{ type.get_create_url() }}">
+                            <i class="fas fa-plus"></i>
+                            <i class="{{ type.fontawesome5_class }}"></i>
+                            {{ type }}
+                        </a>
+                        {% endfor %}
+                        <a class="btn btn-secondary mx-1" href="{{ object.get_publications_update_url() }}">
+                            <i class="fas fa-tasks"></i>
+                            {{ _('select') }}
+                        </a>
+                    </div>
+                    {% endif %}
+                    <div class="col-12 mt-5">
                         <div class="card-columns">
                             {% for object in object.publications.all() %}
                             {% include "core/cards/object.html" %}
@@ -176,6 +188,7 @@
                         </div>
                     </div>
                 </div>
+                {#
                 <div class="row">
                     <div class="col-12">
                         <h2 class="text-center my-5">{{ _('your achievements') }}</h2>
@@ -196,13 +209,10 @@
                         </div>
                     </div>
                 </div>
+                #}
             </div>
             <div class="col-lg-1 col-12 text-right">
                 <div class="sticky pt-lg-5">
-                    {% if object.is_owner_or_editor(request.user) %}
-                    <a href="#"><i class="fas fa-plus"></i> {{ _('New') }}</a><br>
-                    <a href="{{ object.get_publications_update_url() }}"><i class="fas fa-edit"></i> {{ _('edit') }}</a>
-                    {% endif %}
                 </div>
             </div>
         </div>

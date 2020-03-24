@@ -9,6 +9,17 @@
             </div>
             <div class="modal-body">
                 {% include "core/elements/image.html" %}
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-link"></i></span>
+                    </div>
+                    <input id="image-{{ image.id }}" type="text" class="form-control" value="{{ image.id }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary copytoclipboard" type="button" data-clipboard-target="#image-{{ image.id }}">
+                            {{ _('copy') }}
+                        </button>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

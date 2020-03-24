@@ -74,7 +74,7 @@ class PublicImageManager(models.Manager):
 class MembersImageManager(models.Manager):
     # todo: retourner les images utilisée dans une documentation ou un projet réservés aux membres
     def get_queryset(self):
-        return super().get_queryset().none()
+        return super().get_queryset()
 
 
 class Image(LogModelMixin, BaseModel):

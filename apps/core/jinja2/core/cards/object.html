@@ -15,7 +15,7 @@
     {% include "core/modals/object.html" %}
     <div class="card-body">
         <h5 class="card-title">{{ object.title }}</h5>
-        <p class="card-text">{{ object.short_description|to_markdown|safe|truncate(150) }}</p>
+        <p class="card-text">{{ object.short_description|truncate(150) }}</p>
         <p class="card-text">
             <small class="text-muted">
                 {% if object.published_at %}

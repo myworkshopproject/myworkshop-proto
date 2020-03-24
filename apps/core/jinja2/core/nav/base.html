@@ -16,14 +16,14 @@
             {% include 'core/nav/flatpage_list.html' %}
             {% include 'core/nav/project_list.html' %}
             {% include 'core/nav/publication_list.html' %}
-            {#
+            {% if request.user.is_authenticated %}
             <li class="nav-item {{ 'active' if request.path == url('core:image-list') }}">
-                <a class="nav-link" href="{{ url('core:image-list') }}">{{ _('Image gallery') }}</a>
+                <a class="nav-link" href="{{ url('core:image-list') }}">{{ _('Images') }}</a>
             </li>
             <li class="nav-item {{ 'active' if request.path == url('accounts:user-list') }}">
                 <a class="nav-link" href="{{ url('accounts:user-list') }}">{{ _('Users') }}</a>
             </li>
-            #}
+            {% endif %}
         </ul>
         {% include 'core/nav/lang_select.html' %}
         {% include 'core/nav/search.html' %}

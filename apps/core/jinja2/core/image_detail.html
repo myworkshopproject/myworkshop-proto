@@ -8,8 +8,12 @@
                 {% include "core/elements/image_with_modal.html" %}
             </div>
             <div class="col-lg-4 col-md-12">
-                <h1>{{ image.title }}</h1>
-                <span class="text-muted">{{ image.id }}</span>
+                <div class="row">
+                    <div class="col">
+                        <h1>{{ image.title }}</h1>
+                        <span class="text-muted">{{ image.id }}</span>
+                    </div>
+                </div>
                 <p class="lead">
                     {{ image.shooted_at|format_datetime(locale=lang.code, format='long') }}
                 </p>
@@ -81,13 +85,13 @@
                 </p>
             </div>
             <div class="col-lg-2 col-12 text-right">
-                {% if request.user == image.owner %}
                 <div class="sticky pt-lg-5">
-                    <a href="{{ image.get_update_url() }}"><i class="fas fa-edit"></i> {{ _('edit') }}</a>
-                    <br>
-                    <a href="{{ image.get_delete_url() }}"><i class="fas fa-times"></i> {{ _('delete') }}</a>
+                    {% if request.user == image.owner %}
+                    <div class="col-auto text-right">
+                        <a class="btn btn-primary" href="{{ image.get_update_url() }}"><i class="fas fa-edit"></i> {{ _('edit') }}</a>
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
             </div>
         </div>
         {% set exif = image.get_labeled_exif() %}

@@ -30,6 +30,7 @@
                             {% else %}
                             {{ object.created_at|format_date(locale=lang.code, format='full') }}
                             {% endif %}
+                            <br>
                             {% if object.contributors %}
                             {% for contributor in object.contributors.all() %}
                             <a href="{{ contributor.get_absolute_url() }}"><i class="fas fa-user"></i> {{ contributor }}</a><br>
@@ -49,7 +50,7 @@
                             {% endfor %}
                             {% endif %}
                         </p>
-                        <p>{{ object.short_description|to_markdown|safe }}</p>
+                        {{ object.short_description|to_markdown|safe }}
                         {% if object.license %}
                         <small class="text-muted">
                             {{ _('This publication is licensed')}} <a href="#" title="{{ object.get_license_display() }}">{{ object.license }}</a>.

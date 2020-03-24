@@ -320,9 +320,9 @@ class ProjectContributor(LogModelMixin, models.Model):
     CONTRIBUTOR = "CO"
 
     ROLE_CHOICES = [
-        (OWNER, _("Owner")),
-        (EDITOR, _("Editor")),
-        (CONTRIBUTOR, _("Contributor")),
+        (OWNER, _("Administrator")),
+        (EDITOR, _("Contributor")),
+        (CONTRIBUTOR, _("Participant")),
     ]
 
     # DATABASE FIELDS
