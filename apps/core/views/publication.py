@@ -24,7 +24,7 @@ class PublicationListByTypeView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["type"] = PublicationType.objects.get(slug=self.kwargs["type"])
+        context["object"] = PublicationType.objects.get(slug=self.kwargs["type"])
         return context
 
 
@@ -40,7 +40,7 @@ class PublicationListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["type"] = {
+        context["object"] = {
             "title": _("All publications"),
             "fontawesome5_class": "fas fa-feather-alt",
             "short_description": _("All publications"),

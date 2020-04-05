@@ -1,18 +1,29 @@
-<div class="card text-center">
+<div class="card mb-5">
     <a href="#" data-toggle="modal" data-target=".image-{{ image.id }}">
         <img src="{{ image.picture.url }}" class="card-img-top" alt="{{ image.alt }}" title="{{ image.alt }}">
     </a>
     {% include "core/modals/image.html" %}
     <div class="card-body">
+        <h5 class="card-title">
+            <i class="far fa-image"></i>
+            {{ image.title }}
+        </h5>
+        {% if image.short_description %}
+        <p class="card-text">
+            {{ image.short_description|truncate(150) }}
+        </p>
+        {% endif %}
         <p class="card-text text-muted">
-            {% include "core/elements/image_caption.html" %}
+            <small>{% include "core/elements/image_credit.html" %}</small>
         </p>
     </div>
-    {% if image.tags %}
-    <div class="card-footer text-muted">
-        {% for tag in image.tags %}
-        <a href="#" class="badge badge-pill badge-secondary">{{ tag }}</a>
+    <div class="card-footer text-muted text-left">
+        {{ badge_pill.a_tag_object('image') }}
+        {% for tag in object.tags %}
+            {{ badge_pill.a_tag(tag) }}
         {% endfor %}
     </div>
+    {% if request.user == object.owner %}
+    {% include "core/cards/footer_owner.html" %}
     {% endif %}
 </div>

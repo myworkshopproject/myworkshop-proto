@@ -1,0 +1,37 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row align-items-center">
+            {% if object.meta.image %}
+            <div class="col-auto">
+                <div class="image-crop image-crop-1-1" style="width: 225px;">
+                    <img class="image-crop rounded-lg" src="{{ object.meta.image.url }}" alt="{{ object.meta.image.alt if object.meta.image.alt else object.title }}" title="{{ object.title }}">
+                </div>
+            </div>
+            {% endif %}
+            <div class="col">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h5 class="card-title">{{ object.title }}</h5>
+                    </div>
+                    <div class="col-auto text-right">
+                        <i class="fas fa-link"></i>
+                    </div>
+                </div>
+                {% if object.meta.site_name %}
+                <h6 class="card-subtitle mb-2 text-muted">{{ object.meta.site_name }}</h6>
+                {% endif %}
+                {% if object.meta.description %}
+                <p class="card-text">
+                    {{ object.meta.description }}
+                </p>
+                {% endif %}
+                <p class="card-text">
+                    <a href="#" class="badge badge-pill badge-primary"><i class="fas fa-link"></i> {{ _('link') }}</a>
+                    {% for tag in object.tags %}
+                    <a href="#" class="badge badge-pill badge-secondary">{{ tag }}</a>
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

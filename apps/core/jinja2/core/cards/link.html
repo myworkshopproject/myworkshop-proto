@@ -1,0 +1,74 @@
+<div class="card mb-5">
+    {% if object.meta.video %}
+    <a href="#" data-toggle="modal" data-target="#object-{{ object.id }}" data-embed="{{ object.meta.video.url }}">
+    {% elif object.meta.audio %}
+    <a href="#" data-toggle="modal" data-target="#object-{{ object.id }}" data-embed="{{ object.meta.audio.url }}">
+    {% elif object.meta.player %}
+    <a href="#" data-toggle="modal" data-target="#object-{{ object.id }}" data-embed="{{ object.meta.player }}">
+    {% else %}
+    <a href="{{ object.url }}" target="_blank">
+    {% endif %}
+
+        {% if object.meta.image %}
+        <div class="image-crop image-crop-1-1">
+            <img class="image-crop rounded-lg" src="{{ object.meta.image.url }}" alt="{{ object.meta.image.alt if object.meta.image.alt else object.title }}">
+            {% if object.meta.video or object.meta.audio or object.meta.player %}
+            <div>
+                <span class="text-dark" style="font-size: 5.0rem; opacity: 0.75;"><i class="far fa-play-circle"></i></span>
+            </div>
+            {% endif %}
+        </div>
+        {% else %}
+            {% if object.meta.video or object.meta.audio or object.meta.player %}
+            <div class="image-crop image-crop-1-1 bg-light">
+                <div>
+                    <span class="text-primary" style="font-size: 5.0rem;"><i class="far fa-play-circle"></i></span>
+                </div>
+            </div>
+            {% endif %}
+        {% endif %}
+
+    </a>
+    {% if object.meta.video or object.meta.audio or object.meta.player %}
+    {% include "core/modals/embed.html" %}
+    {% endif %}
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <h5 class="card-title">
+                    {% if object.meta.root_type == "video" %}
+                        <i class="fas fa-film"></i>
+                    {% elif object.meta.root_type == "music" %}
+                        <i class="fas fa-music"></i>
+                    {% else %}
+                        <i class="fas fa-link"></i>
+                    {% endif %}
+                    {{ object.title }}
+                </h5>
+            </div>
+            <div class="col-auto">
+                <a href="{{ object.url }}" target="_blank" title="{{ _('visit') }}">
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
+        </div>
+        {% if object.meta.site_name %}
+        <h6 class="card-subtitle mb-2 text-muted">{{ object.meta.site_name }}</h6>
+        {% endif %}
+        {% if object.meta.description %}
+        <p class="card-text">
+            {{ object.meta.description|truncate(150) }}
+        </p>
+        {% endif %}
+    </div>
+    <div class="card-footer text-muted">
+        {{ badge_pill.a_tag_object('link') }}
+        {% for tag in object.tags %}
+            {{ badge_pill.a_tag(tag) }}
+        {% endfor %}
+    </div>
+    {% if request.user == object.owner %}
+    {% include "core/cards/footer_owner.html" %}
+    {% endif %}
+</div>

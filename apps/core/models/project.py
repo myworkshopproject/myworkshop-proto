@@ -242,6 +242,10 @@ class Project(LogModelMixin, SlugModel, BaseModel):
     def get_update_url(self):
         return reverse("core:project-update", kwargs={"slug": self.slug})
 
+    def get_delete_url(self):
+        # return reverse("core:project-delete", kwargs={"slug": self.slug})
+        return reverse("core:project-update", kwargs={"slug": self.slug})
+
     def get_publications_update_url(self):
         return reverse("core:project-publications-update", kwargs={"slug": self.slug})
 
@@ -289,24 +293,24 @@ class Project(LogModelMixin, SlugModel, BaseModel):
     def get_statuses(self):
         statuses = []
         if self.status == self.DRAFT:
-            statuses.append({"name": "draft", "color": "warning"})
+            statuses.append("draft")
 
         if self.status == self.PUBLISH or self.status == self.ARCHIVE:
             if self.visibility == self.PENDING:
-                statuses.append({"name": "pending", "color": "info"})
+                statuses.append("pending")
             if self.visibility == self.MEMBERS_ONLY:
-                statuses.append({"name": "restricted", "color": "dark"})
+                statuses.append("restricted")
             if self.visibility == self.PUBLIC:
-                statuses.append({"name": "public", "color": "success"})
+                statuses.append("public")
 
         if self.status == self.ARCHIVE:
-            statuses.append({"name": "archived", "color": "secondary"})
+            statuses.append("archived")
 
         if self.status == self.TRASH:
-            statuses.append({"name": "deleted", "color": "dark"})
+            statuses.append("deleted")
 
         if self.visibility == self.BLOCKED:
-            statuses.append({"name": "blocked", "color": "danger"})
+            statuses.append("blocked")
 
         return statuses
 

@@ -35,8 +35,7 @@ class ImageDetailView(DetailView):
 
 class ImageListView(ListView):
     model = Image
-    context_object_name = "image_list"
-    template_name = "core/object_list.html"
+    template_name = "core/image_list.html"
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
@@ -46,7 +45,7 @@ class ImageListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["type"] = {
+        context["object"] = {
             "title": _("Images"),
             "fontawesome5_class": "far fa-images",
             "short_description": _("All images"),

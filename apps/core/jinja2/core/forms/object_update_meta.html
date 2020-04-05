@@ -1,10 +1,12 @@
 {% extends "core/page.html" %}
 
-{% block extra_head %}
-<script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-{% endblock extra_head %}
+{% block head_js %}
+{{ super() }}
+    <!-- jsoneditor.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+{% endblock head_js %}
 
 {% block section %}
 <section class="my-5">
@@ -19,8 +21,8 @@
                     {{ form.as_p() }}
                     <div style="display:none;">
                     </div>
-                    <input class="btn btn-primary" type="submit" value="{{ _('Update') }}">
-                    <a class="ml-2" href="{{ object.get_absolute_url() }}">{{ _('Cancel') }}</a>
+                    <input class="btn btn-primary" type="submit" value="{{ _('update') }}">
+                    <a class="ml-2" href="{{ object.get_absolute_url() }}">{{ _('cancel') }}</a>
                 </form>
             </div>
         </div>
@@ -28,7 +30,8 @@
 </section>
 {% endblock section %}
 
-{% block extra_body %}
+{% block body_js %}
+{{ super() }}
 <script>
     // Initialize the editor with a JSON schema
     var editor = new JSONEditor(document.getElementById('body_editor'), {
@@ -72,4 +75,4 @@
         document.getElementById('id_meta').value = JSON.stringify(editor.getValue());
     });
 </script>
-{% endblock extra_body%}
+{% endblock body_js %}

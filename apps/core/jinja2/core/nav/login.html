@@ -9,9 +9,36 @@
             <a class="dropdown-item" href="{{ url('admin:index') }}">{{ _('Admin') }}</a>
             <div class="dropdown-divider"></div>
             {% endif %}
-            <a class="dropdown-item" href="{{ request.user.get_images_url() }}">{{ _('My images') }}</a>
-            <a class="dropdown-item" href="{{ request.user.get_projects_url() }}">{{ _('My projects') }}</a>
-            <a class="dropdown-item" href="{{ request.user.get_publications_url() }}">{{ _('My publications') }}</a>
+            <a class="dropdown-item" href="{{ request.user.get_labbook_url() }}">
+                <div class="row">
+                    <div class="col">
+                        {{ _('My lab book') }}
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-book"></i>
+                    </div>
+                </div>
+            </a>
+            <a class="dropdown-item" href="{{ request.user.get_projects_url() }}">
+                <div class="row">
+                    <div class="col">
+                        {{ _('My projects') }}
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                </div>
+            </a>
+            <a class="dropdown-item" href="{{ request.user.get_publications_url() }}">
+                <div class="row">
+                    <div class="col">
+                        {{ _('My publications') }}
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-feather-alt"></i>
+                    </div>
+                </div>
+            </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{ request.user.get_absolute_url() }}">{{ _('Account') }}</a>
             <a class="dropdown-item" href="{{ url('account_email') }}">{{ _('E-mail Addresses') }}</a>

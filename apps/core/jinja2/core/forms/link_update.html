@@ -1,0 +1,40 @@
+{% extends "core/page.html" %}
+
+{% block head_js %}
+{{ super() }}
+<!-- simplemde.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+{% endblock head_js %}
+
+{% block section %}
+<section class="my-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col col-lg-8">
+                <h1>{{ object.title }}</h1>
+                <h2>{{ _('preview') }}</h2>
+                <div class="mt-2 mb-5">
+                    {% include "core/elements/link.html" %}
+                </div>
+                <form method="post" {% if enctype %} enctype="{{ enctype }}" {% endif %}>
+                    {{ csrf_input }}
+                    {{ as_crispy_form(form) }}
+                    <input class="btn btn-primary" type="submit" value="{{ _('Save') }}">
+                    <a class="ml-2" href="{{ object.get_absolute_url() }}">{{ _('Cancel') }}</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock section %}
+
+{% block body_js %}
+{{ super() }}
+<!-- simplemde.js -->
+<script>
+    var simplemde = new SimpleMDE({
+        element: document.getElementById("id_short_description")
+    });
+</script>
+{% endblock body_js %}

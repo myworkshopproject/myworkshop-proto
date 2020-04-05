@@ -4,9 +4,9 @@
 <section class="my-5">
     <div class="container">
         <div class="row">
-            {% if type.featured_image %}
+            {% if object.featured_image %}
             <div class="col-4">
-                {% with image = type.featured_image %}
+                {% with image = object.featured_image %}
                 {% include "core/elements/image_with_modal.html" %}
                 {% endwith %}
             </div>
@@ -14,36 +14,38 @@
             <div class="col">
                 <div class="row">
                     <div class="col my-auto">
-                        <h1><i class="{{ type.fontawesome5_class }}"></i> {{ type.title }}</h1>
+                        <h1>
+                            {% if object.fontawesome5_class %}
+                                <i class="{{ object.fontawesome5_class }}"></i>
+                            {% endif %}
+                            {{ object.title }}
+                        </h1>
                     </div>
                     <div class="col-auto text-right my-auto">
-                        {% if type.get_create_url %}
-                        <a class="btn btn-primary" href="{{ type.get_create_url() }}"><i class="fas fa-plus"></i> {{ _('New') }}</a>
-                        {% endif %}
-                        {% if image_list %}
-                        <a class="btn btn-primary" href="{{ url('core:image-create') }}"><i class="fas fa-plus"></i> {{ _('New') }}</a>
-                        {% endif %}
+                        {% block menu %}
+                            {% if object.get_create_url %}
+                            <a class="btn btn-primary" href="{{ object.get_create_url() }}">
+                                <i class="fas fa-plus"></i>
+                                {% if object.fontawesome5_class %}
+                                <i class="{{ object.fontawesome5_class }}"></i>
+                                {% endif %}
+                                {{ object.title }}
+                            </a>
+                            {% endif %}
+                        {% endblock menu %}
                     </div>
                 </div>
-                <p class="lead">{{ type.short_description }}</p>
+                <p class="lead">{{ object.short_description }}</p>
             </div>
         </div>
         <div class="row my-5">
             <div class="col">
                 <div class="card-columns">
-                    {% if image_list %}
-                        {% for image in image_list %}
-                            {% include "core/cards/image.html" %}
-                        {% endfor %}
-                    {% elif user_list %}
-                        {% for user in user_list %}
-                            {% include "core/cards/user.html" %}
-                        {% endfor %}
-                    {% else %}
+                    {% block object_list %}
                         {% for object in object_list %}
                             {% include "core/cards/object.html" %}
                         {% endfor %}
-                    {% endif %}
+                    {% endblock object_list %}
                 </div>
             </div>
         </div>

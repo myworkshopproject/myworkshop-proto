@@ -116,7 +116,9 @@ class BaseModel(models.Model):
     )
 
     title = models.CharField(
-        max_length=settings.MYWORKSHOP_TITLE_LENGHT, verbose_name=_("title")
+        max_length=settings.MYWORKSHOP_TITLE_LENGHT,
+        verbose_name=_("title"),
+        default=_("untitled"),
     )  # [i18n]
 
     # is_pinned

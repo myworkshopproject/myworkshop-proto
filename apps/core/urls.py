@@ -25,7 +25,12 @@ urlpatterns = [
         views.ImageThumbnailView.as_view(),
         name="image-thumbnail",
     ),
-    # path("labbook/", views.LabbookView.as_view(), name="labbook"),
+    path("links/create/", views.LinkCreateView.as_view(), name="link-create"),
+    # path("links/<uuid:pk>/", views.LinkDetailView.as_view(), name="link-detail"),
+    path("links/<uuid:pk>/update/", views.LinkUpdateView.as_view(), name="link-update"),
+    path("notes/create/", views.NoteCreateView.as_view(), name="note-create"),
+    # path("notes/<uuid:pk>/", views.NoteDetailView.as_view(), name="note-detail"),
+    path("notes/<uuid:pk>/update/", views.NoteUpdateView.as_view(), name="note-update"),
     path(
         "publications/create/<slug:slug>/",
         views.PublicationCreateView.as_view(),

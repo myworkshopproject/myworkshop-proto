@@ -1,0 +1,67 @@
+{% macro a_tag(text, search='', color='secondary', icon='') %}
+<a role="button" href="?search={{ search if search else text }}" class="badge badge-pill badge-{{ color }}" aria-label="{{ _('search tag') }}">
+    {% if icon %}{{ icon|safe }}{% endif %}
+    {{ text }}
+</a>
+{% endmacro %}
+
+{% macro a_object(text, href='#', color='primary', icon='', fontawesome5_class='') %}
+<a role="button" href="{{ href }}" class="badge badge-pill badge-{{ color }}" aria-label="{{ text }}">
+    {% if icon %}
+        {{ icon|safe }}
+    {% elif fontawesome5_class %}
+        <i class="{{ fontawesome5_class }}"></i>
+    {% endif %}
+    {{ text }}
+</a>
+{% endmacro %}
+
+{% macro visibility(status='') %}
+{% if status == 'draft' %}
+    <span class="badge badge-pill badge-warning" aria-label="{{ _('visibility') }}"><i class="fas fa-edit"></i> {{ _('draft') }}</span>
+{% elif status == 'pending' %}
+    <span class="badge badge-pill badge-info" aria-label="{{ _('visibility') }}"><i class="fas fa-hourglass-half"></i> {{ _('pending') }}</span>
+{% elif status == 'restricted' %}
+    <span class="badge badge-pill badge-dark" aria-label="{{ _('visibility') }}"><i class="far fa-eye-slash"></i> {{ _('restricted') }}</span>
+{% elif status == 'public' %}
+    <span class="badge badge-pill badge-success" aria-label="{{ _('visibility') }}"><i class="far fa-eye"></i> {{ _('public') }}</span>
+{% elif status == 'private' %}
+    <span class="badge badge-pill badge-danger" aria-label="{{ _('visibility') }}"><i class="fas fa-shield-alt"></i> {{ _('private') }}</span>
+{% elif status == 'archived' %}
+    <span class="badge badge-pill badge-secondary" aria-label="{{ _('visibility') }}"><i class="fas fa-archive"></i> {{ _('archived') }}</span>
+{% elif status == 'deleted' %}
+    <span class="badge badge-pill badge-secondary" aria-label="{{ _('visibility') }}"><i class="fas fa-trash-alt"></i> {{ _('deleted') }}</span>
+{% elif status == 'blocked' %}
+    <span class="badge badge-pill badge-danger" aria-label="{{ _('visibility') }}"><i class="fas fa-ban"></i> {{ _('blocked') }}</span>
+{% else %}
+    <span class="badge badge-pill" aria-label="{{ _('visibility') }}">status</span>
+{% endif %}
+{% endmacro %}
+
+{% macro a_tag_object(type) %}
+{% if type == 'image' %}
+    {{ a_tag(
+        text=_('image'),
+        search='image',
+        color='danger',
+        icon = '<i class="far fa-image"></i>',
+        )
+    }}
+{% elif type == 'link' %}
+    {{ a_tag(
+        text=_('link'),
+        search='link',
+        color='success',
+        icon = '<i class="fas fa-external-link-alt"></i>',
+        )
+    }}
+{% elif type == 'note' %}
+    {{ a_tag(
+        text=_('note'),
+        search='note',
+        color='info',
+        icon = '<i class="fas fa-pencil-alt"></i>',
+        )
+    }}
+{% endif %}
+{% endmacro %}

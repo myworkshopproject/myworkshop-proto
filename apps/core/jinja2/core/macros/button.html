@@ -1,0 +1,23 @@
+{% macro button(text, color='primary', tabindex=0) %}
+<button type="button" class="btn btn-{{ color }}" aria-label="" tabindex="{{ tabindex }}">
+    {{ text }}
+</button>
+{% endmacro %}
+
+{% macro a_button(text, href='#', color='primary', tabindex=0) %}
+<a role="button" href="{{ href }}" class="btn btn-{{ color }}" aria-label="" tabindex="{{ tabindex }}">
+    {{ text }}
+</a>
+{% endmacro %}
+
+{% macro a_edit_small(href='#', tabindex=0) %}
+<a role="button" href="{{ href }}" aria-label="{{ _('edit') }}" tabindex="{{ tabindex }}">
+    <i class="fas fa-edit"></i>
+</a>
+{% endmacro %}
+
+{% macro a_delete_small(href='#', tabindex=0) %}
+<a role="button" href="{{ href }}" aria-label="{{ _('delete') }}" tabindex="{{ tabindex }}">
+    <i class="fas fa-trash-alt"></i>
+</a>
+{% endmacro %}

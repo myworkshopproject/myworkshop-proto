@@ -5,11 +5,9 @@ from django.db.models import Q
 from django.urls import reverse
 from django.utils.translation import gettext, gettext_lazy as _
 from core.models import BaseModel, LogModelMixin
-
-import json
+from datetime import datetime
 from PIL.ExifTags import TAGS
 from PIL import Image as PImage
-from datetime import datetime
 
 
 def get_exif(obj):
@@ -180,111 +178,4 @@ class Image(LogModelMixin, BaseModel):
         return reverse("core:image-create")
 
     def get_labeled_exif(self):
-        # return get_labeled_exif(self.exif)
         return get_labeled_exif(get_exif(self.picture))
-
-
-"""
-class Note(LogModelMixin, BaseModel):
-
-    # CHOICES
-
-    # DATABASE FIELDS
-
-    ## BaseModel fields replaced
-
-    # id -> OK
-    # created_at -> OK
-    # changed_at -> OK
-    # owner -> OK
-    # title = None  # no need to use this field in this model
-    # short_description -> ???
-    # featured_image = None  # no need to use this field in this model
-    # license = None  # no need to use this field in this model
-    # tags -> ???
-
-    ## automatic fields
-
-    # history = HistoricalRecords()  # done in translation.py
-
-    ## mandatory fields
-
-    ## optional fields
-
-    # MANAGERS
-
-    # META CLASS
-    class Meta(BaseModel.Meta):
-        verbose_name = _("note")
-        verbose_name_plural = _("notes")
-        ordering = ["-changed_at"]
-
-    # TO STRING METHOD
-    def __str__(self):
-        return self.title
-
-    # SAVE METHOD
-    def save(self, *args, **kwargs):
-        super(Note, self).save(*args, **kwargs)
-
-    # ABSOLUTE URL METHOD
-    def get_absolute_url(self):
-        return reverse("core:image-detail", kwargs={"pk": self.pk})
-
-    # OTHER METHODS
-"""
-
-"""
-class Link(LogModelMixin, Entry):
-    history = HistoricalRecords()
-
-    # uri
-
-    class Meta:
-        verbose_name = _("link")
-        verbose_name_plural = _("links")
-"""
-
-"""
-class Note(LogModelMixin, Entry, LangModelMixin):
-    HTML = "HTML"
-    MARKDOWN = "MD"
-    PLAIN_TEXT = "TXT"
-    RST = "RST"
-    WIKITEXT = "WIKITEXT"
-
-    FORMAT_CHOICES = [
-        (HTML, _("HyperText Markup Language")),
-        (MARKDOWN, _("Markdown")),
-        (PLAIN_TEXT, _("plain text")),
-        (RST, _("reStructuredText")),
-        (WIKITEXT, _("Wikitext")),
-    ]
-
-    history = HistoricalRecords()
-
-    format = models.CharField(max_length=10, choices=FORMAT_CHOICES, default=MARKDOWN)
-
-    body = models.TextField(
-        blank=True,
-        null=True,
-        verbose_name=_("body"),
-        help_text=_("You can use a markup language to write your contents."),
-    )
-
-    @property
-    def summary(self):
-        if len(self.body) > 100:
-            return self.body[:100] + "..."
-        elif not self.body:
-            return str(_("unknown"))
-        else:
-            return self.body
-
-    def __str__(self):
-        return self.summary
-
-    class Meta:
-        verbose_name = _("note")
-        verbose_name_plural = _("notes")
-"""

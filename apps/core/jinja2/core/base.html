@@ -1,4 +1,6 @@
 {% set lang = translation.get_language_info(translation.get_language()) %}
+{% import 'core/macros/button.html' as button %}
+{% import 'core/macros/badge_pill.html' as badge_pill %}
 <!DOCTYPE html>
 <html lang="{{ lang.code }}" dir="ltr">
 
@@ -62,7 +64,6 @@
     <!-- Bootswatch CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/united/bootstrap.min.css">
 
-
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
 
@@ -94,6 +95,28 @@
     <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
     <script type="text/javascript">
         new ClipboardJS('.copytoclipboard');
+    </script>
+
+    <!-- function to get embed player -->
+    <script type="text/javascript">
+        // https://stackoverflow.com/questions/18622508/bootstrap-3-and-youtube-in-modal
+        function embedModal() {
+            var trigger = $("body").find('[data-toggle="modal"]');
+            trigger.click(function() {
+                var theModal = $(this).data("target"),
+                    embedSRC = $(this).data("embed");
+                $(theModal + ' iframe').attr('src', embedSRC);
+                $(theModal + ' button.close').click(function() {
+                    $(theModal + ' iframe').attr('src', '');
+                });
+                $(theModal + ' button.btn').click(function() {
+                    $(theModal + ' iframe').attr('src', '');
+                });
+            });
+        }
+        $(document).ready(function() {
+            embedModal();
+        });
     </script>
     {% endblock body_js %}
     {% block extra_body %}

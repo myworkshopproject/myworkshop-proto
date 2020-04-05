@@ -46,7 +46,7 @@
                             {% endfor %}
                             {% if object.get_statuses and request.user.is_authenticated %}
                             {% for status in object.get_statuses() %}
-                            <span class="badge badge-pill badge-{{ status.color }}">{{ status.name }}</span>
+                                {{ badge_pill.visibility(status) }}
                             {% endfor %}
                             {% endif %}
                         </p>
@@ -60,8 +60,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <a class="btn btn-primary" href="{{ object.get_absolute_url() }}">Detail</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ _('close') }}</button>
+                <a class="btn btn-primary" href="{{ object.get_absolute_url() }}">{{ _('detail') }}</a>
             </div>
         </div>
     </div>

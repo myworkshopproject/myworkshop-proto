@@ -3,24 +3,7 @@
 <br>
 <span>{{ image.short_description }}</span>
 {% endif %}
-
 <br>
 <span class="font-italic">
-    {% if image.license %}
-        © {{ image.shooted_at.year }}
-        {% if image.credit %}
-            {{ image.credit|safe }}
-        {% else %}
-            <a href="{{ image.owner.get_absolute_url() }}">{{ image.owner.get_full_name() }}</a>
-        {% endif %}
-        –
-        <a href="#" title="{{ image.get_license_display() }}">{{ image.license }}</a>
-    {% elif image.credit %}
-        © {{ image.shooted_at.year }} {{ image.credit|safe }}
-    {% else %}
-        <a href="#" title="If you find a picture that doesn’t have a license, that generally means you have no permission from the creators of the picture to use, modify, or share the picture.">
-            <i class="fas fa-exclamation-triangle"></i>
-            {{ _('no license') }}
-        </a>
-    {% endif %}
+    {% include "core/elements/image_credit.html" %}
 </span>

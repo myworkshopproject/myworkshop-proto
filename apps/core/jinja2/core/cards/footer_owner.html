@@ -1,0 +1,19 @@
+<div class="card-footer text-muted bg-light">
+    <div class="row">
+        <div class="col">
+            <small title="{{ _('created at') }}">
+                <i class="far fa-calendar-plus"></i>
+                {{ object.created_at|format_datetime(locale=lang.code, format='short') }}
+            </small>
+            <br>
+            <small title="{{ _('changed_at') }}">
+                <i class="far fa-calendar-check"></i>
+                {{ object.changed_at|format_datetime(locale=lang.code, format='short') }}
+            </small>
+        </div>
+        <div class="col-auto">
+            {{ button.a_edit_small(href=object.get_update_url()) }}
+            {{ button.a_delete_small(href=object.get_delete_url()) }}
+        </div>
+    </div>
+</div>

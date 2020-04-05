@@ -27,7 +27,7 @@ class ProjectListByTypeView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["type"] = ProjectType.objects.get(slug=self.kwargs["type"])
+        context["object"] = ProjectType.objects.get(slug=self.kwargs["type"])
         return context
 
 
@@ -43,7 +43,7 @@ class ProjectListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["type"] = {
+        context["object"] = {
             "title": _("All projects"),
             "fontawesome5_class": "fas fa-cogs",
             "short_description": _("All projects"),

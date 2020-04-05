@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card mb-5">
     <a href="#" data-toggle="modal" data-target=".object-{{ object.id }}">
         {% if object.featured_image %}
         <div class="image-crop image-crop-3-2">
@@ -38,14 +38,27 @@
         </p>
     </div>
     <div class="card-footer text-muted">
-        <a href="{{ object.type.get_absolute_url() }}" class="badge badge-pill badge-{{ object.type.bootstrap4_color }}"><i class="{{ object.type.fontawesome5_class }}"></i> {{ object.type }}</a>
+        {{ badge_pill.a_object(
+            text=object.type,
+            href=object.type.get_absolute_url(),
+            color=object.type.bootstrap4_color,
+            fontawesome5_class=object.type.fontawesome5_class
+            )
+        }}
+
         {% for tag in object.tags %}
-        <a href="#" class="badge badge-pill badge-secondary">{{ tag }}</a>
+            {{ badge_pill.a_tag(tag) }}
         {% endfor %}
+
         {% if object.get_statuses and request.user.is_authenticated %}
-        {% for status in object.get_statuses() %}
-        <span class="badge badge-pill badge-{{ status.color }}">{{ status.name }}</span>
-        {% endfor %}
+            {% for status in object.get_statuses() %}
+                {{ badge_pill.visibility(status) }}
+            {% endfor %}
         {% endif %}
     </div>
+    {% if not object.is_owner %}
+        {% if request.user == object.owner %}
+            {% include "core/cards/footer_owner.html" %}
+        {% endif %}
+    {% endif %}
 </div>

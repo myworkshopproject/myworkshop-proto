@@ -121,7 +121,7 @@
                             {% endfor %}
                             {% if object.get_statuses and request.user.is_authenticated %}
                             {% for status in object.get_statuses() %}
-                            <span class="badge badge-pill badge-{{ status.color }}">{{ status.name }}</span>
+                                {{ badge_pill.visibility(status) }}
                             {% endfor %}
                             {% endif %}
                         </p>
