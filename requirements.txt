@@ -13,8 +13,10 @@ django-modeltranslation==0.14.4
 django-mptt==0.10.0
 django-simple-history==2.8.0
 djangorestframework==3.11.0
+html5lib==1.0.1
 idna==2.9
 Jinja2==2.11.1
+lxml==4.5.0
 markdown2==2.3.8
 MarkupSafe==1.1.1
 oauthlib==3.1.0
@@ -28,3 +30,4 @@ six==1.14.0
 soupsieve==2.0
 sqlparse==0.3.0
 urllib3==1.25.8
+webencodings==0.5.1
