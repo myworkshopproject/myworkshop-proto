@@ -5,7 +5,6 @@ from django.utils.translation import gettext, gettext_lazy as _
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404, redirect
-from allauth.account.decorators import verified_email_required
 from accounts.models import CustomUser
 from core.models import Image, Link, Note, Project, Publication
 
