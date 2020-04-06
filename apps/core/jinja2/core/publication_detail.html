@@ -183,10 +183,21 @@
                 {% if paragraph.image %}
                 {% set image = get_image(paragraph.image) %}
                 {% if image %}
-                <div class="w-75 mx-auto my-4">
+                <div class="w-75 mx-auto my-5">
                     {% include "core/elements/image_with_modal.html" %}
                 </div>
                 {% endif %}
+                {% endif %}
+
+                {% if paragraph.link %}
+                {% with %}
+                {% set object = get_link(paragraph.link) %}
+                {% if object %}
+                <div class="my-5">
+                    {% include "core/elements/link.html" %}
+                </div>
+                {% endif %}
+                {% endwith %}
                 {% endif %}
 
                 {% endfor %}

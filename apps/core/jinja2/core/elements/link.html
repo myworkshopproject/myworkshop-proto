@@ -2,19 +2,39 @@
     <div class="card-body">
         <div class="row align-items-center">
             {% if object.meta.image %}
-            <div class="col-auto">
-                <div class="image-crop image-crop-1-1" style="width: 225px;">
-                    <img class="image-crop rounded-lg" src="{{ object.meta.image.url }}" alt="{{ object.meta.image.alt if object.meta.image.alt else object.title }}" title="{{ object.title }}">
-                </div>
-            </div>
+                {% if object.meta.video %}
+                <a href="#" data-toggle="modal" data-target="#object-{{ object.id }}" data-embed="{{ object.meta.video.url }}">
+                {% elif object.meta.audio %}
+                <a href="#" data-toggle="modal" data-target="#object-{{ object.id }}" data-embed="{{ object.meta.audio.url }}">
+                {% elif object.meta.player %}
+                <a href="#" data-toggle="modal" data-target="#object-{{ object.id }}" data-embed="{{ object.meta.player }}">
+                {% else %}
+                <a href="{{ object.url }}" target="_blank">
+                {% endif %}
+                    <div class="col-auto">
+                        <div class="image-crop image-crop-1-1" style="width: 225px;">
+                            <img class="image-crop rounded-lg" src="{{ object.meta.image.url }}" alt="{{ object.meta.image.alt if object.meta.image.alt else object.title }}">
+                            {% if object.meta.video or object.meta.audio or object.meta.player %}
+                            <div>
+                                <span class="text-dark" style="font-size: 5.0rem; opacity: 0.75;"><i class="far fa-play-circle"></i></span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+                {% if object.meta.video or object.meta.audio or object.meta.player %}
+                {% include "core/modals/embed.html" %}
+                {% endif %}
             {% endif %}
             <div class="col">
-                <div class="row align-items-center">
+                <div class="row">
                     <div class="col">
                         <h5 class="card-title">{{ object.title }}</h5>
                     </div>
                     <div class="col-auto text-right">
-                        <i class="fas fa-link"></i>
+                        <a href="{{ object.url }}" target="_blank">
+                            <i class="fas fa-link"></i>
+                        </a>
                     </div>
                 </div>
                 {% if object.meta.site_name %}

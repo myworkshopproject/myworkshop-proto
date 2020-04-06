@@ -205,6 +205,17 @@
                         }
                     ]
                 },
+                "link": {
+                    "title": "{{ _('Link') }}",
+                    "description": "{{ _('Paste the link ID.') }}",
+                    "type": "string",
+                    "links": [{
+                            "rel": "{{ _('Detail') }}",
+                            "href": "/links/\{\{ self \}\}/",
+                            "class": "text-primary"
+                        }
+                    ]
+                },
                 "textarea": {
                     "title": "{{ _('textarea') }}",
                     "type": "string",
@@ -286,6 +297,14 @@
                             "required": ["image"],
                             "properties": {
                                 "image": {"$ref": "#/definitions/image" }
+                            }
+                        },
+                        {
+                            "title": "{{ _('link') }}",
+                            "type": "object",
+                            "required": ["link"],
+                            "properties": {
+                                "link": {"$ref": "#/definitions/link" }
                             }
                         }
                         ]

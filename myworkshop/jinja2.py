@@ -9,7 +9,7 @@ from django.utils import translation
 from jinja2 import Environment
 from markdown2 import markdown
 from mimetypes import guess_type
-from core.models import Image, ProjectType, Publication, PublicationType
+from core.models import Image, Link, ProjectType, Publication, PublicationType
 from flatpages.models import FlatPage
 
 
@@ -28,6 +28,14 @@ def get_image(id):
     try:
         image = Image.objects.get(pk=id)
         return image
+    except:
+        return None
+
+
+def get_link(id):
+    try:
+        link = Link.objects.get(pk=id)
+        return link
     except:
         return None
 
@@ -124,6 +132,7 @@ def environment(**options):
         {
             "as_crispy_form": as_crispy_form,
             "get_image": get_image,
+            "get_link": get_link,
             "get_messages": get_messages,
             "get_publication": get_publication,
             "guess_type": guess_type,
