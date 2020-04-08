@@ -1,6 +1,18 @@
-<a class="h4 mx-1" href="#"><i class="fab fa-github"></i></a>
-<a class="h4 mx-1" href="#"><i class="fab fa-facebook"></i></a>
-<a class="h4 mx-1" href="#"><i class="fab fa-instagram"></i></a>
-<a class="h4 mx-1" href="#"><i class="fab fa-twitter"></i></a>
-<a class="h4 mx-1" href="#"><i class="fab fa-linkedin"></i></a>
-<a class="h4 mx-1" href="#"><i class="fab fa-youtube"></i></a>
+{% if user.github_username %}
+<a class="h4 mx-1" target="_blank" href="https://github.com/{{ user.github_username }}"><i class="fab fa-github"></i></a>
+{% endif %}
+{% if user.facebook_username %}
+<a class="h4 mx-1" target="_blank" href="https://www.facebook.com/{{ user.facebook_username }}"><i class="fab fa-facebook"></i></a>
+{% endif %}
+{% if user.instagram_username %}
+<a class="h4 mx-1" target="_blank" href="https://www.instagram.com/{{ user.instagram_username }}/"><i class="fab fa-instagram"></i></a>
+{% endif %}
+{% if user.twitter_username %}
+<a class="h4 mx-1" target="_blank" href="https://twitter.com/{{ user.twitter_username }}"><i class="fab fa-twitter"></i></a>
+{% endif %}
+{% if user.linkedin_public_url %}
+<a class="h4 mx-1" target="_blank" href="{{ user.linkedin_public_url }}"><i class="fab fa-linkedin"></i></a>
+{% endif %}
+{% if user.youtube_channel_url %}
+<a class="h4 mx-1" target="_blank" href="{{ user.youtube_channel_url }}"><i class="fab fa-youtube"></i></a>
+{% endif %}

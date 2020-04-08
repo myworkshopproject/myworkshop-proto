@@ -15,11 +15,12 @@
     {% include "core/modals/user.html" %}
     <div class="card-body">
         <h5 class="card-title">{{ user.get_full_name() }}</h5>
-        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        {% include 'accounts/social.html' %}
     </div>
     <div class="card-footer text-muted">
-        {% for tag in ['un', 'deux', 'trois'] %}
-        <a href="#" class="badge badge-secondary">{{ tag }}</a>
+        {{ badge_pill.a_tag_object('user') }}
+        {% for tag in user.tags %}
+            {{ badge_pill.a_tag(tag) }}
         {% endfor %}
     </div>
 </div>

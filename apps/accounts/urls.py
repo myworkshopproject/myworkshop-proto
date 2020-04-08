@@ -9,6 +9,7 @@ app_name = "accounts"
 urlpatterns = [
     path("", views.CustomUserListView.as_view(), name="user-list"),
     path("<str:pk>/", views.CustomUserDetailView.as_view(), name="user-detail"),
+    path("<str:pk>/update/", views.CustomUserUpdateView.as_view(), name="user-update"),
     path(
         "<str:pk>/labbook/", views.CustomUserLabbookView.as_view(), name="user-labbook"
     ),

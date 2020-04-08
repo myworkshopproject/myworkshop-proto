@@ -3,7 +3,15 @@ from django.contrib.sites.models import Site
 from django.db import models
 from django.utils.translation import gettext, gettext_lazy as _
 from core.models import BaseModel, LogModelMixin
-from core.utils import TwitterUsernameValidator
+from core.utils import (
+    UsernameValidator,
+    FacebookUsernameValidator,
+    GithubUsernameValidator,
+    InstagramUsernameValidator,
+    LinkedinPublicUrlValidator,
+    TwitterUsernameValidator,
+    YoutubeChannelUrlValidator,
+)
 
 
 def workshop_file_name(instance, filename):
@@ -64,6 +72,51 @@ class Workshop(LogModelMixin, BaseModel):
         verbose_name=_("footer"),
     )  # [i18n]
 
+    facebook_app_id = models.CharField(
+        blank=True,
+        max_length=255,
+        verbose_name=_("Facebook app ID"),
+        help_text=_(
+            "In order to use Facebook Insights you must add the app ID to your page."  # Afin de pouvoir utiliser les Insights Facebook, vous devez ajouter l’ID d’app à votre page.
+        ),
+    )
+
+    facebook_username_validator = FacebookUsernameValidator()
+
+    facebook_username = models.CharField(
+        max_length=255,
+        blank=True,
+        validators=[facebook_username_validator],
+        verbose_name=_("Facebook's username"),
+    )
+
+    github_username_validator = GithubUsernameValidator()
+
+    github_username = models.CharField(
+        max_length=40,
+        blank=True,
+        validators=[github_username_validator],
+        verbose_name=_("GitHub's username"),
+    )
+
+    instagram_username_validator = InstagramUsernameValidator()
+
+    instagram_username = models.CharField(
+        max_length=255,
+        blank=True,
+        validators=[instagram_username_validator],
+        verbose_name=_("Instagram's username"),
+    )
+
+    linkedin_public_url_validator = LinkedinPublicUrlValidator()
+
+    linkedin_public_url = models.URLField(
+        max_length=2048,
+        blank=True,
+        verbose_name=_("LinkedIn public profile url"),
+        validators=[linkedin_public_url_validator],
+    )
+
     twitter_site_validator = TwitterUsernameValidator()
 
     twitter_site = models.CharField(
@@ -74,13 +127,13 @@ class Workshop(LogModelMixin, BaseModel):
         help_text=_("@username for the website used in the card footer."),
     )
 
-    facebook_app_id = models.CharField(
+    youtube_channel_url_validator = YoutubeChannelUrlValidator()
+
+    youtube_channel_url = models.URLField(
+        max_length=2048,
         blank=True,
-        max_length=255,
-        verbose_name=_("Facebook app ID"),
-        help_text=_(
-            "In order to use Facebook Insights you must add the app ID to your page."  # Afin de pouvoir utiliser les Insights Facebook, vous devez ajouter l’ID d’app à votre page.
-        ),
+        verbose_name=_("YouTube channel url"),
+        validators=[youtube_channel_url_validator],
     )
 
     # MANAGERS

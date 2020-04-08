@@ -1,6 +1,23 @@
-<a class="h1 mx-2" href="#"><i class="fab fa-github"></i></a>
-<a class="h1 mx-2" href="#"><i class="fab fa-facebook"></i></a>
-<a class="h1 mx-2" href="#"><i class="fab fa-instagram"></i></a>
-<a class="h1 mx-2" href="#"><i class="fab fa-twitter"></i></a>
-<a class="h1 mx-2" href="#"><i class="fab fa-linkedin"></i></a>
-<a class="h1 mx-2" href="#"><i class="fab fa-youtube"></i></a>
+{% if request.site.workshop.github_username %}
+<a class="h1 mx-2" target="_blank" href="https://github.com/{{ request.site.workshop.github_username }}"><i class="fab fa-github"></i></a>
+{% endif %}
+
+{% if request.site.workshop.facebook_username %}
+<a class="h1 mx-2" target="_blank" href="https://www.facebook.com/{{ request.site.workshop.facebook_username }}"><i class="fab fa-facebook"></i></a>
+{% endif %}
+
+{% if request.site.workshop.instagram_username %}
+<a class="h1 mx-2" target="_blank" href="https://www.instagram.com/{{ request.site.workshop.instagram_username }}/"><i class="fab fa-instagram"></i></a>
+{% endif %}
+
+{% if request.site.workshop.twitter_site %}
+<a class="h1 mx-2" target="_blank" href="https://twitter.com/{{ request.site.workshop.twitter_site }}"><i class="fab fa-twitter"></i></a>
+{% endif %}
+
+{% if request.site.workshop.linkedin_public_url %}
+<a class="h1 mx-2" target="_blank" href="{{ request.site.workshop.linkedin_public_url }}"><i class="fab fa-linkedin"></i></a>
+{% endif %}
+
+{% if request.site.workshop.youtube_channel_url %}
+<a class="h1 mx-2" target="_blank" href="{{ request.site.workshop.youtube_channel_url }}"><i class="fab fa-youtube"></i></a>
+{% endif %}

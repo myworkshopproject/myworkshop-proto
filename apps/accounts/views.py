@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext, gettext_lazy as _
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404, redirect
 from accounts.models import CustomUser
@@ -13,6 +14,29 @@ class CustomUserDetailView(DetailView):
     model = CustomUser
     context_object_name = "user"
     template_name = "accounts/user_detail.html"
+
+
+class CustomUserUpdateView(UpdateView):
+    model = CustomUser
+    fields = [
+        "first_name",
+        "last_name",
+        "short_description",
+        "tags",
+        "photo",
+        "facebook_username",
+        "github_username",
+        "instagram_username",
+        "linkedin_public_url",
+        "twitter_username",
+        "youtube_channel_url",
+    ]
+    template_name = "core/forms/object_update.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["enctype"] = "multipart/form-data"
+        return context
 
 
 class CustomUserListView(ListView):

@@ -28,7 +28,22 @@ class CustomUserAdmin(UserAdmin):
             },
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
-        (_("Optional"), {"fields": ("twitter_username", "photo")}),
+        (
+            _("Optional"),
+            {
+                "fields": (
+                    "photo",
+                    "short_description",
+                    "tags",
+                    "facebook_username",
+                    "github_username",
+                    "instagram_username",
+                    "linkedin_public_url",
+                    "twitter_username",
+                    "youtube_channel_url",
+                )
+            },
+        ),
     )
     add_fieldsets = (
         (

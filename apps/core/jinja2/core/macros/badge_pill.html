@@ -63,5 +63,13 @@
         icon = '<i class="fas fa-pencil-alt"></i>',
         )
     }}
+{% elif type == 'user' %}
+    {{ a_tag(
+        text=_('user'),
+        search='user',
+        color='danger',
+        icon = '<i class="fas fa-user"></i>',
+        )
+    }}
 {% endif %}
 {% endmacro %}

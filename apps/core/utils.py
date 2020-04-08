@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup, SoupStrainer
 from bs4.dammit import EncodingDetector
 from urllib.parse import urlparse
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, URLValidator
 from django.utils.translation import gettext, gettext_lazy as _
 
 
@@ -15,11 +15,49 @@ class UsernameValidator(RegexValidator):
     flags = 0
 
 
+class FacebookUsernameValidator(RegexValidator):
+    regex = r"^[a-zA-Z.]{5,}$"
+    message = _(
+        "Enter a valid Facebook username. This value may contain at least 5 characters and only letters, numbers, and . character."
+    )
+    flags = 0
+
+
+class GithubUsernameValidator(RegexValidator):
+    regex = r"^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$"
+    message = _(
+        "Enter a valid GitHub username. This value may contain at most 39 characters and only letters, numbers, and hyphens."
+    )
+    flags = 0
+
+
+class InstagramUsernameValidator(RegexValidator):
+    regex = (
+        r"^([A-Za-z0-9._](?:(?:[A-Za-z0-9._]|(?:\.(?!\.))){2,28}(?:[A-Za-z0-9._]))?)$"
+    )
+    message = _("Enter a valid Instagram username.")
+    flags = 0
+
+
+class LinkedinPublicUrlValidator(URLValidator):
+    regex = r"^https://www.linkedin.com/in/[\w-]+$"
+    schemes = ["https"]
+    message = _("Enter a valid LinkedIn public url.")
+    flags = 0
+
+
 class TwitterUsernameValidator(RegexValidator):
-    regex = r"^@[\w]+\Z"
+    regex = r"^@[\w]{1,15}$"
     message = _(
         "Enter a valid Twitter username. This value may start with @ and contain only letters, numbers, and _ character."
     )
+    flags = 0
+
+
+class YoutubeChannelUrlValidator(URLValidator):
+    regex = r"^https://www.youtube.com/[\w\/]+$"
+    schemes = ["https"]
+    message = _("Enter a valid YouTube channel url.")
     flags = 0
 
 
