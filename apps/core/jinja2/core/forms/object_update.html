@@ -16,6 +16,7 @@
                 {% if image %}
                 {% include "core/elements/image.html" %}
                 {% endif %}
+                {% include 'core/messages/current_language.html' %}
                 <form method="post"{% if enctype %} enctype="{{ enctype }}"{% endif %}>
                     {{ csrf_input }}
                     {{ as_crispy_form(form) }}

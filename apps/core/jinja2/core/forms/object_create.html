@@ -13,6 +13,7 @@
         <div class="row justify-content-center">
             <div class="col col-lg-8">
                 <h1>{{ _('Create') }}</h1>
+                {% include 'core/messages/current_language.html' %}
                 <form method="post"{% if enctype %} enctype="{{ enctype }}"{% endif %}>
                     {{ csrf_input }}
                     {{ as_crispy_form(form) }}

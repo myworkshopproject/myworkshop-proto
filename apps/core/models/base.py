@@ -116,9 +116,7 @@ class BaseModel(models.Model):
     )
 
     title = models.CharField(
-        max_length=settings.MYWORKSHOP_TITLE_LENGHT,
-        verbose_name=_("title"),
-        default="untitled",
+        max_length=settings.MYWORKSHOP_TITLE_LENGHT, verbose_name=_("title")
     )  # [i18n]
 
     # is_pinned
@@ -171,7 +169,7 @@ class BaseModel(models.Model):
 
     # TO STRING METHOD
     def __str__(self):
-        return self.title if self.title else str(_("unknown"))
+        return self.title if self.title else str(_("untitled"))
 
     # SAVE METHOD
 

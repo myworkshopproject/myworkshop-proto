@@ -79,7 +79,7 @@ class ProjectType(LogModelMixin, SlugModel, BaseModel):
 
     # TO STRING METHOD
     def __str__(self):
-        return self.title
+        return self.title if self.title else str(_("untitled"))
 
     # SAVE METHOD
     def save(self, *args, **kwargs):
@@ -220,7 +220,7 @@ class Project(LogModelMixin, SlugModel, BaseModel):
 
     # TO STRING METHOD
     def __str__(self):
-        return self.title
+        return self.title if self.title else str(_("untitled"))
 
     # SAVE METHOD
     def save(self, *args, **kwargs):
