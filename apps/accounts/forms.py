@@ -1,6 +1,6 @@
 from allauth.account.forms import LoginForm, SignupForm
 from django import forms
-from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 
 class CustomSignupForm(SignupForm):

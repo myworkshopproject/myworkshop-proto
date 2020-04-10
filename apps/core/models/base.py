@@ -3,7 +3,7 @@ from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils.text import slugify
-from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.translation import ugettext, ugettext_lazy as _
 from accounts.models import get_sentinel_user
 
 

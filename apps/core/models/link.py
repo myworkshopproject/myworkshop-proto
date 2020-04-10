@@ -1,7 +1,7 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.urls import reverse
-from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.translation import ugettext, ugettext_lazy as _
 from core.models import BaseModel, LogModelMixin
 from core.utils import custom_url_parse
 

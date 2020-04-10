@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.translation import ugettext, ugettext_lazy as _
 from allauth.account.models import EmailAddress
 from accounts.models import CustomUser
 

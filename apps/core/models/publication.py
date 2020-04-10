@@ -2,7 +2,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
-from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.translation import ugettext, ugettext_lazy as _
 from model_utils.fields import MonitorField
 from core.models import BaseModel, LogModelMixin, SlugModel
 

@@ -1,7 +1,7 @@
 from itertools import chain
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.translation import ugettext, ugettext_lazy as _
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView

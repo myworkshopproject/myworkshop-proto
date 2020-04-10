@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.urls import reverse
-from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.translation import ugettext, ugettext_lazy as _
 from core.utils import (
     UsernameValidator,
     FacebookUsernameValidator,

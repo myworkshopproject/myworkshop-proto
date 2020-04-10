@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.translation import ugettext, ugettext_lazy as _
 from modeltranslation.admin import TranslationAdmin
 from simple_history.admin import SimpleHistoryAdmin
 from core.admin import LogAdminMixin, SaveOwnerModelMixin

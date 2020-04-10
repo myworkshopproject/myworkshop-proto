@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup, SoupStrainer
 from bs4.dammit import EncodingDetector
 from urllib.parse import urlparse
 from django.core.validators import RegexValidator, URLValidator
-from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 
 class UsernameValidator(RegexValidator):
