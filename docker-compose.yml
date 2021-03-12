@@ -1,0 +1,89 @@
+version: "3"
+
+services:
+    reverse-proxy:
+        image: nginx:${NGINX_VERSION}-alpine
+        volumes:
+            - ./reverse-proxy/nginx/templates:/etc/nginx/templates
+            - ./core/dist/assets/:/www/assets/
+            - ./core/static/:/www/static/
+            - core-media:/www/media/
+        ports:
+            - "${NGINX_HOST_PORT}:${NGINX_PORT}"
+        environment:
+            - NGINX_HOST=${DOMAIN}
+            - NGINX_PORT=${NGINX_PORT}
+            - NGINX_CLIENT_MAX_BODY_SIZE=${NGINX_CLIENT_MAX_BODY_SIZE}
+            - CORE_HOST=core
+            - CORE_PORT=${CORE_PORT}
+            - ASSETS_ROOT=/www/assets/
+            - STATIC_ROOT=/www/static/
+            - MEDIA_ROOT=/www/media/
+        restart: unless-stopped
+        depends_on:
+            - core
+
+    db:
+        image: postgres:${POSTGRES_VERSION}-alpine
+        environment:
+            - POSTGRES_DB=${POSTGRES_DB}
+            - POSTGRES_USER=${POSTGRES_USER}
+            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+        volumes:
+            - db-data:/var/lib/postgresql/data/
+        expose:
+            - "5432"
+        restart: unless-stopped
+
+    brocker:
+        image: rabbitmq:${RABBITMQ_VERSION}-management-alpine
+        environment:
+            - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+            - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+            - RABBITMQ_DEFAULT_VHOST=${RABBITMQ_DEFAULT_VHOST}
+        expose:
+            - "5672"
+        ports:
+            - "${RABBITMQ_MANAGEMENT_HOST_PORT}:15672"
+        restart: unless-stopped
+
+    core:
+        build:
+            context: ./core
+            args:
+                - PYTHON_VERSION=${PYTHON_VERSION}
+        image: ${MYAPP_NAME}:${MYAPP_VERSION}
+        volumes:
+            - core-media:/code/media/
+        environment:
+            - DEBUG=False
+            - SITE_NAME=${SITE_NAME}
+            - ALLOWED_HOSTS=${DOMAIN}
+            - SERVER_PORT=${CORE_PORT}
+            - SECRET_KEY=${SECRET_KEY}
+            - FONTAWESOME_SITE_ICON=${FONTAWESOME_SITE_ICON}
+            - GITHUB_REPO_NAME=${GITHUB_REPO_NAME}
+            - GITHUB_REPO_URL=${GITHUB_REPO_URL}
+            - GITHUB_TEAM_NAME=${GITHUB_TEAM_NAME}
+            - GITHUB_TEAM_URL=${GITHUB_TEAM_URL}
+            - GITHUB_CONTRIB_URL=${GITHUB_CONTRIB_URL}
+            - LICENSE_NAME=${LICENSE_NAME}
+            - LICENSE_URL=${LICENSE_URL}
+            - POSTGRES_DB=${POSTGRES_DB}
+            - POSTGRES_USER=${POSTGRES_USER}
+            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+            - POSTGRES_HOST=db
+            - RABBITMQ_HOST=brocker
+            - RABBITMQ_VHOST=${RABBITMQ_DEFAULT_VHOST}
+        expose:
+            - ${CORE_PORT}
+        command: ["./utils/wait-for-postgres.sh", "make", "serve"]
+        depends_on:
+            - db
+        restart: unless-stopped
+
+volumes:
+    db-data:
+        name: ${MYAPP_NAME}-db-data-prod
+    core-media:
+        name: ${MYAPP_NAME}-core-media-prod
