@@ -3,9 +3,16 @@
 import os
 import sys
 
+if os.path.exists(".env"):
+    with open(".env") as f:
+        for line in f:
+            key, value = line.strip().split("=", 1)
+            os.environ.setdefault(key, value)
+
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myworkshop.settings')
+    """Run administrative tasks."""
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myapp.settings")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -17,5 +24,5 @@ def main():
     execute_from_command_line(sys.argv)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

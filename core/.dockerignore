@@ -1,0 +1,8 @@
+*
+!apps
+!myapp
+!utils
+!Makefile
+!manage.py
+!requirements.in
+!webpack-stats.json
