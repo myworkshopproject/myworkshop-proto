@@ -1,11 +1,14 @@
 import simple_history
-from accounts.models import CustomUser
+from django.contrib.auth.models import Group
 from modeltranslation.translator import translator, TranslationOptions
+from accounts.models import User
+
+simple_history.register(Group, app="accounts")
 
 
-class CustomUserTranslationOptions(TranslationOptions):
-    fields = ("short_description",)
+class UserTranslationOptions(TranslationOptions):
+    pass
 
 
-translator.register(CustomUser, CustomUserTranslationOptions)
-simple_history.register(CustomUser)
+translator.register(User, UserTranslationOptions)
+simple_history.register(User, excluded_fields=["date_joined", "last_login", "password"])

@@ -1,8 +1,10 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.utils.translation import gettext, gettext_lazy as _
 from allauth.account.models import EmailAddress
-from accounts.models import CustomUser
+from allauth.socialaccount.models import SocialAccount
+from simple_history.admin import SimpleHistoryAdmin
+from accounts.models import User
 
 
 class EmailAddressInline(admin.TabularInline):
@@ -10,8 +12,17 @@ class EmailAddressInline(admin.TabularInline):
     extra = 0
 
 
-class CustomUserAdmin(UserAdmin):
+class SocialAccountInline(admin.TabularInline):
+    model = SocialAccount
+    extra = 0
+    fields = ("provider", "uid", "extra_data", "last_login", "date_joined")
+    fields = ("provider", "extra_data", "last_login", "date_joined")
+    readonly_fields = ("last_login", "date_joined")
+
+
+class UserAdmin(BaseUserAdmin, SimpleHistoryAdmin):
     # see https://github.com/django/django/blob/master/django/contrib/auth/admin.py
+    readonly_fields = ("username",)
     fieldsets = (
         (None, {"fields": ("username", "password")}),
         (_("Personal info"), {"fields": ("first_name", "last_name", "email")}),
@@ -28,37 +39,11 @@ class CustomUserAdmin(UserAdmin):
             },
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
-        (
-            _("Optional"),
-            {
-                "fields": (
-                    "photo",
-                    "short_description",
-                    "tags",
-                    "facebook_username",
-                    "github_username",
-                    "instagram_username",
-                    "linkedin_public_url",
-                    "twitter_username",
-                    "youtube_channel_url",
-                )
-            },
-        ),
     )
     add_fieldsets = (
         (
             None,
-            {
-                "classes": ("wide",),
-                "fields": (
-                    "first_name",
-                    "last_name",
-                    "email",
-                    "username",
-                    "password1",
-                    "password2",
-                ),
-            },
+            {"classes": ("wide",), "fields": ("username", "password1", "password2")},
         ),
     )
     list_display = (
@@ -66,12 +51,15 @@ class CustomUserAdmin(UserAdmin):
         "email",
         "first_name",
         "last_name",
+        "is_superuser",
         "is_staff",
-        "has_verified_emailaddress",
+        "is_active",
     )
     list_filter = ("is_staff", "is_superuser", "is_active", "groups")
     search_fields = ("username", "first_name", "last_name", "email")
-    inlines = [EmailAddressInline]
+    ordering = ("username",)
+    filter_horizontal = ("groups", "user_permissions")
+    inlines = [EmailAddressInline, SocialAccountInline]
 
 
-admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(User, UserAdmin)
