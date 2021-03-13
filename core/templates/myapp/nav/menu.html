@@ -1,5 +1,5 @@
 {% load i18n %}
 {% url 'core:home' as the_url %}
 <a class="navbar-item{% if request.path == the_url %} is-active{% endif %}" href="{{ the_url }}">{% trans 'Home' %}</a>
-{% url 'publications:home' as the_url %}
+{% url 'publications:publication-list' as the_url %}
 <a class="navbar-item{% if request.path == the_url %} is-active{% endif %}" href="{{ the_url }}">{% trans 'Publications' %}</a>

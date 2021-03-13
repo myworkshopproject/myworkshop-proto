@@ -1,0 +1,27 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+{% load render_bundle from webpack_loader %}
+
+{% block robots %}
+<meta name="robots" content="all, index, follow">
+{% endblock robots %}
+
+{% block page_css %}
+{% render_bundle 'home' 'css' %}
+{% endblock page_css %}
+
+{% block page_js %}
+{% render_bundle 'home' 'js' %}
+{% endblock page_js %}
+
+{% block page_content %}
+<div>
+    <h2 class="title">{{ object.title }}</h2>
+    <p class="subtitle">{{ object.description }}</p>
+    <ul>
+    {% for object in object_list %}
+    <li><a href="{% url 'publications:publication-detail' object.id %}">{{ object.title }}</a></li>
+    {% endfor %}
+</ul>
+</div>
+{% endblock page_content %}

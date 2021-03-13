@@ -176,6 +176,9 @@ GITHUB_CONTRIB_URL = str(os.environ["GITHUB_CONTRIB_URL"])
 LICENSE_NAME = str(os.environ["LICENSE_NAME"])
 LICENSE_URL = str(os.environ["LICENSE_URL"])
 
+# Publications App
+PUBLICATIONSAPP_ID_LENGHT = 6
+
 # Celery Configuration Options
 CELERY_BROKER_URL = "amqp://{host}:5672/{vhost}".format(
     host=str(os.environ["RABBITMQ_HOST"]),
