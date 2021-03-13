@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # "allauth.socialaccount.providers.twitter",
     # "allauth.socialaccount.providers.openid",
     "core.apps.CoreConfig",
+    "publications.apps.PublicationsConfig",
     "webpack_loader",
     "simple_history",
     "widget_tweaks",
@@ -69,7 +70,7 @@ ROOT_URLCONF = "myapp.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
