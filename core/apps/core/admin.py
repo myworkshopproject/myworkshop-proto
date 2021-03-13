@@ -3,9 +3,7 @@ from django.contrib.sites.models import Site
 from django.utils.translation import ugettext, ugettext_lazy as _
 from modeltranslation.admin import TranslationAdmin
 from simple_history.admin import SimpleHistoryAdmin
-from core.models import SiteCustomization
-
-from core.models import BaseModel
+from core.models import BaseModel, SiteCustomization
 
 
 class BaseModelMixin(object):
@@ -16,7 +14,7 @@ class BaseModelMixin(object):
                 {
                     "classes": ("collapse",),
                     "fields": (
-                        # "id",
+                        "id",
                         "created_at",
                         "created_by",
                         "changed_at",
@@ -84,17 +82,6 @@ class BaseModelMixin(object):
                     pass
 
         super(BaseModelMixin, self).save_related(request, form, formsets, change)
-
-
-class ReadOnlyModelMixin(object):
-    def has_add_permission(self, request, obj=None):
-        return False
-
-    def has_change_permission(self, request, obj=None):
-        return False
-
-    def has_delete_permission(self, request, obj=None):
-        return False
 
 
 class SiteAdmin(SimpleHistoryAdmin):
