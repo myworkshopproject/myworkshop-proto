@@ -9,9 +9,28 @@ app_name = "publications"
 REGEX = r"(?P<pk>[\w]+)/(?:(?P<slug>[\w-]+)/)?"
 
 urlpatterns = [
-    path("publications/", views.PublicationListView.as_view(), name="publication-list"),
+    path(
+        "create/",
+        views.PublicationCreateView.as_view(),
+        name="publication-create",
+    ),
+    path(
+        "update/<str:pk>/",
+        views.PublicationUpdateView.as_view(),
+        name="publication-update",
+    ),
+    path(
+        "delete/<str:pk>/",
+        views.PublicationDeleteView.as_view(),
+        name="publication-delete",
+    ),
+    path(
+        "",
+        views.PublicationListView.as_view(),
+        name="publication-list",
+    ),
     re_path(
-        r"^publications/{}".format(REGEX),
+        r"^{}".format(REGEX),
         views.PublicationDetailView.as_view(),
         name="publication-detail",
     ),

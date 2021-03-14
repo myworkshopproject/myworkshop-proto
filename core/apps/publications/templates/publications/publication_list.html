@@ -15,13 +15,40 @@
 {% endblock page_js %}
 
 {% block page_content %}
-<div>
-    <h2 class="title">{{ object.title }}</h2>
-    <p class="subtitle">{{ object.description }}</p>
-    <ul>
-    {% for object in object_list %}
-    <li><a href="{% url 'publications:publication-detail' object.id %}">{{ object.title }}</a></li>
-    {% endfor %}
-</ul>
+<div class="columns">
+    <div class="column is-7 is-offset-3">
+        {% include 'publications/headline.html' %}
+
+        {% for object in object_list %}
+        <div class="block">
+            <div class="card">
+                <div class="card-content">
+                    {% include 'publications/headline.html' %}
+                    {% include 'publications/info.html' %}
+                    <a class="button is-primary" href="{{ object.get_absolute_url }}">
+                        <span class="icon">
+                            <i class="far fa-eye"></i>
+                        </span>
+                        <span>{% translate 'Read' %}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="column is-1 is-offset-1">
+        <div class="sticky">
+            <br>
+            <a href="{% url 'publications:publication-create' %}">
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="{{ object.icon }}"></i>
+                    </span>
+                    <span>{% translate 'New' %}</span>
+                </span>
+            </a>
+        </div>
+    </div>
 </div>
 {% endblock page_content %}

@@ -2,10 +2,6 @@
 {% load i18n %}
 {% load render_bundle from webpack_loader %}
 
-{% block robots %}
-<meta name="robots" content="all, index, follow">
-{% endblock robots %}
-
 {% block page_css %}
 {% render_bundle 'home' 'css' %}
 {% endblock page_css %}
@@ -19,30 +15,27 @@
     <div class="column is-6 is-offset-3">
         {% include 'publications/headline.html' %}
 
-        {% include 'publications/info.html' %}
+        <form method="post">
+            {% csrf_token %}
 
-        <hr>
+            {% include "core/forms/bulma.html" %}
 
-        <div class="content">{{ object.html|safe }}</div>
+            <div class="message is-danger">
+                <div class="message-body">
+                    {% trans "Are you sure you want to delete this publication?" %}
+                </div>
+            </div>
 
-        {% if object.tags %}
-        <hr>
-        <div class="has-text-centered">
-            {% for tag in object.tags %}
-            <span class="tag is-medium mx-1">{{ tag }}</span>
-            {% endfor %}
-        </div>
-        {% endif %}
+            <div class="field">
+                <div class="control">
+                    <button class="button is-danger" type="submit">{% trans "Confirm" %}</button>
+                    <a href="{{ object.get_cancel_url }}" class="button is-ghost">{% trans "Cancel" %}</a>
+                </div>
+            </div>
+        </form>
     </div>
 
-    <div class="column is-2">
-        <div class="content">
-            <p class="has-text-weight-bold">{% translate 'Table of Contents' %}</p>
-            {{ object.toc|safe }}
-        </div>
-    </div>
-
-    <div class="column is-1">
+    <div class="column is-1 is-offset-2">
         <div class="sticky">
             <br>
             <a href="#">

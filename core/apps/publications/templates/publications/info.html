@@ -1,0 +1,39 @@
+{% load i18n %}
+<div class="level">
+    <div class="level-left">
+        <div class="level-item">
+            <a href="#">
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fas fa-user"></i>
+                    </span>
+                    <span>{{ object.owner }}</span>
+                </span>
+            </a>
+        </div>
+        <div class="level-item">
+            <span class="icon-text">
+                <span class="icon">
+                    <i class="far fa-clock"></i>
+                </span>
+                <span>{{ object.changed_at|date:"SHORT_DATE_FORMAT" }}</span>
+            </span>
+        </div>
+    </div>
+    <div class="level-right">
+        <div class="level-item">
+            <a href="{{ object.get_update_url }}" title="{% translate 'Edit' %}">
+                <span class="icon">
+                    <i class="fas fa-edit"></i>
+                </span>
+            </a>
+        </div>
+        <div class="level-item">
+            <a href="{{ object.get_delete_url }}" title="{% translate 'Delete' %}">
+                <span class="icon">
+                    <i class="fas fa-trash"></i>
+                </span>
+            </a>
+        </div>
+    </div>
+</div>

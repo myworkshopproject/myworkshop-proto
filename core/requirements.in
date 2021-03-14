@@ -30,6 +30,9 @@ gunicorn
 # Front-end
 django-webpack-loader==0.7.0
 
+# Markdown
+markdown
+
 # Dev tools
 black
 

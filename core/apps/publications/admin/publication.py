@@ -5,9 +5,22 @@ from publications.models import Publication
 
 
 class PublicationAdmin(BaseModelMixin, SimpleHistoryAdmin):
+    fields = (
+        "source",
+        "toc",
+        "html",
+    )
+
     readonly_fields = (
         "owner",
         "metadata",
+        "toc",
+        "html",
+    )
+
+    list_display = (
+        "__str__",
+        "title",
     )
 
 
