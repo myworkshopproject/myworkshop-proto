@@ -63,3 +63,12 @@ class User(AbstractUser):
             return self.socialaccount_set.all()[0].get_avatar_url()
         except:
             return None
+
+    def __str__(self):
+        return self.get_full_name()
+
+    def get_full_name(self):
+        if self.first_name and self.last_name:
+            return "{} {}".format(self.first_name, self.last_name)
+        else:
+            return self.username
