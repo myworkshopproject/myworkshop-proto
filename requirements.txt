@@ -12,7 +12,7 @@ django-model-utils==4.0.0
 django-modeltranslation==0.14.4
 django-mptt==0.10.0
 django-simple-history==2.8.0
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 html5lib==1.0.1
 idna==2.9
 Jinja2==2.11.1
