@@ -1,0 +1,19 @@
+{% load i18n %}
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>
+            <a href="{{ request.site.sitecustomization.github_repo_url }}">
+                <span class="icon">
+                    <i class="fab fa-github"></i>
+                </span>
+                {{ request.site.sitecustomization.github_repo_name }}
+            </a>
+            {% trans 'by' %}
+            <a href="{{ request.site.sitecustomization.github_team_url }}">{{ request.site.sitecustomization.github_team_name }}</a>
+            {% trans 'and' %}
+            <a href="{{ request.site.sitecustomization.github_contributors_url }}">{% trans 'many contributors' %}</a>.
+            {% trans 'The source code is licensed' %}
+            <a href="{{ request.site.sitecustomization.license_url }}">{{ request.site.sitecustomization.license_name }}</a>.
+        </p>
+    </div>
+</footer>

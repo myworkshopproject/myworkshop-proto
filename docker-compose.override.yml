@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+    reverse-proxy:
+        restart: "no"
+
+    db:
+        ports:
+            - "${POSTGRES_HOST_PORT_DEV}:5432"
+        restart: "no"
+
+    brocker:
+        ports:
+            - "${RABBITMQ_HOST_PORT_DEV}:5672"
+        restart: "no"
+
+    core:
+        volumes:
+            - ./core/:/code/
+        environment:
+            - DEBUG=True
+            - ALLOWED_HOSTS=localhost 127.0.0.1 [::1] ${DOMAIN}
+        ports:
+            - "${CORE_HOST_PORT_DEV}:${CORE_PORT}"
+        command: ["sleep", "infinity"]
+        restart: "no"
+
+    frontend:
+        image: node:15
+        environment:
+            - NODE_ENV=development
+        volumes:
+            - ./core/:/code/
+        working_dir: /code
+        command: ["sleep", "infinity"]
+        ports:
+            - "3000:3000"
+        restart: "no"
+
+volumes:
+    db-data:
+        name: ${MYAPP_NAME}-db-data-dev
+    core-media:
+        name: ${MYAPP_NAME}-core-media-dev

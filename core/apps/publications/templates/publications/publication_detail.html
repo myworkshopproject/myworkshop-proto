@@ -1,0 +1,59 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+{% load render_bundle from webpack_loader %}
+
+{% block robots %}
+<meta name="robots" content="all, index, follow">
+{% endblock robots %}
+
+{% block page_css %}
+{% render_bundle 'home' 'css' %}
+{% endblock page_css %}
+
+{% block page_js %}
+{% render_bundle 'home' 'js' %}
+{% endblock page_js %}
+
+{% block page_content %}
+<div class="columns">
+    <div class="column is-6 is-offset-3">
+        {% include 'publications/headline.html' %}
+
+        {% include 'publications/info.html' %}
+
+        <hr>
+
+        <div class="content">{{ object.html|safe }}</div>
+
+        {% if object.tags %}
+        <hr>
+        <div class="has-text-centered">
+            {% for tag in object.tags %}
+            <span class="tag is-medium mx-1">{{ tag }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="column is-2">
+        <div class="content">
+            <p class="has-text-weight-bold">{% translate 'Table of Contents' %}</p>
+            {{ object.toc|safe }}
+        </div>
+    </div>
+
+    <div class="column is-1">
+        <div class="sticky">
+            <br>
+            <a href="#">
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fas fa-chevron-up"></i>
+                    </span>
+                    <span>{% translate 'Top' %}</span>
+                </span>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock page_content %}

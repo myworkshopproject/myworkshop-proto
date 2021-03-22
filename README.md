@@ -1,4 +1,4 @@
-# myworkshop
+# My Workshop
 A documentation generator for open hardware projects.
 
 ## Disclaimer
@@ -7,65 +7,99 @@ This project is at a very early stage of development: It can evolve dramatically
 ## Features
  * Generate beautiful documentation for open hardware projects!
 
-## Getting started
+## Installation
 
 ### Requirements
- * python 3.6.9 or higher (package _python3_);
- * PostgreSQL 10.3 or higher;
+- [Docker](https://docs.docker.com/get-docker/): we use _Docker_ to develop and run __My Workshop__. This is a strict requirement to use this project.
+- [Docker Compose](https://docs.docker.com/compose/install/): we use _Docker Compose_ to simplify the orchestration of all __My Workshop__ application services, using configuration files for different environments (such as _dev_, _test_, _staging_ or _prod_).
 
-### Install
-Edit `myworkshop/settings/development.py` and complete your database settings in it.
+Download this repository and unzip it on your computer. You should rename the folder `myworkshop-master` in `myworkshop`.
 
-Install all the required tools in a virtualenv:
+Or clone the repository directly on your computer:
 ```
+$ git clone git@github.com:myworkshopproject/myworkshop.git
+```
+
+### Install and run a production environment
+__My Workshop__ stores config in environment variables.
+You must set these environment variables before running __My Workshop__, either directly or by providing the file `.env`.
+To make things easier, we have prepared the `.env.example` template that you can adapt to your project.
+
+Once the environment variables are set, you can build and start all the services of the __My Workshop__ application (via _Docker Compose_) using the following command:
+``` bash
+$ make prod
+```
+
+You can now access the application with your favorite internet browser at the address you set in the `$DOMAIN` environment variable.
+
+When launching the application for the first time, you will need to create a super user to manage it.
+You can do this using the following command:
+``` bash
+$ docker exec -it myworkshop_core_1 make createsuperuser
+```
+
+Finally, To stop all application services, use the following command:
+``` bash
+$ make stop
+```
+
+### Install and run a development environment
+You can build and start a development environment (completely independent of the production one) with the following command:
+``` bash
+$ make dev
+```
+
+This previous command builds all the required services for development and starts them all except the _core_ web server and workers.
+
+To start the _Django_ web server, please open a terminal in the container:
+``` bash
+$ docker exec -it myworkshop-dev_core_1 /bin/bash
+```
+
+Then run:
+``` bash
+$ make venv
 $ make install
+$ make migrate
+$ make populate-db
+$ make createsuperuser
+$ make serve-dev
 ```
 
-### Serve
-
-#### Development environment
-To run the application locally in a development environment:
-
-```
-$ make serve
+To start a _Celery_ worker, please run:
+``` bash
+$ docker exec -it myworkshop-dev_core_1 make worker
 ```
 
-#### Production environment
-Create a new file named `production.py` in `myworkshop/settings` and write your production settings in it.
-
-Edit `myworkshop/settings/__init__.py`:
+To start the frontend dev environment, please open a terminal in the container:
+``` bash
+$ docker exec -it myworkshop-dev_frontend_1 /bin/bash
 ```
-from .production import *
+
+Then run:
+``` bash
+$ npm install
+$ npm run build
 ```
 
 ## Tech/framework used
+- [NGINX](https://www.nginx.com/): a free and open-source web server used as a reverse proxy;
+- [Django](https://www.djangoproject.com/): a Python-based free and open-source web framework;
+- [PostgreSQL](https://www.postgresql.org/): a free and open-source relational database management system.
 
-### Backend
-* [Django 3.0](https://www.djangoproject.com/) : High-level Python Web framework.
-* [Jinja2 2.11.1](https://jinja.palletsprojects.com/en/2.11.x/) : a modern and designer-friendly templating language for Python.
-* [The “sites” framework](https://docs.djangoproject.com/en/2.2/ref/contrib/sites/) : Associating content with multiple sites
-* [django-allauth 0.41.0](https://github.com/pennersr/django-allauth) : Integrated set of Django applications addressing authentication, registration, account management as well as 3rd party (social) account authentication.
-* [Modeltranslation 0.14.4](https://github.com/deschler/django-modeltranslation) : is used to translate dynamic content of existing Django models to an arbitrary number of languages without having to change the original model classes.
-* [django-crispy-forms 1.9.0](https://github.com/django-crispy-forms/django-crispy-forms) : The best way to have DRY Django forms.
-* [Django REST framework 3.11.0](https://github.com/encode/django-rest-framework) : A powerful and flexible toolkit for building Web APIs.
+## Contributing
+For the sake of simplicity, to ease interaction with the community, we use the [GitHub flow](https://guides.github.com/introduction/flow/index.html) for open-source projects. In a few words:
+* The `master` branch is always stable and deployable;
+* Tags from the `master` branch are considered as releases;
+* Contributors have to fork or create a new feature-branch to work on (if they are allowed to in the original repository) and propose a pull request to merge their branch to `master`.
 
-### Frontend
- * [Bootstrap 4.4.1](https://getbootstrap.com/) : A responsive web toolkit.
- * [Boostwatch 4.4.1](https://bootswatch.com/) : Free themes for Bootstrap.
- * [Font Awesome 5.12.1](https://fontawesome.com/) : Icon set and toolkit.
- * [jQuery 3.4.1](https://jquery.com/) : A feature-rich JavaScript library for dynamic web pages.
+If you'd like to contribute, please raise an issue or fork the repository and use a feature branch. Pull requests are warmly welcome!
 
 ## Versioning
 We use [SemVer](http://semver.org/) for versioning. See the [CHANGELOG.md](CHANGELOG.md) file for details.
-
-## Technical details
-To know more about the development guidelines of this project, see the [TECHNICAL_DETAILS.md](TECHNICAL_DETAILS.md) file.
-
-## Contributing
-If you'd like to contribute, please raise an issue or fork the repository and use a feature branch. Pull requests are warmly welcome.
 
 ## Licensing
 The code in this project is licensed under MIT license. See the [LICENSE](LICENSE) file for details.
 
 ## Contributors
- * **Julien Lebunetel** - [jlebunetel](https://github.com/jlebunetel)
+* **Julien Lebunetel** - [jlebunetel](https://github.com/jlebunetel).

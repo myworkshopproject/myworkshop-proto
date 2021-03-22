@@ -1,0 +1,15 @@
+<div class="navbar-brand">
+    <a class="navbar-item" href="{% url 'core:home' %}">
+        <div class="is-size-4 has-text-weight-bold is-family-secondary">
+            <span class="icon">
+                <i class="{{ request.site.sitecustomization.fontawesome_site_icon }}"></i>
+            </span>
+            <span>{{ request.site.name }}</span>
+        </div>
+    </a>
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+    </a>
+</div>

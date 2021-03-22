@@ -1,0 +1,50 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+{% load render_bundle from webpack_loader %}
+
+{% block page_css %}
+{% render_bundle 'home' 'css' %}
+{% endblock page_css %}
+
+{% block page_js %}
+{% render_bundle 'home' 'js' %}
+{% endblock page_js %}
+
+{% block page_content %}
+<div class="columns">
+    <div class="column is-6 is-offset-3">
+        {% include 'publications/headline.html' %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% include "core/forms/bulma.html" %}
+
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary" type="submit" name="save">{% trans "Save" %}</button>
+                    <button class="button is-light" type="submit" name="continue">{% trans "Save and continue editing" %}</button>
+                    <a href="{{ object.get_cancel_url }}" class="button is-ghost">{% trans "Cancel" %}</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="column is-2">
+    </div>
+
+    <div class="column is-1">
+        <div class="sticky">
+            <br>
+            <a href="#">
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fas fa-chevron-up"></i>
+                    </span>
+                    <span>{% translate 'Top' %}</span>
+                </span>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock page_content %}

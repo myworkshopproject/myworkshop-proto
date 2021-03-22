@@ -1,0 +1,40 @@
+# Generic tools
+pip-tools
+wheel
+
+# Django
+Django==3.1.*
+
+# PostgreSQL
+psycopg2
+
+# Auth
+django-allauth
+
+# i18n
+django-modeltranslation
+
+# Log
+django-simple-history
+
+# Celery
+celery
+django-celery-results
+
+# Forms
+django-widget-tweaks
+
+# Gunicorn
+gunicorn
+
+# Front-end
+django-webpack-loader==0.7.0
+
+# Markdown
+markdown
+
+# Dev tools
+black
+
+# Debug
+django-debug-toolbar

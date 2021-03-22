@@ -1,0 +1,19 @@
+{% load i18n %}
+<nav class="navbar has-shadow is-spaced">
+    <div class="container">
+        {% include 'core/nav/brand.html' %}
+        <div class="navbar-menu" id="navMenu">
+            <div class="navbar-start">
+                {% include 'myapp/nav/menu.html' %}
+            </div>
+            <div class="navbar-end">
+                {% include 'core/nav/lang.html' %}
+                {% if user.is_authenticated %}
+                {% include 'core/nav/accounts_menu.html' %}
+                {% else %}
+                {% include 'core/nav/login_buttons.html' %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>

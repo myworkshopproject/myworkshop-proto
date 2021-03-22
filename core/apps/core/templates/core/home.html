@@ -1,0 +1,25 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+{% load render_bundle from webpack_loader %}
+
+{% block robots %}
+<meta name="robots" content="all, index, follow">
+{% endblock robots %}
+
+{% block page_css %}
+{% render_bundle 'home' 'css' %}
+{% endblock page_css %}
+
+{% block page_js %}
+{% render_bundle 'home' 'js' %}
+{% endblock page_js %}
+
+{% block page_content %}
+<div id="home">
+    <h2 class="title">{{ request.site.name }}</h2>
+    <p class="subtitle">{{ request.site.sitecustomization.tagline }}</p>
+    <div class="content">
+        {{ request.site.sitecustomization.description|safe }}
+    </div>
+</div>
+{% endblock page_content %}

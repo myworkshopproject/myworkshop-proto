@@ -1,0 +1,44 @@
+@charset "utf-8";
+
+@font-face {
+    font-family: 'DejaVu Sans';
+    src: url("../fonts/DejaVuSans.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: 'DejaVu Sans Mono';
+    src: url("../fonts/DejaVuSansMono.ttf") format('truetype');
+}
+
+// Set your brand colors
+$color_1: #47B8B7;
+$color_2: #B747B8;
+$color_3: #B8B747;
+$color_1_dark: #205353;
+$color_2_dark: #532053;
+$color_3_dark: #535320;
+$color_grey_dark: #757763;
+$color_grey_light: #D0D1CD;
+
+// Update Bulma's global variables
+$family-sans-serif: "DejaVu Sans", sans-serif;
+$family-monospace: "DejaVu Sans Mono", monospace;
+$grey-dark: $color_grey_dark;
+$grey-light: $color_grey_light;
+$primary: $color_1;
+$link: $color_2;
+//$body-background-color: $color_5;
+
+// Import bulma.sass
+@import "~bulma/bulma.sass";
+
+// Or import only what you need from Bulma
+// @import "~bulma/sass/utilities/_all.sass";
+// @import "~bulma/sass/base/_all.sass";
+// @import "~bulma/sass/elements/button.sass";
+// @import "~bulma/sass/elements/container.sass";
+// @import "~bulma/sass/elements/title.sass";
+// @import "~bulma/sass/form/_all.sass";
+// @import "~bulma/sass/components/navbar.sass";
+// @import "~bulma/sass/layout/hero.sass";
+// @import "~bulma/sass/layout/section.sass";

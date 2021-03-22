@@ -1,0 +1,107 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% load render_bundle from webpack_loader %}
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+
+    {% if object.author %}
+    <meta name="author" content="{% if object.author %}{{ object.author }}{% else %}{{ request.site.name }}{% endif %}">
+    {% endif %}
+
+    {% if object.description %}
+    <meta name="description" content="{% if object.description %}{{ object.description }}{% else %}{{ request.site.sitecustomization.description }}{% endif %}">
+    {% endif %}
+
+    {% if object.tags %}
+    <meta name="keywords" content="{% for tag in object.tags %}{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}">
+    {% endif %}
+
+    <meta name="generator" content="{{ request.site.name }}">
+
+    <meta name="publisher" content="{{ request.site.name }}">
+
+    {% block robots %}
+    <meta name="robots" content="noindex, nofollow">
+    {% endblock robots %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% block opengraph %}
+    {% include "core/opengraph/base.html" %}
+    {% endblock opengraph %}
+
+    <title>{% block head_title %}{% if object.title %}{{ object.title }} | {{ request.site.name }}{% else %}{{ request.site.name }} | {{ request.site.sitecustomization.tagline }}{% endif %}{% endblock head_title %}</title>
+
+    {% block css %}
+    {% render_bundle 'runtime' 'css' %}
+    {% render_bundle 'vendors' 'css' %}
+    {% block page_css %}
+    {% render_bundle 'base' 'css' %}
+    {% endblock page_css %}
+    {% endblock css %}
+
+    {% block head_js %}
+    {% endblock head_js %}
+
+    {% block extra_head %}
+    {% endblock extra_head %}
+</head>
+
+<body>
+    {% block body %}
+
+    {% block hero %}
+    {% include 'core/hero/base.html' %}
+    {% endblock hero %}
+
+    {% block nav %}
+    {% include 'core/nav/base.html' %}
+    {% endblock nav %}
+
+    {% block main %}
+    <main id="main" class="section">
+        <div class="container">
+            {% block messages %}
+            {% include 'core/messages/base.html' %}
+            {% endblock messages %}
+
+            {% block page_content %}
+            <article>
+                <header>
+                    <h1>Titre</h1>
+                </header>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <footer></footer>
+            </article>
+            {% endblock page_content %}
+        </div>
+
+        <aside></aside>
+    </main>
+    {% endblock main %}
+
+    {% block footer %}
+    {% include 'core/footer/base.html' %}
+    {% endblock footer %}
+
+    {% endblock body %}
+
+    {% block body_js %}
+    {% render_bundle 'runtime' 'js' %}
+    {% render_bundle 'vendors' 'js' %}
+    {% block page_js %}
+    {% render_bundle 'base' 'js' %}
+    {% endblock page_js %}
+    {% endblock body_js %}
+
+    {% block extra_body %}
+    {% endblock extra_body %}
+</body>
+
+</html>
