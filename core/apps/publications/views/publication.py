@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.template.defaultfilters import slugify
 from django.urls import reverse_lazy
@@ -35,7 +36,7 @@ class PublicationDetailView(DetailView):
         return redirect("publications:publication-detail", permanent=True, **kwargs)
 
 
-class PublicationCreateView(CreateView):
+class PublicationCreateView(LoginRequiredMixin, CreateView):
     model = Publication
     fields = ["source"]
 
@@ -59,7 +60,7 @@ class PublicationCreateView(CreateView):
         return self.object.get_absolute_url()
 
 
-class PublicationUpdateView(UpdateView):
+class PublicationUpdateView(LoginRequiredMixin, UpdateView):
     model = Publication
     fields = ["source"]
 
@@ -69,7 +70,7 @@ class PublicationUpdateView(UpdateView):
         return self.object.get_absolute_url()
 
 
-class PublicationDeleteView(DeleteView):
+class PublicationDeleteView(LoginRequiredMixin, DeleteView):
     model = Publication
 
     success_url = reverse_lazy("publications:publication-list")
