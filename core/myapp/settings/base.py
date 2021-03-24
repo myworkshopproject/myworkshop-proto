@@ -152,8 +152,17 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 # Email
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-DEFAULT_FROM_EMAIL = "webmaster@example.com"
+if DEBUG:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    DEFAULT_FROM_EMAIL = "webmaster@example.com"
+else:
+    EMAIL_HOST = str(os.environ["EMAIL_HOST"])
+    EMAIL_PORT = str(os.environ["EMAIL_PORT"])
+    EMAIL_HOST_USER = str(os.environ["EMAIL_HOST_USER"])
+    EMAIL_HOST_PASSWORD = str(os.environ["EMAIL_HOST_PASSWORD"])
+    EMAIL_USE_TLS = str(os.environ["EMAIL_USE_TLS"]) == "True"
+    EMAIL_USE_SSL = str(os.environ["EMAIL_USE_SSL"]) == "True"
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # django-simple-history
 # SIMPLE_HISTORY_HISTORY_CHANGE_REASON_USE_TEXT_FIELD = False

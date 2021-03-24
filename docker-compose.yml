@@ -75,6 +75,12 @@ services:
             - POSTGRES_HOST=db
             - RABBITMQ_HOST=brocker
             - RABBITMQ_VHOST=${RABBITMQ_DEFAULT_VHOST}
+            - EMAIL_HOST=${EMAIL_HOST}
+            - EMAIL_PORT=${EMAIL_PORT}
+            - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+            - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+            - EMAIL_USE_TLS=${EMAIL_USE_TLS}
+            - EMAIL_USE_SSL=${EMAIL_USE_SSL}
         expose:
             - ${CORE_PORT}
         command: ["./utils/wait-for-postgres.sh", "make", "serve"]
