@@ -1,0 +1,22 @@
+<p class="menu-label">
+    <span class="icon-text">
+        <span class="icon">
+            <i class="{{ menu.icon }}"></i>
+        </span>
+        <span>{{ menu.title }}</span>
+    </span>
+</p>
+<ul class="menu-list">
+    {% for item in menu.items %}
+    <li>
+        <a href="{{ item.url }}" {% if item.active %} class="is-active" {% endif %}>
+            <span class="icon-text">
+                <span class="icon">
+                    <i class="{{ item.icon }}"></i>
+                </span>
+                <span>{{ item.text }}</span>
+            </span>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
