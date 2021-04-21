@@ -33,6 +33,12 @@ django-webpack-loader==0.7.0
 # Markdown
 markdown
 
+# Models
+django-model-utils
+
+# Images
+Pillow
+
 # Dev tools
 black
 
