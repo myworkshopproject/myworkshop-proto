@@ -1,36 +1,32 @@
 from markdown import Markdown
 from markdown.extensions.toc import TocExtension
 from random import choice
+from urllib.parse import urlparse
 from django.conf import settings
 from django.db import models
-from django.urls import reverse
+from django.urls import resolve, reverse
 from django.utils.translation import ugettext, ugettext_lazy as _
+from model_utils.managers import InheritanceManager
 from simple_history.models import HistoricalRecords
 from publications.models import BaseModel
-
-DEFAULT_SOURCE_TEXT = """title: Choose a good title
-description: Write a short description.
-
-## First paragraph
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor...
-"""
 
 
 class Publication(BaseModel):
     history = HistoricalRecords()
 
     id = models.CharField(
-        primary_key=True, max_length=settings.PUBLICATIONSAPP_ID_LENGHT, editable=False
+        primary_key=True, max_length=settings.PUBLICATIONS_ID_LENGHT, editable=False
     )
 
     source = models.TextField(
         blank=True,
         verbose_name=_("source"),
         help_text=_("You can use Markdown syntax."),
-        default=DEFAULT_SOURCE_TEXT,
     )
     toc = models.TextField(blank=True, editable=False)
     html = models.TextField(blank=True, editable=False)
+
+    objects = InheritanceManager()
 
     @property
     def title(self):
@@ -61,7 +57,23 @@ class Publication(BaseModel):
 
     @property
     def icon(self):
-        return "fas fa-feather-alt"
+        return settings.PUBLICATIONS_PUBLICATION_ICON
+
+    @property
+    def featured_image(self):
+        if "image" in self.metadata:
+            featured_image = self.metadata["image"][0]
+            try:
+                from publications.models import Image
+
+                url = urlparse(featured_image)
+                match = resolve(url.path)
+                pk = match.kwargs["pk"]
+
+                return Image.objects.get(pk=pk)
+            except:
+                return None
+        return None
 
     class Meta(BaseModel.Meta):
         verbose_name = _("publication")
@@ -69,9 +81,6 @@ class Publication(BaseModel):
 
     def get_absolute_url(self):
         return reverse("publications:publication-detail", args=[str(self.id)])
-
-    def get_update_url(self):
-        return reverse("publications:publication-update", args=[str(self.id)])
 
     def get_delete_url(self):
         return reverse("publications:publication-delete", args=[str(self.id)])
@@ -94,7 +103,7 @@ class Publication(BaseModel):
                     [choice(LETTERS_EXCLUDE_SIMILAR)]
                     + [
                         choice(ALL_EXCLUDE_SIMILAR)
-                        for i in range(settings.PUBLICATIONSAPP_ID_LENGHT - 1)
+                        for i in range(settings.PUBLICATIONS_ID_LENGHT - 1)
                     ]
                 )
                 is_unique = not Publication.objects.filter(id=id).exists()
