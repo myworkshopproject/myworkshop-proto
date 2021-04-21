@@ -1,0 +1,16 @@
+{% if object.tags or object.difficulty or object.duration or object.cost %}
+<div class="level">
+    <div class="level-left">
+        {% if object.tags %}
+        {% for tag in object.tags %}
+        <div class="level-item">
+            <span class="tag">{{ tag }}</span>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div class="level-right">
+        {% include 'publications/elements/properties.html' %}
+    </div>
+</div>
+{% endif %}

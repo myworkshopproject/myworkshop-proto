@@ -1,0 +1,57 @@
+{% load i18n %}
+{% if object.difficulty %}
+<div class="level-item">
+    <div class="tags has-addons" title="{% translate 'difficulty' %}">
+        <span class="tag is-dark">
+            <span class="icon">
+                <i class="fas fa-tachometer-alt"></i>
+            </span>
+        </span>
+        <span class="tag">
+            {% if object.difficulty == 1 %}
+            <span class="icon"><i class="fas fa-star"></i></span>
+            <span class="icon"><i class="far fa-star"></i></span>
+            <span class="icon"><i class="far fa-star"></i></span>
+            {% elif object.difficulty == 2 %}
+            <span class="icon"><i class="fas fa-star"></i></span>
+            <span class="icon"><i class="fas fa-star"></i></span>
+            <span class="icon"><i class="far fa-star"></i></span>
+            {% elif object.difficulty == 3 %}
+            <span class="icon"><i class="fas fa-star"></i></span>
+            <span class="icon"><i class="fas fa-star"></i></span>
+            <span class="icon"><i class="fas fa-star"></i></span>
+            {% endif %}
+        </span>
+    </div>
+</div>
+{% endif %}
+
+{% if object.duration %}
+<div class="level-item">
+    <div class="tags has-addons" title="{% translate 'duration' %}">
+        <span class="tag is-dark">
+            <span class="icon">
+                <i class="fas fa-clock"></i>
+            </span>
+        </span>
+        <span class="tag">
+            {{ object.duration }}
+        </span>
+    </div>
+</div>
+{% endif %}
+
+{% if object.cost %}
+<div class="level-item">
+    <div class="tags has-addons" title="{% translate 'cost' %}">
+        <span class="tag is-dark">
+            <span class="icon">
+                <i class="fas fa-money-bill-alt"></i>
+            </span>
+        </span>
+        <span class="tag">
+            {{ object.cost }}
+        </span>
+    </div>
+</div>
+{% endif %}

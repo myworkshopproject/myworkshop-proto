@@ -1,0 +1,9 @@
+{% if page_obj.has_other_pages %}
+{% if page_obj.start_index == page_obj.end_index %}
+Résultats : {{ page_obj.start_index }} sur {{ page_obj.paginator.count }}.
+{% else %}
+Résultats : {{ page_obj.start_index }} à {{ page_obj.end_index }} sur {{ page_obj.paginator.count }}.
+{% endif %}
+{% else %}
+Résultats : {{ page_obj.paginator.count }}.
+{% endif %}

@@ -16,33 +16,31 @@
 
 {% block page_content %}
 <div class="columns">
-    <div class="column is-6 is-offset-3">
-        {% include 'publications/headline.html' %}
-
-        {% include 'publications/info.html' %}
-
-        <hr>
-
-        <div class="content">{{ object.html|safe }}</div>
-
-        {% if object.tags %}
-        <hr>
-        <div class="has-text-centered">
-            {% for tag in object.tags %}
-            <span class="tag is-medium mx-1">{{ tag }}</span>
-            {% endfor %}
-        </div>
-        {% endif %}
-    </div>
-
     <div class="column is-2">
-        <div class="content">
+        <div class="content sticky">
+            <br>
             <p class="has-text-weight-bold">{% translate 'Table of Contents' %}</p>
             {{ object.toc|safe }}
         </div>
     </div>
 
-    <div class="column is-1">
+    <div class="column is-6 is-offset-1">
+        {% include 'publications/elements/headline.html' %}
+
+        {% include 'publications/elements/tags.html' %}
+
+        {% include 'publications/elements/info.html' %}
+
+        {% if object.featured_image %}
+        {% include 'publications/images/box.html' with image=object.featured_image %}
+        {% else %}
+        <hr>
+        {% endif %}
+
+        <div class="content">{{ object.html|safe }}</div>
+    </div>
+
+    <div class="column is-1 is-offset-2">
         <div class="sticky">
             <br>
             <a href="#">

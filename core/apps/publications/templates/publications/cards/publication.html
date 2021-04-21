@@ -1,0 +1,20 @@
+<div class="card">
+    <div class="card-content">
+        {% if object.featured_image %}
+        <div class="columns is-vcentered is-variable is-5">
+            <div class="column is-one-third">
+                {% include 'publications/images/rounded.html' with image=object.featured_image %}
+            </div>
+            <div class="column">
+                {% include 'publications/elements/headline.html' %}
+            </div>
+        </div>
+        {% else %}
+        {% include 'publications/elements/headline.html' %}
+        {% endif %}
+
+        {% include 'publications/elements/tags.html' %}
+
+        {% include 'publications/elements/info.html' %}
+    </div>
+</div>

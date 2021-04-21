@@ -1,0 +1,7 @@
+<div class="box modal-button" data-target="{{ image.id }}">
+    <figure class="image is-3by2">
+        <img src="{{ image.picture.url }}" alt="{{ image.alt }}" title="{{ image.alt }}" style="object-fit: cover;">
+    </figure>
+    <figcaption class="mt-3 has-text-centered is-italic">{{ image.caption }}</figcaption>
+</div>
+{% include 'publications/images/modal.html' %}

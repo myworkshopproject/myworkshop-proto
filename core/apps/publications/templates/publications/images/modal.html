@@ -1,0 +1,10 @@
+<div class="modal" id="{{ image.id }}">
+    <div class="modal-background"></div>
+    <div class="modal-content has-text-centered">
+        <figure>
+            <img height="80%" src="{{ image.picture.url }}" alt="{{ image.alt }}" title="{{ image.alt }}" style="object-fit: cover;">
+            <figcaption class="mt-3 has-text-centered is-italic has-text-light">{{ image.caption }}</figcaption>
+        </figure>
+    </div>
+    <button class="modal-close is-large modal-button" aria-label="close" data-target="{{ image.id }}"></button>
+</div>
