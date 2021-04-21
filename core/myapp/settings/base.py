@@ -6,6 +6,7 @@ import os
 import sys
 from django.utils.translation import ugettext_lazy as _
 from pathlib import Path
+from .publication import *
 from .allauth import *
 from .auth import *
 
@@ -78,6 +79,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",  # `allauth` needs this from django
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "publications.context_processors.get_publication_to_context",
             ]
         },
     }
@@ -184,9 +186,6 @@ GITHUB_TEAM_URL = str(os.environ["GITHUB_TEAM_URL"])
 GITHUB_CONTRIB_URL = str(os.environ["GITHUB_CONTRIB_URL"])
 LICENSE_NAME = str(os.environ["LICENSE_NAME"])
 LICENSE_URL = str(os.environ["LICENSE_URL"])
-
-# Publications App
-PUBLICATIONSAPP_ID_LENGHT = 6
 
 # Celery Configuration Options
 CELERY_BROKER_URL = "amqp://{host}:5672/{vhost}".format(
