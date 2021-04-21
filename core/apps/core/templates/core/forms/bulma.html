@@ -111,6 +111,36 @@
                 </p>
                 {% endif %}
             </div>
+        {% elif field|fieldtype == "ClearableFileInput" %}
+            <div class="file is-normal has-name{% if field.errors %} is-danger{% endif %}">
+                <label class="file-label">
+                    <input class="file-input" id="{{ field.id_for_label }}" type="file" name="{{ field.name }}"{% for name, value in field.field.widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}>
+                    <span class="file-cta">
+                        <span class="file-icon">
+                            <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="file-label">
+                            Choose a file…
+                        </span>
+                    </span>
+                    <span class="file-name">
+                        {{ field.value }}
+                    </span>
+                </label>
+            </div>
+            <div class="field">
+                {% if field.errors %}
+                <p class="help is-danger">
+                    {% for error in field.errors %}
+                    {{ error }}<br>
+                    {% endfor %}
+                </p>
+                {% else %}
+                <p class="help">
+                    {{ field.help_text }}
+                </p>
+                {% endif %}
+            </div>
         {% elif field_type in "password,text,email" %}
             <div class="field">
                 <label class="label">{{ field.label_tag }}</label>

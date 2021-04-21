@@ -14,12 +14,35 @@
 {% render_bundle 'home' 'js' %}
 {% endblock page_js %}
 
-{% block page_content %}
-<div id="home">
-    <h2 class="title">{{ request.site.name }}</h2>
-    <p class="subtitle">{{ request.site.sitecustomization.tagline }}</p>
-    <div class="content">
-        {{ request.site.sitecustomization.description|safe }}
+{% block body %}
+<section class="hero is-fullheight">
+    <div class="hero-head">
+        <div class="navbar">
+            <div class="container">
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                        {% include 'core/nav/lang.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-{% endblock page_content %}
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns is-mobile is-centered is-vcentered is-8">
+                <div class="column is-one-quarter ">
+                    <img src="{{ request.site.sitecustomization.image.picture.url }}" alt="{{ request.site.sitecustomization.image.title }}" title="{{ request.site.sitecustomization.image.description }}">
+                </div>
+                <div class="column is-half">
+                    <p class="title">{{ request.site.name }}</p>
+                    <p class="subtitle">{{ request.site.sitecustomization.tagline }}</p>
+                    <p class="content">{{ request.site.sitecustomization.description|safe }}</p>
+                    <p>
+                        <a class="button is-link" href="{% url 'publications:publication-list' %}">{% translate 'Show publications !' %}</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock body %}

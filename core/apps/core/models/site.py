@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.db import models
 from django.utils.translation import ugettext, ugettext_lazy as _
+from publications.models import Image
 
 
 class SiteCustomization(models.Model):
@@ -32,6 +33,14 @@ class SiteCustomization(models.Model):
         verbose_name=_("description"),
         help_text=_("A short text to describe this very website."),
         default=_("A short text to describe this very website."),
+    )
+
+    image = models.ForeignKey(
+        Image,
+        blank=True,
+        null=True,
+        verbose_name=_("featured image"),
+        on_delete=models.SET_NULL,
     )
 
     class Meta:
